@@ -243,11 +243,10 @@ tfoot td{font-weight:700;border-top:2px solid var(--border);border-bottom:none;f
         <thead>
           <tr>
             <th>Quarter</th>
-            <th class="num">In Call Forecast</th>
-            <th class="num">Out Call Forecast</th>
-            <th class="num">合計 Forecast</th>
+            <th class="num">In Call Forecast ★</th>
+            <th class="num" style="color:var(--text3);">Out Call (参考)</th>
             <th class="num">Target</th>
-            <th class="num">達成率</th>
+            <th class="num">達成率 (In Call÷Target)</th>
             <th class="num">Δ vs Last Wk</th>
           </tr>
         </thead>
@@ -265,11 +264,10 @@ tfoot td{font-weight:700;border-top:2px solid var(--border);border-bottom:none;f
         <thead>
           <tr>
             <th>Quarter</th>
-            <th class="num">In Call Forecast</th>
-            <th class="num">Out Call Forecast</th>
-            <th class="num">合計 Forecast</th>
+            <th class="num">In Call Forecast ★</th>
+            <th class="num" style="color:var(--text3);">Out Call (参考)</th>
             <th class="num">Target (Quota)</th>
-            <th class="num">達成率</th>
+            <th class="num">達成率 (In Call÷Target)</th>
             <th class="num">Δ vs Last Wk</th>
           </tr>
         </thead>
@@ -475,10 +473,10 @@ tfoot td{font-weight:700;border-top:2px solid var(--border);border-bottom:none;f
    ================================================================ */
 let D = {
   kpis: [
-    {id:'acv',   label:'ACV',         target:9191819,  forecast:11681937, c:'c-blue'},
-    {id:'lic',   label:'License',      target:11717775, forecast:15175868, c:'c-green'},
-    {id:'book',  label:'Booking',      target:0,        forecast:44591513, c:'c-yellow'},
-    {id:'ai',    label:'AI Booking',   target:0,        forecast:524569,   c:'c-purple'},
+    {id:'acv',   label:'ACV',         target:9191819,  c:'c-blue'},
+    {id:'lic',   label:'License',      target:11717775, c:'c-green'},
+    {id:'book',  label:'Booking',      target:0,        c:'c-yellow'},
+    {id:'ai',    label:'AI Booking',   target:0,        c:'c-purple'},
   ],
   quarters:[
     {q:'Q1', inACV:965001,  outACV:74158,   inLic:590424,  outLic:0,       inBook:2731366,  outBook:4530,      tgtACV:1838364, tgtLic:2343555, lwkACV:1419382, lwkLic:2039245},
@@ -575,25 +573,40 @@ function deltaHtml(cur, last){
    KPI CARDS
    ============================================================ */
 const KPI_COLORS = {'c-blue':'#3b82f6','c-green':'#10b981','c-yellow':'#f59e0b','c-purple':'#a855f7'};
+
+// In Call合計を四半期データから自動計算
+function calcInCallForecasts(){
+  const acv  = D.quarters.reduce((s,q)=>s+q.inACV,  0);
+  const lic  = D.quarters.reduce((s,q)=>s+q.inLic,  0);
+  const book = D.quarters.reduce((s,q)=>s+q.inBook, 0);
+  const ai   = D.deals.filter(d=>d.isAI===1 && d.type==='In').reduce((s,d)=>s+d.acv, 0);
+  return {acv, lic, book, ai};
+}
+
 function renderKPIs(){
+  const inCall = calcInCallForecasts();
+  const foreMap = {acv: inCall.acv, lic: inCall.lic, book: inCall.book, ai: inCall.ai};
+
   document.getElementById('kpiGrid').innerHTML = D.kpis.map(k=>{
-    const col   = KPI_COLORS[k.c]||'#3b82f6';
-    const rate  = k.target>0 ? (k.forecast/k.target*100) : null;
-    const barW  = rate !== null ? Math.min(rate,100).toFixed(1) : 0;
-    const rc    = rate!==null ? rateColor(rate) : '#64748b';
-    const gap   = k.target>0 ? k.forecast-k.target : null;
+    const col      = KPI_COLORS[k.c]||'#3b82f6';
+    const forecast = foreMap[k.id] ?? 0;
+    const rate     = k.target>0 ? (forecast/k.target*100) : null;
+    const barW     = rate !== null ? Math.min(rate,100).toFixed(1) : 0;
+    const rc       = rate!==null ? rateColor(rate) : '#64748b';
+    const gap      = k.target>0 ? forecast-k.target : null;
     return `
 <div class="kpi-card ${k.c}">
   <div class="kpi-label">${k.label}</div>
+  <div style="font-size:9px;color:var(--text3);margin-bottom:6px;letter-spacing:1px;">IN CALL FORECAST</div>
   <div class="kpi-main">
-    <div class="kpi-fore" style="color:${col}">${fmtEUR(k.forecast)}</div>
+    <div class="kpi-fore" style="color:${col}">${fmtEUR(forecast)}</div>
   </div>
   <div class="kpi-tgt">Target: <span>${k.target>0?fmtEUR(k.target):'未設定 (下記に入力)'}</span></div>
   <div class="bar-bg"><div class="bar-fill" style="width:${barW}%;background:${col}"></div></div>
   <div class="kpi-btm">
     <div>
       <div class="kpi-rate" style="color:${rc}">${rate!==null?rate.toFixed(1)+'%':'—'}</div>
-      <div class="kpi-rate-sub">達成率</div>
+      <div class="kpi-rate-sub">達成率 (In Call)</div>
     </div>
     <div class="kpi-gap">
       ${gap!==null?`<span style="color:${gap>=0?'#10b981':'#ef4444'}">${gap>=0?'▲ ':'▼ '}${fmtEUR(Math.abs(gap))}</span><br>vs Target`:''}
@@ -601,17 +614,18 @@ function renderKPIs(){
   </div>
   <div class="kpi-inputs">
     <div class="ki-group"><div class="ki-label">Target (€)</div>
-      <input class="ki-input" type="number" value="${k.target}" oninput="updKPI('${k.id}','target',this.value)"></div>
-    <div class="ki-group"><div class="ki-label">Forecast (€)</div>
-      <input class="ki-input" type="number" value="${k.forecast}" oninput="updKPI('${k.id}','forecast',this.value)"></div>
+      <input class="ki-input" type="number" value="${k.target}" oninput="updKPITarget('${k.id}',this.value)"></div>
+    <div class="ki-group" style="opacity:.5;pointer-events:none;">
+      <div class="ki-label">Forecast (自動計算)</div>
+      <input class="ki-input" type="number" value="${forecast}" readonly style="cursor:not-allowed;"></div>
   </div>
 </div>`;
   }).join('');
 }
 
-function updKPI(id,f,v){
+function updKPITarget(id,v){
   const k=D.kpis.find(x=>x.id===id); if(!k) return;
-  k[f]=parseFloat(v)||0;
+  k.target=parseFloat(v)||0;
   renderKPIs();
   setTimeout(renderDashCharts,60);
 }
@@ -622,18 +636,15 @@ function updKPI(id,f,v){
 function qBadge(q){ return `<span class="badge bq${q[1]}">${q}</span>`; }
 
 function renderQTables(){
-  // ACV
+  // ACV — 達成率はIn Callのみ
   let acvTotIn=0,acvTotOut=0,acvTotTgt=0;
   document.getElementById('qAcvBody').innerHTML = D.quarters.map(q=>{
-    const tot  = q.inACV+q.outACV;
-    const rate = q.tgtACV>0?(tot/q.tgtACV*100):null;
-    const curLwk = q.lwkACV;
+    const rate = q.tgtACV>0?(q.inACV/q.tgtACV*100):null;  // ★ In Callのみ
     acvTotIn+=q.inACV; acvTotOut+=q.outACV; acvTotTgt+=q.tgtACV;
     return `<tr>
       <td>${qBadge(q.q)}</td>
-      <td class="num">${fmtEUR(q.inACV)}</td>
-      <td class="num">${fmtEUR(q.outACV)}</td>
-      <td class="num" style="font-weight:600;">${fmtEUR(tot)}</td>
+      <td class="num" style="font-weight:600;">${fmtEUR(q.inACV)}</td>
+      <td class="num" style="color:var(--text3);">${fmtEUR(q.outACV)}</td>
       <td class="num" style="color:var(--text2);">${fmtEUR(q.tgtACV)}</td>
       <td class="num">
         <div class="pct-cell" style="justify-content:flex-end;">
@@ -641,32 +652,28 @@ function renderQTables(){
           <span style="color:${rateColor(rate||0)};font-family:'DM Mono',monospace;font-size:11px;">${rate!==null?rate.toFixed(1)+'%':'—'}</span>
         </div>
       </td>
-      <td class="num">${deltaHtml(tot, curLwk)}</td>
+      <td class="num">${deltaHtml(q.inACV, q.lwkACV)}</td>
     </tr>`;
   }).join('');
-  const acvTot = acvTotIn+acvTotOut;
-  const acvR = acvTotTgt>0?(acvTot/acvTotTgt*100):null;
+  const acvR = acvTotTgt>0?(acvTotIn/acvTotTgt*100):null;  // ★ In Callのみ
   document.getElementById('qAcvFoot').innerHTML=`<tr>
     <td style="color:var(--acc2);">合計</td>
     <td class="num" style="color:var(--acc2);">${fmtEUR(acvTotIn)}</td>
-    <td class="num" style="color:var(--acc2);">${fmtEUR(acvTotOut)}</td>
-    <td class="num" style="color:var(--acc2);">${fmtEUR(acvTot)}</td>
+    <td class="num" style="color:var(--text3);">${fmtEUR(acvTotOut)}</td>
     <td class="num" style="color:var(--text2);">${fmtEUR(acvTotTgt)}</td>
     <td class="num" style="color:${rateColor(acvR||0)};">${acvR!==null?acvR.toFixed(1)+'%':'—'}</td>
     <td></td>
   </tr>`;
 
-  // License
+  // License — 達成率はIn Callのみ
   let licTotIn=0,licTotOut=0,licTotTgt=0;
   document.getElementById('qLicBody').innerHTML = D.quarters.map(q=>{
-    const tot  = q.inLic+q.outLic;
-    const rate = q.tgtLic>0?(tot/q.tgtLic*100):null;
+    const rate = q.tgtLic>0?(q.inLic/q.tgtLic*100):null;  // ★ In Callのみ
     licTotIn+=q.inLic; licTotOut+=q.outLic; licTotTgt+=q.tgtLic;
     return `<tr>
       <td>${qBadge(q.q)}</td>
-      <td class="num">${fmtEUR(q.inLic)}</td>
-      <td class="num">${fmtEUR(q.outLic)}</td>
-      <td class="num" style="font-weight:600;">${fmtEUR(tot)}</td>
+      <td class="num" style="font-weight:600;">${fmtEUR(q.inLic)}</td>
+      <td class="num" style="color:var(--text3);">${fmtEUR(q.outLic)}</td>
       <td class="num" style="color:var(--text2);">${fmtEUR(q.tgtLic)}</td>
       <td class="num">
         <div class="pct-cell" style="justify-content:flex-end;">
@@ -674,16 +681,14 @@ function renderQTables(){
           <span style="color:${rateColor(rate||0)};font-family:'DM Mono',monospace;font-size:11px;">${rate!==null?rate.toFixed(1)+'%':'—'}</span>
         </div>
       </td>
-      <td class="num">${deltaHtml(tot, q.lwkLic)}</td>
+      <td class="num">${deltaHtml(q.inLic, q.lwkLic)}</td>
     </tr>`;
   }).join('');
-  const licTot = licTotIn+licTotOut;
-  const licR = licTotTgt>0?(licTot/licTotTgt*100):null;
+  const licR = licTotTgt>0?(licTotIn/licTotTgt*100):null;  // ★ In Callのみ
   document.getElementById('qLicFoot').innerHTML=`<tr>
     <td style="color:var(--green);">合計</td>
     <td class="num" style="color:var(--green);">${fmtEUR(licTotIn)}</td>
-    <td class="num" style="color:var(--green);">${fmtEUR(licTotOut)}</td>
-    <td class="num" style="color:var(--green);">${fmtEUR(licTot)}</td>
+    <td class="num" style="color:var(--text3);">${fmtEUR(licTotOut)}</td>
     <td class="num" style="color:var(--text2);">${fmtEUR(licTotTgt)}</td>
     <td class="num" style="color:${rateColor(licR||0)};">${licR!==null?licR.toFixed(1)+'%':'—'}</td>
     <td></td>
