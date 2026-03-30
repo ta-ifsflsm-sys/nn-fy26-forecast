@@ -178,7 +178,7 @@ tfoot td{font-weight:700;border-top:2px solid var(--border);border-bottom:none;f
     <div>
       <div class="h-title">FY26 FORECAST</div>
     </div>
-    <span class="h-tag">As of 2026-03-10</span>
+    <span class="h-tag">As of 2026-03-30  |  04:56更新</span>
   </div>
   <div class="h-right">
     <span class="h-date" id="lastUpdated">—</span>
@@ -191,7 +191,7 @@ tfoot td{font-weight:700;border-top:2px solid var(--border);border-bottom:none;f
 <div class="nav">
   <div class="nav-tab active" onclick="switchTab('dashboard',this)">📊 ダッシュボード</div>
   <div class="nav-tab" onclick="switchTab('quarterly',this)">📅 Q別 In/Out Call</div>
-  <div class="nav-tab" onclick="switchTab('deals',this)">📋 案件一覧 (36件)</div>
+  <div class="nav-tab" onclick="switchTab('deals',this)">📋 案件一覧 (38件)</div>
 </div>
 
 <!-- ===================== TAB 1: DASHBOARD ===================== -->
@@ -475,56 +475,67 @@ let D = {
   kpis: [
     {id:'acv',   label:'ACV',         target:9191819,  c:'c-blue'},
     {id:'lic',   label:'License',      target:11717775, c:'c-green'},
-    {id:'book',  label:'Booking',      target:0,        c:'c-yellow'},
-    {id:'ai',    label:'AI Booking',   target:0,        c:'c-purple'},
+    {id:'book',  label:'Booking',      target:40802500, c:'c-yellow'},
+    {id:'ai',    label:'AI Booking',   target:3752500,  c:'c-purple'},
   ],
   quarters:[
-    {q:'Q1', inACV:965001,  outACV:74158,   inLic:590424,  outLic:0,       inBook:2731366,  outBook:4530,      tgtACV:1838364, tgtLic:2343555, lwkACV:1419382, lwkLic:2039245},
-    {q:'Q2', inACV:1027509, outACV:16420,   inLic:229830,  outLic:23127,   inBook:3103203,  outBook:8344,      tgtACV:2297955, tgtLic:2929444, lwkACV:942402,  lwkLic:141105},
-    {q:'Q3', inACV:2666544, outACV:627254,  inLic:5403673, outLic:839125,  inBook:12582537, outBook:2558114,   tgtACV:1838364, tgtLic:2343555, lwkACV:2133367, lwkLic:4984961},
-    {q:'Q4', inACV:640392,  outACV:5664659, inLic:1452738, outLic:6636951, inBook:3201959,  outBook:20401460,  tgtACV:3217137, tgtLic:4101221, lwkACV:0,       lwkLic:0},
+    // 2026-03-30 更新 | FY26_Forecast_Call_20260330_0456.xlsx より
+    {q:'Q1', inACV:726280,   outACV:0,        inLic:512065,  outLic:0,       inBook:2526112,  outBook:0,
+             inAiACV:145675, outAiACV:0,       inAiBook:145675, outAiBook:0,
+             tgtACV:1838364, tgtLic:2343555,   lwkACV:794698,   lwkLic:564699},
+    {q:'Q2', inACV:1135087,  outACV:16420,    inLic:282464,  outLic:23127,   inBook:3137797,  outBook:8344,
+             inAiACV:309762, outAiACV:0,       inAiBook:309762, outAiBook:0,
+             tgtACV:2297955, tgtLic:2929444,   lwkACV:1027509,  lwkLic:229830},
+    {q:'Q3', inACV:3166382,  outACV:979908,   inLic:6478773, outLic:722201,  inBook:14519798, outBook:3551716,
+             inAiACV:387395, outAiACV:330117,  inAiBook:387395, outAiBook:330117,
+             tgtACV:1838364, tgtLic:2343555,   lwkACV:2917663,  lwkLic:5841440},
+    {q:'Q4', inACV:640392,   outACV:5233436,  inLic:1452738, outLic:4778858, inBook:3201959,  outBook:17863302,
+             inAiACV:125927, outAiACV:1597320, inAiBook:125927, outAiBook:1597320,
+             tgtACV:3217137, tgtLic:4101221,   lwkACV:640392,   lwkLic:1452738},
   ],
   deals:[
-    /* ---- Q1 ---- */
-    {id:1, name:'SUBARU New Non-production environments', co:'NEC Corporation',                          opp:'94325', q:'Q1', type:'In',  acv:12599,   lic:10412,   book:12599,    date:'2026-01-12', stage:'won',      prob:100, isAI:0, status:'', comp:'', notes:''},
-    {id:2, name:'ShinMaywa Aircraft Div - SCM/MES - FY26Q1', co:'ShinMaywa Industries, Ltd.',           opp:'74989', q:'Q1', type:'In',  acv:447798,  lic:423161,  book:2238990,  date:'2026-02-26', stage:'won',      prob:100, isAI:0, status:'', comp:'', notes:''},
-    {id:3, name:'JVC KENWOOD Additional Sales',          co:'JVCKENWOOD CORPORATION',                    opp:'97124', q:'Q1', type:'In',  acv:2033,    lic:4723,    book:10673,    date:'2026-03-06', stage:'won',      prob:100, isAI:0, status:'', comp:'', notes:''},
-    {id:4, name:'Skydrive - ICAM',                       co:'SkyDrive Inc.',                             opp:'75026', q:'Q1', type:'In',  acv:68418,   lic:52634,   book:205254,   date:'2026-03-20', stage:'close',    prob:85,  isAI:0, status:'', comp:'', notes:''},
-    {id:5, name:'MELCO_DS_CRP',                          co:'Mitsubishi Electric Corporation, Defense',  opp:'94851', q:'Q1', type:'In',  acv:434153,  lic:99494,   book:263850,   date:'2026-03-25', stage:'close',    prob:80,  isAI:0, status:'', comp:'', notes:''},
-    {id:6, name:'Renewal - JAL Engineering - Uplift',   co:'JAL Engineering Co.,LTD.',                  opp:'89753', q:'Q1', type:'Out', acv:74158,   lic:0,       book:4530,     date:'2026-03-27', stage:'close',    prob:80,  isAI:0, status:'', comp:'', notes:''},
-    /* ---- Q2 ---- */
-    {id:7, name:'Honda Marine - POKA',                   co:'Honda Motor Co., Ltd.',                     opp:'84447', q:'Q2', type:'In',  acv:44139,   lic:0,       book:220694,   date:'2026-05-18', stage:'negotiate',prob:65,  isAI:0, status:'', comp:'', notes:''},
-    {id:8, name:'ERP - Shizuoka Gas America',            co:'SHIZUOKA GAS CO., LTD.',                    opp:'95424', q:'Q2', type:'In',  acv:38293,   lic:0,       book:191466,   date:'2026-06-04', stage:'negotiate',prob:60,  isAI:0, status:'', comp:'', notes:''},
-    {id:9, name:'Futaba ERP License/Success',            co:'FUTABA CORPORATION',                        opp:'90748', q:'Q2', type:'In',  acv:448822,  lic:141105,  book:2244108,  date:'2026-06-12', stage:'negotiate',prob:60,  isAI:0, status:'', comp:'', notes:''},
-    {id:10,name:'SUBARU_ai',                             co:'NEC Corporation',                           opp:'86759', q:'Q2', type:'In',  acv:22054,   lic:0,       book:110268,   date:'2026-06-12', stage:'negotiate',prob:60,  isAI:1, status:'', comp:'', notes:''},
-    {id:11,name:'JAL Customer Success CP1H2 (Jul-Dec)',  co:'Japan Airlines Co., Ltd.',                  opp:'94085', q:'Q2', type:'In',  acv:449441,  lic:0,       book:247942,   date:'2026-06-15', stage:'negotiate',prob:55,  isAI:0, status:'', comp:'', notes:''},
-    {id:12,name:'Renewal - SUBARU Add Use Place env.',   co:'NEC Corporation',                           opp:'67409', q:'Q2', type:'Out', acv:16420,   lic:23127,   book:8344,     date:'2026-06-20', stage:'negotiate',prob:55,  isAI:0, status:'', comp:'', notes:''},
-    {id:13,name:'MHI AEL - Oracle',                     co:'NEC Corporation',                           opp:'96704', q:'Q2', type:'In',  acv:24760,   lic:88725,   book:88725,    date:'2026-06-23', stage:'negotiate',prob:55,  isAI:0, status:'', comp:'', notes:''},
-    /* ---- Q3 ---- */
-    {id:14,name:'Kyushu Electric T&D EAM (Telecom)',    co:'NEC Corporation',                            opp:'95743', q:'Q3', type:'In',  acv:383140,  lic:418712,  book:1915702,  date:'2026-08-14', stage:'negotiate',prob:45,  isAI:0, status:'', comp:'', notes:''},
-    {id:15,name:'MELCO - A&D',                          co:'Mitsubishi Electric Corporation, Defense',   opp:'90924', q:'Q3', type:'In',  acv:1901372, lic:4182571, book:8756677,  date:'2026-09-18', stage:'negotiate',prob:40,  isAI:0, status:'', comp:'', notes:''},
-    {id:16,name:'IHI Add Extra non-production envs.',   co:'NEC Corporation',                            opp:'90047', q:'Q3', type:'Out', acv:251119,  lic:437767,  book:690578,   date:'2026-09-18', stage:'prospect', prob:40,  isAI:0, status:'', comp:'', notes:''},
-    {id:17,name:'KHI-Energy&Marine - Oracle ASFU',      co:'NEC Corporation',                            opp:'96173', q:'Q3', type:'Out', acv:3941,    lic:6568,    book:6568,     date:'2026-09-22', stage:'prospect', prob:35,  isAI:0, status:'', comp:'', notes:''},
-    {id:18,name:'KHI-Energy&Marine MES / PoC / NEC Ph2',co:'NEC Corporation',                            opp:'73746', q:'Q3', type:'In',  acv:382032,  lic:802390,  book:1910158,  date:'2026-09-22', stage:'prospect', prob:35,  isAI:0, status:'', comp:'', notes:''},
-    {id:19,name:'Inaba Foods ERP',                      co:'Inaba foods Co.,Ltd',                        opp:'75205', q:'Q3', type:'Out', acv:372194,  lic:394790,  book:1860968,  date:'2026-09-28', stage:'prospect', prob:35,  isAI:0, status:'', comp:'', notes:''},
-    /* ---- Q4 ---- */
-    {id:20,name:'Sankyu - ERP (Hitachi consulting)',     co:'Sankyu Inc.',                                opp:'92221', q:'Q4', type:'Out', acv:656812,  lic:833356,  book:3284061,  date:'2026-10-16', stage:'prospect', prob:25,  isAI:0, status:'', comp:'', notes:''},
-    {id:21,name:'KHI - Plant Procurement',               co:'NEC Corporation',                           opp:'93171', q:'Q4', type:'In',  acv:640392,  lic:1452738, book:3201959,  date:'2026-10-20', stage:'prospect', prob:25,  isAI:0, status:'', comp:'', notes:''},
-    {id:22,name:'FUJIFILM Healthcare Mfg - New MFG FY25',co:'NEC Corporation',                           opp:'70643', q:'Q4', type:'Out', acv:143943,  lic:259281,  book:719713,   date:'2026-10-26', stage:'prospect', prob:25,  isAI:0, status:'', comp:'', notes:''},
-    {id:23,name:'Renewal - SUBARU New Use Place',        co:'NEC Corporation',                           opp:'73333', q:'Q4', type:'Out', acv:60734,   lic:50193,   book:0,        date:'2026-10-28', stage:'prospect', prob:25,  isAI:0, status:'', comp:'', notes:''},
-    {id:24,name:'Hitachi Construction Machinery - ERP',  co:'Hitachi Construction Machinery Japan',       opp:'68562', q:'Q4', type:'Out', acv:611585,  lic:694423,  book:1834755,  date:'2026-11-12', stage:'prospect', prob:25,  isAI:0, status:'', comp:'', notes:''},
-    {id:25,name:'AGC TECHNO GLASS - POKA (Inbound)',     co:'AGC TECHNO GLASS CO., LTD.',                opp:'87251', q:'Q4', type:'Out', acv:80167,   lic:82102,   book:120251,   date:'2026-11-20', stage:'prospect', prob:25,  isAI:0, status:'', comp:'', notes:''},
-    {id:26,name:'ShinMaywa - Ground Support Veh. FY26Q4',co:'ShinMaywa Industries, Ltd.',                opp:'95268', q:'Q4', type:'Out', acv:651468,  lic:1066365, book:3257338,  date:'2026-11-23', stage:'prospect', prob:25,  isAI:0, status:'', comp:'', notes:''},
-    {id:27,name:'KHI - Aero Engine MRO',                 co:'Kawasaki Heavy Industries, Ltd.',           opp:'76028', q:'Q4', type:'Out', acv:754730,  lic:954795,  book:2264191,  date:'2026-11-30', stage:'prospect', prob:25,  isAI:0, status:'', comp:'', notes:''},
-    {id:28,name:'KHI - Poka',                            co:'Kawasaki Heavy Industries, Ltd.',           opp:'89156', q:'Q4', type:'Out', acv:87575,   lic:65681,   book:131362,   date:'2026-12-10', stage:'prospect', prob:20,  isAI:0, status:'', comp:'', notes:''},
-    {id:29,name:'Chubu Power Grid - FSM_PSO',            co:'NEC Corporation',                           opp:'93174', q:'Q4', type:'Out', acv:237713,  lic:3423,    book:1188563,  date:'2026-12-11', stage:'prospect', prob:20,  isAI:0, status:'', comp:'', notes:''},
-    {id:30,name:'MHI - JASDF POC 2',                    co:'Tsunami Tsolutions LLC (Partner)',            opp:'90817', q:'Q4', type:'Out', acv:507366,  lic:486613,  book:1014732,  date:'2026-12-12', stage:'prospect', prob:20,  isAI:0, status:'', comp:'', notes:''},
-    {id:31,name:'Kyodo Yushi - NEW MFG 400NU FY26Q4',   co:'Alphast Co.,Ltd.',                           opp:'89290', q:'Q4', type:'Out', acv:383140,  lic:562222,  book:1149421,  date:'2026-12-16', stage:'prospect', prob:20,  isAI:0, status:'', comp:'', notes:''},
-    {id:32,name:'YKK - ERP',                             co:'YKK Corporation',                           opp:'85251', q:'Q4', type:'Out', acv:463320,  lic:913336,  book:2316601,  date:'2026-12-18', stage:'prospect', prob:20,  isAI:0, status:'', comp:'', notes:''},
-    {id:33,name:'YKK - Loops AI - FY26Q4',               co:'YKK Corporation',                           opp:'91738', q:'Q4', type:'Out', acv:149999,  lic:0,       book:149999,   date:'2026-12-18', stage:'prospect', prob:20,  isAI:1, status:'', comp:'', notes:''},
-    {id:34,name:'Lasertec - ERP & FSM',                  co:'Lasertec Corporation',                      opp:'57736', q:'Q4', type:'Out', acv:523591,  lic:665161,  book:2617957,  date:'2026-12-18', stage:'prospect', prob:20,  isAI:0, status:'', comp:'', notes:''},
-    {id:35,name:'KHI Energy & Marine - Loops AI FY26Q4', co:'NEC Corporation',                           opp:'91739', q:'Q4', type:'Out', acv:202517,  lic:0,       book:202517,   date:'2026-12-23', stage:'prospect', prob:20,  isAI:1, status:'', comp:'', notes:''},
-    {id:36,name:'ROHM - LOOPS AI - FY26Q4',              co:'IBM Japan, Ltd',                            opp:'91740', q:'Q4', type:'Out', acv:149999,  lic:0,       book:149999,   date:'2026-12-24', stage:'prospect', prob:20,  isAI:1, status:'', comp:'', notes:''},
+    /* ---- Q1（全4件 Won確定）---- */
+    {id:1,  name:'SUBARU New Non-production environments',     co:'NEC Corporation',                          opp:'94325', q:'Q1', type:'In',  acv:12599,   lic:10412,   book:12599,   date:'2026-01-12', stage:'won',      prob:100, isAI:0, status:'', comp:'', notes:''},
+    {id:2,  name:'ShinMaywa Aircraft Div - SCM/MES - FY26Q1', co:'ShinMaywa Industries, Ltd.',               opp:'74989', q:'Q1', type:'In',  acv:447798,  lic:423161,  book:2238990, date:'2026-02-26', stage:'won',      prob:100, isAI:1, status:'', comp:'', notes:''},
+    {id:3,  name:'JVC KENWOOD Additional Sales',               co:'JVCKENWOOD CORPORATION',                   opp:'97124', q:'Q1', type:'In',  acv:2033,    lic:4723,    book:10673,   date:'2026-03-06', stage:'won',      prob:100, isAI:0, status:'', comp:'', notes:''},
+    {id:4,  name:'MELCO_DS_CRP',                               co:'Mitsubishi Electric Corporation, Defense', opp:'94851', q:'Q1', type:'In',  acv:263850,  lic:73769,   book:263850,  date:'2026-03-19', stage:'won',      prob:100, isAI:1, status:'', comp:'', notes:''},
+    /* ---- Q2（10件）---- */
+    {id:6,  name:'Renewal - JAL Engineering - Uplift',         co:'JAL Engineering Co.,LTD.',                 opp:'89753', q:'Q2', type:'In',  acv:77453,   lic:0,       book:20806,   date:'2026-04-01', stage:'close',    prob:80,  isAI:0, status:'⬆️ Q1 Out→Q2 In に変更', comp:'', notes:''},
+    {id:5,  name:'Skydrive - ICAM',                            co:'SkyDrive Inc.',                            opp:'75026', q:'Q2', type:'In',  acv:68418,   lic:52634,   book:205254,  date:'2026-05-27', stage:'close',    prob:80,  isAI:1, status:'⬆️ Q1→Q2 に変更', comp:'', notes:''},
+    {id:9,  name:'Futaba ERP License/Success',                 co:'FUTABA CORPORATION',                       opp:'90748', q:'Q2', type:'In',  acv:448822,  lic:141105,  book:2244108, date:'2026-06-12', stage:'negotiate',prob:60,  isAI:1, status:'', comp:'', notes:''},
+    {id:10, name:'SUBARU_ai',                                  co:'NEC Corporation',                          opp:'86759', q:'Q2', type:'In',  acv:22054,   lic:0,       book:110268,  date:'2026-06-12', stage:'negotiate',prob:60,  isAI:1, status:'', comp:'', notes:''},
+    {id:11, name:'JAL Customer Success CP1H2 (Jul-Dec)',       co:'Japan Airlines Co., Ltd.',                 opp:'94085', q:'Q2', type:'In',  acv:449441,  lic:0,       book:247942,  date:'2026-06-15', stage:'negotiate',prob:55,  isAI:0, status:'', comp:'', notes:''},
+    {id:7,  name:'Honda Marine - POKA',                        co:'Honda Motor Co., Ltd.',                    opp:'84447', q:'Q2', type:'In',  acv:44139,   lic:0,       book:220694,  date:'2026-06-18', stage:'negotiate',prob:65,  isAI:0, status:'', comp:'', notes:''},
+    {id:12, name:'Renewal - SUBARU Add Use Place env.',        co:'NEC Corporation',                          opp:'67409', q:'Q2', type:'Out', acv:16420,   lic:23127,   book:8344,    date:'2026-06-20', stage:'negotiate',prob:55,  isAI:0, status:'', comp:'', notes:''},
+    {id:13, name:'MHI AEL - Oracle',                          co:'NEC Corporation',                           opp:'96704', q:'Q2', type:'In',  acv:24760,   lic:88725,   book:88725,   date:'2026-06-23', stage:'negotiate',prob:55,  isAI:0, status:'', comp:'', notes:''},
+    /* ---- Q3（8件）---- */
+    {id:14, name:'Kyushu Electric T&D EAM (Telecom)',          co:'NEC Corporation',                          opp:'95743', q:'Q3', type:'In',  acv:432170,  lic:579477,  book:2160851, date:'2026-08-14', stage:'negotiate',prob:45,  isAI:1, status:'', comp:'', notes:''},
+    {id:16, name:'IHI Add Extra non-production envs.',         co:'NEC Corporation',                          opp:'90047', q:'Q3', type:'In',  acv:251119,  lic:437767,  book:690578,  date:'2026-08-31', stage:'prospect', prob:40,  isAI:0, status:'', comp:'', notes:''},
+    {id:40, name:'MELCO_DS - Customer Success Oct26-Mar29',    co:'Mitsubishi Electric Corporation, Defense', opp:'98278', q:'Q3', type:'Out', acv:217931,  lic:0,       book:521399,  date:'2026-08-31', stage:'prospect', prob:35,  isAI:0, status:'🆕 今週新規追加', comp:'', notes:''},
+    {id:41, name:'MaedaKosen - New ERP DI FY26Q3',            co:'Maeda Kosen Co.,Ltd.',                     opp:'97948', q:'Q3', type:'Out', acv:389783,  lic:327411,  book:1169349, date:'2026-09-11', stage:'prospect', prob:35,  isAI:1, status:'🆕 今週新規追加', comp:'', notes:''},
+    {id:15, name:'MELCO - A&D',                               co:'Mitsubishi Electric Corporation, Defense',  opp:'90924', q:'Q3', type:'In',  acv:2097120, lic:4652571, book:9751643, date:'2026-09-18', stage:'negotiate',prob:40,  isAI:1, status:'', comp:'', notes:''},
+    {id:18, name:'KHI-Energy&Marine MES / PoC / NEC Ph2',     co:'NEC Corporation',                          opp:'73746', q:'Q3', type:'In',  acv:382032,  lic:802390,  book:1910158, date:'2026-09-22', stage:'prospect', prob:35,  isAI:1, status:'', comp:'', notes:''},
+    {id:17, name:'KHI-Energy&Marine - Oracle ASFU',            co:'NEC Corporation',                          opp:'96173', q:'Q3', type:'In',  acv:3941,    lic:6568,    book:6568,    date:'2026-09-22', stage:'prospect', prob:35,  isAI:0, status:'⬆️ Out→In に変更', comp:'', notes:''},
+    {id:19, name:'Inaba Foods ERP',                           co:'Inaba foods Co.,Ltd',                       opp:'75205', q:'Q3', type:'Out', acv:372194,  lic:394790,  book:1860968, date:'2026-09-28', stage:'prospect', prob:35,  isAI:1, status:'', comp:'', notes:''},
+    /* ---- Q4（18件）---- */
+    {id:20, name:'Sankyu - ERP (Hitachi consulting)',          co:'Sankyu Inc.',                               opp:'92221', q:'Q4', type:'Out', acv:656812,  lic:833356,  book:3284061, date:'2026-10-16', stage:'prospect', prob:25,  isAI:1, status:'', comp:'', notes:''},
+    {id:21, name:'KHI - Plant Procurement',                   co:'NEC Corporation',                           opp:'93171', q:'Q4', type:'In',  acv:640392,  lic:1452738, book:3201959, date:'2026-10-20', stage:'prospect', prob:25,  isAI:1, status:'', comp:'', notes:''},
+    {id:22, name:'FUJIFILM Healthcare Mfg - New MFG FY25',    co:'NEC Corporation',                           opp:'70643', q:'Q4', type:'Out', acv:143943,  lic:259281,  book:719713,  date:'2026-10-26', stage:'prospect', prob:25,  isAI:1, status:'', comp:'', notes:''},
+    {id:23, name:'Renewal - SUBARU New Use Place',            co:'NEC Corporation',                           opp:'73333', q:'Q4', type:'Out', acv:60734,   lic:50193,   book:0,       date:'2026-10-28', stage:'prospect', prob:25,  isAI:0, status:'', comp:'', notes:''},
+    {id:24, name:'Hitachi Construction Machinery - ERP',      co:'Hitachi Construction Machinery Japan',      opp:'68562', q:'Q4', type:'Out', acv:611585,  lic:694423,  book:1834755, date:'2026-11-12', stage:'prospect', prob:25,  isAI:0, status:'', comp:'', notes:''},
+    {id:42, name:'Eurus Wind Power - EAM',                    co:'Eurus Energy Holdings',                     opp:'98566', q:'Q4', type:'Out', acv:164203,  lic:13461,   book:821015,  date:'2026-11-19', stage:'prospect', prob:25,  isAI:1, status:'🆕 今週新規追加', comp:'', notes:''},
+    {id:43, name:'JGC HOLDINGS - LOOPS',                      co:'JGC Holdings Corporation',                  opp:'98451', q:'Q4', type:'Out', acv:85414,   lic:0,       book:256242,  date:'2026-11-20', stage:'prospect', prob:25,  isAI:1, status:'🆕 今週新規追加', comp:'', notes:''},
+    {id:44, name:'Hokkaido Electric NW - Loops',              co:'Hokkaido Electric Power Network',           opp:'98574', q:'Q4', type:'Out', acv:85414,   lic:0,       book:85414,   date:'2026-11-20', stage:'prospect', prob:25,  isAI:1, status:'🆕 今週新規追加', comp:'', notes:''},
+    {id:25, name:'AGC TECHNO GLASS - POKA (Inbound)',         co:'AGC TECHNO GLASS CO., LTD.',                opp:'87251', q:'Q4', type:'Out', acv:80167,   lic:82102,   book:120251,  date:'2026-11-20', stage:'prospect', prob:25,  isAI:0, status:'', comp:'', notes:''},
+    {id:26, name:'ShinMaywa - Ground Support Veh. FY26Q4',   co:'ShinMaywa Industries, Ltd.',                 opp:'95268', q:'Q4', type:'Out', acv:651468,  lic:1066365, book:3257338, date:'2026-11-23', stage:'prospect', prob:25,  isAI:1, status:'', comp:'', notes:''},
+    {id:28, name:'KHI - Poka',                               co:'Kawasaki Heavy Industries, Ltd.',            opp:'89156', q:'Q4', type:'Out', acv:87575,   lic:65681,   book:131362,  date:'2026-12-10', stage:'prospect', prob:20,  isAI:0, status:'', comp:'', notes:''},
+    {id:30, name:'MHI - JASDF POC 2',                        co:'Tsunami Tsolutions LLC (Partner)',           opp:'90817', q:'Q4', type:'Out', acv:507366,  lic:486613,  book:1014732, date:'2026-12-12', stage:'prospect', prob:20,  isAI:1, status:'', comp:'', notes:''},
+    {id:31, name:'Kyodo Yushi - NEW MFG 400NU FY26Q4',       co:'Alphast Co.,Ltd.',                          opp:'89290', q:'Q4', type:'Out', acv:383140,  lic:562222,  book:1149421, date:'2026-12-16', stage:'prospect', prob:20,  isAI:1, status:'', comp:'', notes:''},
+    {id:39, name:'Otsuka HD - Copperleaf',                   co:'Otsuka Holdings Co.,Ltd.',                   opp:'96702', q:'Q4', type:'Out', acv:689509,  lic:0,       book:2068526, date:'2026-12-18', stage:'prospect', prob:20,  isAI:0, status:'', comp:'', notes:''},
+    {id:34, name:'Lasertec - ERP & FSM',                     co:'Lasertec Corporation',                       opp:'57736', q:'Q4', type:'Out', acv:523591,  lic:665161,  book:2617957, date:'2026-12-18', stage:'prospect', prob:20,  isAI:1, status:'', comp:'', notes:''},
+    {id:33, name:'YKK - Loops AI - FY26Q4',                  co:'YKK Corporation',                            opp:'91738', q:'Q4', type:'Out', acv:149999,  lic:0,       book:149999,  date:'2026-12-18', stage:'prospect', prob:20,  isAI:1, status:'', comp:'', notes:''},
+    {id:35, name:'KHI Energy & Marine - Loops AI FY26Q4',    co:'NEC Corporation',                            opp:'91739', q:'Q4', type:'Out', acv:202517,  lic:0,       book:202517,  date:'2026-12-23', stage:'prospect', prob:20,  isAI:1, status:'', comp:'', notes:''},
+    {id:36, name:'ROHM - LOOPS AI - FY26Q4',                 co:'IBM Japan, Ltd',                             opp:'91740', q:'Q4', type:'Out', acv:149999,  lic:0,       book:149999,  date:'2026-12-24', stage:'prospect', prob:20,  isAI:1, status:'', comp:'', notes:''},
   ]
 };
 
@@ -535,11 +546,45 @@ let charts      = {};
 /* ============================================================
    INIT
    ============================================================ */
+
+// ハードコードされたマスターデータ（毎週Excelから更新）
+const MASTER = {
+  kpis: [
+    {id:'acv',   label:'ACV',       target:9191819,  c:'c-blue'},
+    {id:'lic',   label:'License',   target:11717775, c:'c-green'},
+    {id:'book',  label:'Booking',   target:40802500, c:'c-yellow'},
+    {id:'ai',    label:'AI Booking',target:3752500,  c:'c-purple'},
+  ],
+  quarters: D.quarters,  // 常に最新Excelの値を使用
+};
+
 function init(){
   const s = localStorage.getItem('fy26ForecastDash');
-  if(s){ try{ D = JSON.parse(s); }catch(e){} }
+  if(s){
+    try{
+      const saved = JSON.parse(s);
+      // quarters・kpi targets は常に最新コードを優先（Excel更新反映のため）
+      // deals の status/comp/notes/stage/prob だけ保存データを引き継ぐ
+      if(saved.deals){
+        D.deals = D.deals.map(master => {
+          const old = saved.deals.find(d => d.opp === master.opp);
+          if(!old) return master;
+          return {
+            ...master,
+            status: old.status || master.status,
+            comp:   old.comp   || master.comp,
+            notes:  old.notes  || master.notes,
+            stage:  old.stage  !== undefined ? old.stage  : master.stage,
+            prob:   old.prob   !== undefined ? old.prob   : master.prob,
+          };
+        });
+      }
+    }catch(e){}
+  }
+  // KPI targets は常にマスターで上書き
+  D.kpis = MASTER.kpis.map(m => ({...m}));
   renderAll();
-  document.getElementById('lastUpdated').textContent = '3/10付けデータ　保存: ' + new Date().toLocaleTimeString('ja-JP');
+  document.getElementById('lastUpdated').textContent = '3/30 04:56付けデータ　保存: ' + new Date().toLocaleTimeString('ja-JP');
 }
 
 function renderAll(){
@@ -579,7 +624,8 @@ function calcInCallForecasts(){
   const acv  = D.quarters.reduce((s,q)=>s+q.inACV,  0);
   const lic  = D.quarters.reduce((s,q)=>s+q.inLic,  0);
   const book = D.quarters.reduce((s,q)=>s+q.inBook, 0);
-  const ai   = D.deals.filter(d=>d.isAI===1 && d.type==='In').reduce((s,d)=>s+d.acv, 0);
+  // AI Booking は In+Out 全体を集計（Call種別不問）
+  const ai   = D.quarters.reduce((s,q)=>s+(q.inAiBook||0)+(q.outAiBook||0), 0);
   return {acv, lic, book, ai};
 }
 
@@ -995,7 +1041,7 @@ function switchTab(id,el){
 function saveData(){
   localStorage.setItem('fy26ForecastDash',JSON.stringify(D));
   showToast('💾 保存しました');
-  document.getElementById('lastUpdated').textContent='3/10付けデータ　保存: '+new Date().toLocaleTimeString('ja-JP');
+  document.getElementById('lastUpdated').textContent='3/30 04:56付けデータ　保存: '+new Date().toLocaleTimeString('ja-JP');
 }
 
 function exportCSV(){
