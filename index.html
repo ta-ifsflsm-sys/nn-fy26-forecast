@@ -1,288 +1,587 @@
-#!/usr/bin/env python3
-"""
-IFS Japan - Weekly Forecast Update Script
-使い方: python update_forecast.py <sales_opp.xlsx> <previous_forecast.xlsx>
-"""
-import openpyxl
-from datetime import datetime
-import re, sys, os
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFS Japan – FY26 Forecast Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --navy:       #0d1b2e;
+  --navy-mid:   #162540;
+  --navy-card:  #1c2f4a;
+  --navy-hover: #213554;
+  --accent:     #3b9eff;
+  --accent2:    #00c2a8;
+  --gold:       #f5a623;
+  --red:        #f05a5a;
+  --green:      #4cc97a;
+  --muted:      #6b8aaa;
+  --text:       #e8f0fc;
+  --text-dim:   #9db4ce;
+  --border:     rgba(59,158,255,0.15);
+  --radius:     10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+}
+header {
+  background: var(--navy-mid);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+header .brand { display: flex; align-items: center; gap: 12px; }
+header .brand .logo {
+  width: 36px; height: 36px; background: var(--accent);
+  border-radius: 8px; display: flex; align-items: center;
+  justify-content: center; font-weight: 700; font-size: 16px; color: #fff;
+}
+header h1 { font-size: 17px; font-weight: 600; letter-spacing: 0.3px; }
+header .meta { font-size: 12px; color: var(--muted); }
+.badge {
+  background: rgba(59,158,255,0.15); color: var(--accent);
+  border: 1px solid rgba(59,158,255,0.3);
+  border-radius: 20px; padding: 3px 11px; font-size: 11px; font-weight: 600;
+}
+nav {
+  display: flex;
+  gap: 4px;
+  padding: 12px 28px 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--navy-mid);
+}
+nav button {
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); font-size: 13px; font-weight: 500;
+  padding: 8px 16px 10px;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+}
+nav button:hover { color: var(--text); }
+nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.page { padding: 24px 28px; max-width: 1400px; }
 
-def normalize_call_type(value):
-    if value is None: return None
-    return re.sub(r'\s+', ' ', str(value).strip())
+/* KPI Cards */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.kpi-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.kpi-card.acv::before    { background: var(--accent); }
+.kpi-card.lic::before    { background: var(--accent2); }
+.kpi-card.book::before   { background: var(--gold); }
+.kpi-card.ai::before     { background: #a78bfa; }
+.kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; }
+.kpi-value { font-size: 26px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+.kpi-card.acv  .kpi-value { color: var(--accent); }
+.kpi-card.lic  .kpi-value { color: var(--accent2); }
+.kpi-card.book .kpi-value { color: var(--gold); }
+.kpi-card.ai   .kpi-value { color: #a78bfa; }
+.kpi-sub { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+.progress-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 2px; transition: width .8s ease; }
+.kpi-card.acv  .progress-fill { background: var(--accent); }
+.kpi-card.lic  .progress-fill { background: var(--accent2); }
+.kpi-card.book .progress-fill { background: var(--gold); }
+.kpi-card.ai   .progress-fill { background: #a78bfa; }
+.kpi-pct { font-size: 12px; font-weight: 600; margin-top: 6px; }
 
-def parse_date(d):
-    if d is None: return None
-    if isinstance(d, datetime): return d
-    if isinstance(d, str):
-        for fmt in ('%Y-%m-%d', '%m/%d/%Y', '%d/%m/%Y', '%Y/%m/%d'):
-            try: return datetime.strptime(d, fmt)
-            except: pass
-    return None
+/* Section titles */
+.section-title {
+  font-size: 13px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--muted);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-def get_quarter(date):
-    if date is None: return None
-    m = date.month
-    if m <= 3: return 1
-    if m <= 6: return 2
-    if m <= 9: return 3
-    return 4
+/* Charts row */
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+.chart-card {
+  background: var(--navy-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+}
+.chart-card h3 { font-size: 13px; font-weight: 600; color: var(--text-dim); margin-bottom: 16px; }
+.chart-wrap { height: 220px; }
 
-def col_letter(n):
-    result = ''
-    while n:
-        n, r = divmod(n - 1, 26)
-        result = chr(65 + r) + result
-    return result
+/* WTW Section */
+.wtw-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+.wtw-card {
+  background: var(--navy-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px; text-align: center;
+}
+.wtw-q { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.wtw-val { font-size: 22px; font-weight: 700; }
+.wtw-val.pos { color: var(--green); }
+.wtw-val.neg { color: var(--red); }
+.wtw-val.zero { color: var(--muted); }
+.wtw-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
-def detect_header_cols_first(ws, row=1):
-    result = {}
-    for cell in ws[row]:
-        if cell.value is not None and cell.value not in result:
-            result[cell.value] = cell.column
-    return result
+/* Quarterly Table */
+.q-section { margin-bottom: 28px; }
+.q-header {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--navy-mid); border: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 12px 18px;
+}
+.q-tag {
+  background: var(--accent); color: #fff;
+  font-size: 11px; font-weight: 700; border-radius: 4px;
+  padding: 2px 8px; letter-spacing: 0.5px;
+}
+.q-dates { font-size: 12px; color: var(--muted); }
+.q-acv-total { margin-left: auto; font-size: 13px; font-weight: 600; }
+.q-acv-total span { color: var(--accent); }
+table { width: 100%; border-collapse: collapse; }
+.q-table-wrap {
+  border: 1px solid var(--border); border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius); overflow: hidden;
+}
+thead th {
+  background: rgba(255,255,255,0.04);
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+  color: var(--muted); font-weight: 600;
+  padding: 9px 14px; text-align: left; border-bottom: 1px solid var(--border);
+}
+thead th.num { text-align: right; }
+tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background .15s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--navy-hover); }
+tbody td { padding: 10px 14px; font-size: 13px; }
+tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.in-badge {
+  display: inline-block;
+  background: rgba(59,158,255,0.15); color: var(--accent);
+  border-radius: 4px; padding: 1px 7px; font-size: 10px; font-weight: 600;
+}
+.out-badge {
+  display: inline-block;
+  background: rgba(107,138,170,0.15); color: var(--muted);
+  border-radius: 4px; padding: 1px 7px; font-size: 10px; font-weight: 600;
+}
+.opp-id { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.subtotal-row td { background: rgba(255,255,255,0.03); font-weight: 600; font-size: 12px; color: var(--text-dim); }
 
-def detect_source_header(ws, row=1):
-    return {cell.value: i for i, cell in enumerate(ws[row])}
+/* Deal Management */
+.deal-filters { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.deal-filters input, .deal-filters select {
+  background: var(--navy-card); border: 1px solid var(--border);
+  color: var(--text); border-radius: 6px; padding: 7px 12px;
+  font-size: 13px; outline: none;
+}
+.deal-filters input { width: 260px; }
+.deal-filters input:focus, .deal-filters select:focus { border-color: var(--accent); }
+.deal-table-wrap {
+  background: var(--navy-card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: auto;
+}
+.deal-table-wrap table { min-width: 1100px; }
+.deal-table-wrap thead th { padding: 10px 12px; }
+.deal-table-wrap tbody td { padding: 9px 12px; }
+.deal-edit {
+  background: var(--navy-hover); border: 1px solid var(--border);
+  color: var(--text); border-radius: 5px; padding: 4px 8px;
+  font-size: 12px; width: 100%; outline: none; min-width: 90px;
+}
+.deal-edit:focus { border-color: var(--accent); }
+.save-indicator {
+  display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--green);
+  margin-left: 6px; opacity: 0; transition: opacity .3s;
+}
+.save-indicator.show { opacity: 1; }
+select.deal-edit option { background: var(--navy-card); }
 
-def get_last_wk(forecast_file):
-    """
-    前週 Last Wk 値を取得。
-    優先: Dashboard D2/D4/D6/D8（data_only）
-    フォールバック: Forecast(Call)シートから直接集計
-    （Excelで未開封のスクリプト生成ファイルはDashboard数式キャッシュがゼロになるため）
-    """
-    # まずdata_onlyでDashboardを試みる
-    wb_d = openpyxl.load_workbook(forecast_file, data_only=True)
-    ws_dash = wb_d['Dashboard']
-    dash_lw_map = {1:(2,4,5), 2:(4,4,5), 3:(6,4,5), 4:(8,4,5)}
-    last_wk = {}
-    for q, (row, acv_col, lic_col) in dash_lw_map.items():
-        acv = ws_dash.cell(row, acv_col).value or 0
-        lic = ws_dash.cell(row, lic_col).value or 0
-        last_wk[q] = (acv, lic)
+footer {
+  text-align: center; padding: 20px;
+  color: var(--muted); font-size: 11px;
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
 
-    # 全Quarterがゼロ → Excelで未計算のためForecast(Call)から直接集計
-    if all(v[0] == 0 for v in last_wk.values()):
-        print("   ⚠️  Dashboard キャッシュ未計算 → Forecast(Call)シートから直接集計します")
-        wb_fc = openpyxl.load_workbook(forecast_file)
-        ws_fc = wb_fc['FY26 Forecast (Call)']
-        fc_h = detect_header_cols_first(ws_fc)
-        c_type=fc_h.get('Type',1); c_acv=fc_h.get('ACV',4)
-        c_lic=fc_h.get('License Value',5); c_date=fc_h.get('Close Date',8)
-        totals = {q: [0, 0] for q in range(1,5)}
-        for row in ws_fc.iter_rows(min_row=2, values_only=True):
-            if not any(v is not None for v in row): continue
-            ct = normalize_call_type(row[c_type-1])
-            d  = parse_date(row[c_date-1])
-            q  = get_quarter(d)
-            if not q or ct != 'In Call': continue
-            totals[q][0] += row[c_acv-1] or 0
-            totals[q][1] += row[c_lic-1] or 0
-        last_wk = {q: (totals[q][0], totals[q][1]) for q in range(1,5)}
+<header>
+  <div class="brand">
+    <div class="logo">IF</div>
+    <div>
+      <h1>IFS Japan &nbsp;–&nbsp; FY26 Forecast Dashboard</h1>
+      <div class="meta">Last updated: 2026-05-11</div>
+    </div>
+  </div>
+  <span class="badge">In Call Only &nbsp;·&nbsp; EUR</span>
+</header>
 
-    return last_wk
+<nav id="nav">
+  <button class="active" onclick="switchTab('kpi')">KPI Overview</button>
+  <button onclick="switchTab('quarterly')">Quarterly Breakdown</button>
+  <button onclick="switchTab('deals')">Deal Management</button>
+</nav>
 
-def update_forecast(source_file, forecast_file):
-    today_str = datetime.now().strftime('%Y%m%d_%H%M')
-    output_file = f'FY26_Forecast_Call_{today_str}.xlsx'
+<!-- ═══════════════════════════════════════════ KPI TAB -->
+<div id="tab-kpi" class="tab-content active">
+<div class="page">
 
-    print(f"\n{'='*60}")
-    print(f"  IFS Japan Weekly Forecast Updater")
-    print(f"{'='*60}")
-    print(f"  ソース      : {os.path.basename(source_file)}")
-    print(f"  前週ファイル: {os.path.basename(forecast_file)}")
-    print(f"  出力        : {output_file}")
-    print(f"{'='*60}\n")
+  <div class="kpi-grid">
+    <div class="kpi-card acv">
+      <div class="kpi-label">Total ACV (In Call)</div>
+      <div class="kpi-value">€6.12M</div>
+      <div class="kpi-sub">Target: €9,191,819</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:66.5%"></div></div>
+      <div class="kpi-pct" style="color:var(--accent)">66.5% achieved</div>
+    </div>
+    <div class="kpi-card lic">
+      <div class="kpi-label">Total License (In Call)</div>
+      <div class="kpi-value">€9.79M</div>
+      <div class="kpi-sub">Target: €11,717,775</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:83.5%"></div></div>
+      <div class="kpi-pct" style="color:var(--accent2)">83.5% achieved</div>
+    </div>
+    <div class="kpi-card book">
+      <div class="kpi-label">Total Booking (In Call)</div>
+      <div class="kpi-value">€27.16M</div>
+      <div class="kpi-sub">Target: €40,802,500</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:66.6%"></div></div>
+      <div class="kpi-pct" style="color:var(--gold)">66.6% achieved</div>
+    </div>
+    <div class="kpi-card ai">
+      <div class="kpi-label">AI Booking (In Call)</div>
+      <div class="kpi-value">€1.09M</div>
+      <div class="kpi-sub">Target: €3,752,500</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:29.2%"></div></div>
+      <div class="kpi-pct" style="color:#a78bfa">29.2% achieved</div>
+    </div>
+  </div>
 
-    # STEP 1: 前週 Last Wk を取得
-    print("[1/5] 前週 Last Wk を取得中...")
-    last_wk = get_last_wk(forecast_file)
-    for q in range(1,5):
-        print(f"   Last Wk Q{q}: ACV={last_wk[q][0]:>12,.0f}  License={last_wk[q][1]:>12,.0f}")
+  <div class="section-title">Quarter Performance (In Call ACV)</div>
+  <div class="charts-row">
+    <div class="chart-card">
+      <h3>In Call ACV vs Target by Quarter (€)</h3>
+      <div class="chart-wrap"><canvas id="chartAcv"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>In Call ACV – Quarter Breakdown</h3>
+      <div class="chart-wrap"><canvas id="chartPie"></canvas></div>
+    </div>
+  </div>
 
-    # STEP 2: Sales Opportunities 読み込み
-    print("\n[2/5] Sales Opportunities 読み込み中...")
-    wb_src = openpyxl.load_workbook(source_file, data_only=True)
-    ws_src = wb_src.active
-    src_h  = detect_source_header(ws_src)
-    def gc(*names):
-        for n in names:
-            if n in src_h: return src_h[n]
-        return None
+  <div class="section-title">WTW (vs 2026-04-20)</div>
+  <div class="wtw-grid">
+    <div class="wtw-card">
+      <div class="wtw-q">Q1 · Jan–Mar</div>
+      <div class="wtw-val zero">±0</div>
+      <div class="wtw-sub">726,280 → 726,280</div>
+    </div>
+    <div class="wtw-card">
+      <div class="wtw-q">Q2 · Apr–Jun</div>
+      <div class="wtw-val pos">+149,494</div>
+      <div class="wtw-sub">642,735 → 792,229</div>
+    </div>
+    <div class="wtw-card">
+      <div class="wtw-q">Q3 · Jul–Sep</div>
+      <div class="wtw-val zero">±0</div>
+      <div class="wtw-sub">3,237,521 → 3,237,521</div>
+    </div>
+    <div class="wtw-card">
+      <div class="wtw-q">Q4 · Oct–Dec</div>
+      <div class="wtw-val pos">+695,607</div>
+      <div class="wtw-sub">665,152 → 1,360,759</div>
+    </div>
+  </div>
 
-    idx_desc    = gc('Opp.Description', 'Opp. Description')
-    idx_id      = gc('Opportunity ID')
-    idx_acv     = gc('Total ACV')
-    idx_renewal = gc('Renewal ACV')
-    idx_lic     = gc('Total License')
-    idx_book    = gc('New Bookings')
-    idx_ai      = gc('AI Bookings', 'AI Booking')
-    idx_date    = gc('Sign Date')
-    idx_type    = gc('Call Type')
+</div>
+</div>
 
-    new_rows = []
-    skipped  = 0
-    for row in ws_src.iter_rows(min_row=2, values_only=True):
-        opp_id = row[idx_id] if idx_id is not None else None
-        if not opp_id or str(opp_id).strip() == '':
-            skipped += 1
-            continue
-        ai_val = row[idx_ai] if idx_ai is not None else 0
-        if not isinstance(ai_val, (int, float)): ai_val = 0
-        total_acv   = row[idx_acv]     or 0
-        renewal_acv = row[idx_renewal] or 0 if idx_renewal is not None else 0
-        new_rows.append({
-            'call_type':   normalize_call_type(row[idx_type]),
-            'opp_desc':    row[idx_desc],
-            'opp_id':      str(opp_id),
-            'acv':         total_acv - renewal_acv,
-            'license_val': row[idx_lic]  or 0,
-            'booking_val': row[idx_book] or 0,
-            'ai_booking':  ai_val,
-            'sign_date':   parse_date(row[idx_date]),
-        })
+<!-- ═══════════════════════════════════════════ QUARTERLY TAB -->
+<div id="tab-quarterly" class="tab-content">
+<div class="page">
 
-    new_rows.sort(key=lambda r: r['sign_date'] or datetime(9999, 12, 31))
-    quarters = {1: [], 2: [], 3: [], 4: []}
-    for r in new_rows:
-        q = get_quarter(r['sign_date'])
-        if q: quarters[q].append(r)
+<script>
+const DEALS = [
+  {q:1,ct:'In Call', id:'94325', desc:'NEC Corp – SUBARU Non-production Env',  acv:12599,   lic:10412,   book:12599,    ai:0,         date:'2026-01-12'},
+  {q:1,ct:'In Call', id:'74989', desc:'ShinMaywa Aircraft Div – SCM/MES FY26Q1', acv:447798, lic:423161,  book:2238990,  ai:118768,    date:'2026-02-26'},
+  {q:1,ct:'In Call', id:'97124', desc:'JVCKENWOOD – Additional Sales',           acv:2033,    lic:4723,    book:10673,    ai:0,         date:'2026-03-06'},
+  {q:1,ct:'In Call', id:'94851', desc:'MELCO DS – CRP',                          acv:263850,  lic:73769,   book:263850,   ai:26907,     date:'2026-03-19'},
+  {q:2,ct:'In Call', id:'89753', desc:'JAL Engineering – Renewal BO 43549',      acv:4993,    lic:0,       book:20806,    ai:0,         date:'2026-04-01'},
+  {q:2,ct:'Out Call',id:'91278', desc:'JAL – Demand Planning Server',            acv:9942,    lic:0,       book:15742,    ai:0,         date:'2026-06-05'},
+  {q:2,ct:'In Call', id:'86759', desc:'NEC – SUBARU AI',                         acv:22054,   lic:0,       book:110268,   ai:110268,    date:'2026-06-12'},
+  {q:2,ct:'In Call', id:'90748', desc:'FUTABA – ERP License',                    acv:448822,  lic:141105,  book:2244108,  ai:123938,    date:'2026-06-12'},
+  {q:2,ct:'In Call', id:'94085', desc:'JAL – Customer Success CP1H2',            acv:247942,  lic:0,       book:247942,   ai:0,         date:'2026-06-15'},
+  {q:2,ct:'In Call', id:'75026', desc:'SkyDrive – ICAM Type Certificate',        acv:68418,   lic:52634,   book:205254,   ai:75556,     date:'2026-06-19'},
+  {q:2,ct:'Out Call',id:'67409', desc:'NEC – SUBARU Add Use Place',              acv:4171,    lic:23127,   book:8344,     ai:0,         date:'2026-06-20'},
+  {q:2,ct:'Out Call',id:'99143', desc:'YKK AP – POKA FY26Q2',                   acv:66122,   lic:0,       book:198366,   ai:0,         date:'2026-06-26'},
+  {q:3,ct:'In Call', id:'95743', desc:'NEC – Kyushu Electric T&D EAM',          acv:432170,  lic:579477,  book:2160851,  ai:135265,    date:'2026-08-14'},
+  {q:3,ct:'In Call', id:'98278', desc:'MELCO DS – Customer Success Oct26–Mar29', acv:217931,  lic:0,       book:521399,   ai:0,         date:'2026-08-31'},
+  {q:3,ct:'In Call', id:'90047', desc:'NEC – IHI Extra Non-production Env',      acv:251119,  lic:437767,  book:690578,   ai:0,         date:'2026-08-31'},
+  {q:3,ct:'In Call', id:'90924', desc:'MELCO – A&D',                             acv:1950328, lic:4652571, book:9751643,  ai:134534,    date:'2026-09-18'},
+  {q:3,ct:'In Call', id:'96173', desc:'NEC – KHI Energy&Marine Oracle ASFU',    acv:3941,    lic:6568,    book:6568,     ai:0,         date:'2026-09-22'},
+  {q:3,ct:'In Call', id:'73746', desc:'NEC – KHI Energy&Marine MES Ph2',        acv:382032,  lic:802390,  book:1910158,  ai:117595,    date:'2026-09-22'},
+  {q:3,ct:'Out Call',id:'75205', desc:'Inaba Foods – ERP',                       acv:372194,  lic:394790,  book:1860968,  ai:117595,    date:'2026-09-28'},
+  {q:4,ct:'Out Call',id:'92221', desc:'Sankyu – ERP (Hitachi Consulting)',       acv:656812,  lic:833356,  book:3284061,  ai:125927,    date:'2026-10-16'},
+  {q:4,ct:'In Call', id:'93171', desc:'NEC – KHI Plant Procurement',             acv:640392,  lic:1452738, book:3201959,  ai:125927,    date:'2026-10-20'},
+  {q:4,ct:'Out Call',id:'95590', desc:'JERA – O&M CPLF PoC',                   acv:141108,  lic:0,       book:141108,   ai:0,         date:'2026-10-22'},
+  {q:4,ct:'Out Call',id:'70643', desc:'NEC – FUJIFILM Healthcare MFG FY25',     acv:143943,  lic:259281,  book:719713,   ai:123938,    date:'2026-10-26'},
+  {q:4,ct:'Out Call',id:'73333', desc:'NEC – SUBARU New Use Place',              acv:60734,   lic:50193,   book:0,        ai:0,         date:'2026-10-28'},
+  {q:4,ct:'Out Call',id:'68562', desc:'Hitachi Construction Machinery – ERP',   acv:611585,  lic:694423,  book:1834755,  ai:0,         date:'2026-11-12'},
+  {q:4,ct:'Out Call',id:'98566', desc:'Eurus Energy – Wind Power ERP',          acv:191570,  lic:75659,   book:957851,   ai:135265,    date:'2026-11-19'},
+  {q:4,ct:'In Call', id:'96704', desc:'NEC – MHI AEL-Oracle',                   acv:24760,   lic:88725,   book:88725,    ai:0,         date:'2026-11-20'},
+  {q:4,ct:'In Call', id:'95268', desc:'ShinMaywa – Ground Support Vehicle FY26Q4',acv:651468, lic:1066365, book:3257338,  ai:125927,    date:'2026-11-23'},
+  {q:4,ct:'Out Call',id:'89156', desc:'KHI – Poka',                              acv:87575,   lic:65681,   book:131362,   ai:0,         date:'2026-12-10'},
+  {q:4,ct:'Out Call',id:'90817', desc:'Tsunami Tsolutions – MHI JASDF POC 2',  acv:507366,  lic:486613,  book:1014732,  ai:47507,     date:'2026-12-12'},
+  {q:4,ct:'Out Call',id:'89290', desc:'Alphast – Kyodo Yushi NEW MFG FY26Q4',  acv:383140,  lic:562222,  book:1149421,  ai:70646,     date:'2026-12-16'},
+  {q:4,ct:'In Call', id:'84447', desc:'Honda Motor – Honda Marine POKA',         acv:44139,   lic:0,       book:220694,   ai:0,         date:'2026-12-18'},
+  {q:4,ct:'Out Call',id:'99759', desc:'Kirin Holdings – Kirin FSM',              acv:164203,  lic:312067,  book:821015,   ai:134467,    date:'2026-12-18'},
+  {q:4,ct:'Out Call',id:'96702', desc:'Otsuka Holdings – Copperleaf',           acv:689509,  lic:0,       book:2068526,  ai:0,         date:'2026-12-18'},
+  {q:4,ct:'Out Call',id:'91738', desc:'YKK Corp – Loops AI FY26Q4',             acv:149999,  lic:0,       book:149999,   ai:149999,    date:'2026-12-18'},
+  {q:4,ct:'Out Call',id:'99694', desc:'Yokowo – FSM',                            acv:252406,  lic:216046,  book:1262031,  ai:134467,    date:'2026-12-18'},
+  {q:4,ct:'Out Call',id:'57736', desc:'Lasertec – ERP & FSM',                   acv:523591,  lic:665161,  book:2617957,  ai:123938,    date:'2026-12-18'},
+  {q:4,ct:'Out Call',id:'91739', desc:'NEC – KHI Energy Loops AI FY26Q4',      acv:202517,  lic:0,       book:202517,   ai:202517,    date:'2026-12-23'},
+  {q:4,ct:'Out Call',id:'91740', desc:'IBM Japan – ROHM Loops AI FY26Q4',      acv:149999,  lic:0,       book:149999,   ai:149999,    date:'2026-12-24'},
+];
+const fmt = n => '€' + Math.round(n).toLocaleString('en-US');
+const fmtN = n => Math.round(n).toLocaleString('en-US');
+</script>
 
-    total_deals = sum(len(v) for v in quarters.values())
-    print(f"   読み込み件数: {total_deals}件  (スキップ: {skipped}行)")
-    for q in range(1, 5):
-        in_c  = sum(1 for r in quarters[q] if r['call_type'] == 'In Call')
-        out_c = sum(1 for r in quarters[q] if r['call_type'] == 'Out Call')
-        other = len(quarters[q]) - in_c - out_c
-        print(f"   Q{q}({['1-3月','4-6月','7-9月','10-12月'][q-1]}): "
-              f"{len(quarters[q])}件 (In Call={in_c}, Out Call={out_c}"
-              + (f", その他={other}" if other else "") + ")")
+<div id="quarterly-content"></div>
 
-    # STEP 3: FY26 Forecast (Call) シートを更新
-    print("\n[3/5] FY26 Forecast (Call) シートを更新中...")
-    wb    = openpyxl.load_workbook(forecast_file)
-    ws_fc = wb['FY26 Forecast (Call)']
-    fc_h  = detect_header_cols_first(ws_fc)
-    wc_type=fc_h.get('Type',1); wc_desc=fc_h.get('Opp. Description',2)
-    wc_id=fc_h.get('Opportunity No',3); wc_acv=fc_h.get('ACV',4)
-    wc_lic=fc_h.get('License Value',5); wc_book=fc_h.get('Booking Value',6)
-    wc_ai=fc_h.get('AI Booking',7); wc_date=fc_h.get('Close Date',8)
+<script>
+(function(){
+  const qInfo = {
+    1:{label:'Q1',range:'January – March 2026'},
+    2:{label:'Q2',range:'April – June 2026'},
+    3:{label:'Q3',range:'July – September 2026'},
+    4:{label:'Q4',range:'October – December 2026'},
+  };
+  let html = '';
+  for(let q=1;q<=4;q++){
+    const deals = DEALS.filter(d=>d.q===q);
+    const inDeals = deals.filter(d=>d.ct==='In Call');
+    const outDeals = deals.filter(d=>d.ct==='Out Call');
+    const inAcv = inDeals.reduce((s,d)=>s+d.acv,0);
+    const outAcv = outDeals.reduce((s,d)=>s+d.acv,0);
+    const rowsHtml = (arr) => arr.map(d=>`
+      <tr>
+        <td>
+          <div><span class="${d.ct==='In Call'?'in-badge':'out-badge'}">${d.ct}</span></div>
+        </td>
+        <td>
+          <div>${d.desc}</div>
+          <div class="opp-id">#${d.id}</div>
+        </td>
+        <td class="num">${fmtN(d.acv)}</td>
+        <td class="num">${fmtN(d.lic)}</td>
+        <td class="num">${fmtN(d.book)}</td>
+        <td class="num">${d.ai?fmtN(d.ai):'—'}</td>
+        <td>${d.date}</td>
+      </tr>`).join('');
 
-    for row in ws_fc.iter_rows(min_row=2, max_row=ws_fc.max_row):
-        for cell in row: cell.value = None
+    html += `
+    <div class="q-section">
+      <div class="q-header">
+        <span class="q-tag">${qInfo[q].label}</span>
+        <span class="q-dates">${qInfo[q].range}</span>
+        <div class="q-acv-total">In Call ACV: <span>${fmt(inAcv)}</span></div>
+      </div>
+      <div class="q-table-wrap">
+        <table>
+          <thead><tr>
+            <th style="width:100px">Type</th>
+            <th>Opportunity</th>
+            <th class="num">ACV (€)</th>
+            <th class="num">License (€)</th>
+            <th class="num">Booking (€)</th>
+            <th class="num">AI Booking (€)</th>
+            <th>Sign Date</th>
+          </tr></thead>
+          <tbody>
+            ${rowsHtml(inDeals)}
+            <tr class="subtotal-row">
+              <td colspan="2" style="padding-left:14px">In Call Subtotal</td>
+              <td class="num">${fmtN(inDeals.reduce((s,d)=>s+d.acv,0))}</td>
+              <td class="num">${fmtN(inDeals.reduce((s,d)=>s+d.lic,0))}</td>
+              <td class="num">${fmtN(inDeals.reduce((s,d)=>s+d.book,0))}</td>
+              <td class="num">${fmtN(inDeals.reduce((s,d)=>s+d.ai,0))}</td>
+              <td></td>
+            </tr>
+            ${rowsHtml(outDeals)}
+            ${outDeals.length?`<tr class="subtotal-row">
+              <td colspan="2" style="padding-left:14px">Out Call Subtotal</td>
+              <td class="num">${fmtN(outDeals.reduce((s,d)=>s+d.acv,0))}</td>
+              <td class="num">${fmtN(outDeals.reduce((s,d)=>s+d.lic,0))}</td>
+              <td class="num">${fmtN(outDeals.reduce((s,d)=>s+d.book,0))}</td>
+              <td class="num">${fmtN(outDeals.reduce((s,d)=>s+d.ai,0))}</td>
+              <td></td>
+            </tr>`:''}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+  }
+  document.getElementById('quarterly-content').innerHTML = html;
+})();
+</script>
+</div>
+</div>
 
-    current_row = 2
-    quarter_row_ranges = {}
-    for q in range(1, 5):
-        start = current_row
-        for r in quarters[q]:
-            ws_fc.cell(current_row, wc_type).value  = r['call_type']
-            ws_fc.cell(current_row, wc_desc).value  = r['opp_desc']
-            ws_fc.cell(current_row, wc_id).value    = r['opp_id']
-            ws_fc.cell(current_row, wc_acv).value   = r['acv']
-            ws_fc.cell(current_row, wc_lic).value   = r['license_val']
-            ws_fc.cell(current_row, wc_book).value  = r['booking_val']
-            ws_fc.cell(current_row, wc_ai).value    = r['ai_booking'] if r['ai_booking'] else None
-            d = r['sign_date']
-            ws_fc.cell(current_row, wc_date).value  = d.strftime('%Y-%m-%d') if d else None
-            current_row += 1
-        if not quarters[q]: current_row += 1
-        quarter_row_ranges[q] = (start, current_row - 1)
-        print(f"   Q{q}: 行{quarter_row_ranges[q][0]}-{quarter_row_ranges[q][1]}  ({len(quarters[q])}件)")
+<!-- ═══════════════════════════════════════════ DEALS TAB -->
+<div id="tab-deals" class="tab-content">
+<div class="page">
+  <div class="deal-filters">
+    <input type="text" id="dealSearch" placeholder="Search deals…" oninput="renderDeals()">
+    <select id="filterQ" onchange="renderDeals()">
+      <option value="">All Quarters</option>
+      <option value="1">Q1</option><option value="2">Q2</option>
+      <option value="3">Q3</option><option value="4">Q4</option>
+    </select>
+    <select id="filterCt" onchange="renderDeals()">
+      <option value="">In & Out Call</option>
+      <option value="In Call">In Call</option>
+      <option value="Out Call">Out Call</option>
+    </select>
+  </div>
+  <div class="deal-table-wrap">
+    <table>
+      <thead><tr>
+        <th>Q</th><th>Type</th><th>Opp No.</th><th>Opportunity</th>
+        <th class="num">ACV (€)</th>
+        <th>Sign Date</th>
+        <th>Stage</th><th>Status</th><th>Competition</th><th>Notes</th>
+      </tr></thead>
+      <tbody id="dealTableBody"></tbody>
+    </table>
+  </div>
+  <div style="margin-top:10px;font-size:11px;color:var(--muted)">
+    Stage / Status / Competition / Notes are saved per browser (localStorage)
+  </div>
+</div>
+</div>
 
-    # STEP 4: Dashboard SUMIF 数式を更新
-    print("\n[4/5] Dashboard の数式を更新中...")
-    ws_dash = wb['Dashboard']
-    dash_main_cols = {}
-    for cell in ws_dash[1]:
-        if cell.value in ('ACV', 'License', 'Booking', 'AI Booking'):
-            if cell.value not in dash_main_cols and cell.column <= 15:
-                dash_main_cols[cell.value] = cell.column
-    dc_acv=dash_main_cols.get('ACV',4); dc_lic=dash_main_cols.get('License',5)
-    dc_book=dash_main_cols.get('Booking',6); dc_ai=dash_main_cols.get('AI Booking',7)
-    print(f"   集計列: ACV={col_letter(dc_acv)}, License={col_letter(dc_lic)}, "
-          f"Booking={col_letter(dc_book)}, AI Booking={col_letter(dc_ai)}")
+<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-05-11 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
 
-    FC = "'FY26 Forecast (Call)'"
-    dash_rows = {1: (2, 3), 2: (4, 5), 3: (6, 7), 4: (8, 9)}
-    for q in range(1, 5):
-        sr, er = quarter_row_ranges[q]
-        in_row, out_row = dash_rows[q]
-        ref = f"$A${sr}:$A${er}"
-        for dc, wc in [(dc_acv,wc_acv),(dc_lic,wc_lic),(dc_book,wc_book),(dc_ai,wc_ai)]:
-            if dc is None: continue
-            fc_l = col_letter(wc)
-            data_range = f"{fc_l}{sr}:{fc_l}{er}"
-            ws_dash.cell(in_row,  dc).value = f'=SUMIF({FC}!{ref},"In Call",{FC}!{data_range})'
-            ws_dash.cell(out_row, dc).value = f'=SUMIF({FC}!{ref},"Out Call",{FC}!{data_range})'
+<script>
+function switchTab(id){
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('nav button')[['kpi','quarterly','deals'].indexOf(id)].classList.add('active');
+}
 
-    # STEP 5: Last Wk / WTW を更新
-    print("[5/5] Last Wk / WTW を設定中...")
-    lw_q_rows = {}
-    for r_idx in range(1, ws_dash.max_row + 1):
-        for c_idx in range(1, ws_dash.max_column + 1):
-            v = ws_dash.cell(r_idx, c_idx).value
-            if v in ('Q1', 'Q2', 'Q3', 'Q4') and r_idx > 15:
-                q_num = int(str(v)[1])
-                lw_q_rows[q_num] = (r_idx, c_idx + 1, c_idx + 2)
+// Charts
+window.addEventListener('load', function(){
+  const qAcv  = [726280,792229,3237521,1360759];
+  const qTgt  = [1838364,2297955,1838364,3217137];
+  const labels = ['Q1','Q2','Q3','Q4'];
 
-    for q in range(1, 5):
-        if q in lw_q_rows:
-            r, ca, cl = lw_q_rows[q]
-            ws_dash.cell(r, ca).value = last_wk[q][0]
-            ws_dash.cell(r, cl).value = last_wk[q][1]
-            print(f"   Last Wk Q{q}: 行{r} ACV={last_wk[q][0]:,.0f}  Lic={last_wk[q][1]:,.0f}")
+  new Chart(document.getElementById('chartAcv'),{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'In Call ACV',data:qAcv,backgroundColor:'rgba(59,158,255,0.7)',borderRadius:4,borderSkipped:false},
+        {label:'Target',data:qTgt,backgroundColor:'rgba(245,166,35,0.25)',borderRadius:4,borderSkipped:false,borderColor:'rgba(245,166,35,0.6)',borderWidth:1}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#9db4ce',font:{size:11}}}},
+      scales:{
+        x:{ticks:{color:'#9db4ce'},grid:{color:'rgba(255,255,255,0.04)'}},
+        y:{ticks:{color:'#9db4ce',callback:v=>'€'+Math.round(v/1000)+'k'},grid:{color:'rgba(255,255,255,0.06)'}}
+      }
+    }
+  });
 
-    in_call_dash_rows = {q: dash_rows[q][0] for q in range(1, 5)}
-    for q in range(1, 5):
-        if q not in lw_q_rows: continue
-        lw_r, lw_ca, lw_cl = lw_q_rows[q]
-        in_r = in_call_dash_rows[q]
-        wtw_r = None
-        for rr in range(1, 16):
-            v = ws_dash.cell(rr, lw_ca).value
-            if isinstance(v, str) and f'D{in_r}' in v:
-                wtw_r = rr
-                break
-        if wtw_r:
-            ws_dash.cell(wtw_r, lw_ca).value = f'={col_letter(dc_acv)}{in_r}-{col_letter(lw_ca)}{lw_r}'
-            ws_dash.cell(wtw_r, lw_cl).value = f'={col_letter(dc_lic)}{in_r}-{col_letter(lw_cl)}{lw_r}'
-    print("   WTW 数式を更新しました")
+  new Chart(document.getElementById('chartPie'),{
+    type:'doughnut',
+    data:{
+      labels,
+      datasets:[{data:qAcv,backgroundColor:['rgba(59,158,255,0.8)','rgba(0,194,168,0.8)','rgba(245,166,35,0.8)','rgba(167,139,250,0.8)'],borderWidth:0}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'right',labels:{color:'#9db4ce',font:{size:11},padding:12}}}
+    }
+  });
+});
 
-    wb.save(output_file)
+// Deal Management with localStorage
+const STORE_KEY = 'ifs_fy26_deals_v1';
+function loadStore(){
+  try{ return JSON.parse(localStorage.getItem(STORE_KEY)||'{}'); }catch(e){return {};}
+}
+function saveField(id, field, val){
+  const s = loadStore();
+  if(!s[id]) s[id]={};
+  s[id][field]=val;
+  localStorage.setItem(STORE_KEY, JSON.stringify(s));
+}
+function getField(id, field){
+  const s = loadStore();
+  return (s[id]&&s[id][field])||'';
+}
 
-    # 自己検証
-    wb_v = openpyxl.load_workbook(output_file)
-    ws_v = wb_v['Dashboard']
-    print("\n--- SUMIF 範囲 自己検証 ---")
-    all_ok = True
-    for q in range(1, 5):
-        sr, er = quarter_row_ranges[q]
-        formula = ws_v.cell(dash_rows[q][0], dc_acv).value
-        expected = f"$A${sr}:$A${er}"
-        ok = expected in str(formula) if formula else False
-        if not ok: all_ok = False
-        print(f"   Q{q}: 期待={expected}  {'✅' if ok else '❌'}")
+function renderDeals(){
+  const q = document.getElementById('filterQ').value;
+  const ct = document.getElementById('filterCt').value;
+  const search = document.getElementById('dealSearch').value.toLowerCase();
+  const filtered = DEALS.filter(d=>{
+    if(q && d.q!==parseInt(q)) return false;
+    if(ct && d.ct!==ct) return false;
+    if(search && !d.desc.toLowerCase().includes(search) && !d.id.includes(search)) return false;
+    return true;
+  });
+  const stages=['','Qualify','Demo/POC','Proposal','Negotiation','Closed Won','Closed Lost'];
+  const statuses=['','On Track','At Risk','Stalled','Won','Lost'];
+  const tbody = document.getElementById('dealTableBody');
+  tbody.innerHTML = filtered.map(d=>`
+    <tr>
+      <td><span style="color:var(--accent);font-weight:600">Q${d.q}</span></td>
+      <td><span class="${d.ct==='In Call'?'in-badge':'out-badge'}">${d.ct}</span></td>
+      <td style="color:var(--muted);font-size:11px">${d.id}</td>
+      <td style="max-width:280px">${d.desc}</td>
+      <td class="num">${fmtN(d.acv)}</td>
+      <td style="font-size:12px;color:var(--muted)">${d.date}</td>
+      <td><select class="deal-edit" onchange="saveField('${d.id}','stage',this.value);flash(this)">${stages.map(s=>`<option${getField(d.id,'stage')===s?' selected':''}>${s}</option>`).join('')}</select></td>
+      <td><select class="deal-edit" onchange="saveField('${d.id}','status',this.value);flash(this)">${statuses.map(s=>`<option${getField(d.id,'status')===s?' selected':''}>${s}</option>`).join('')}</select></td>
+      <td><input class="deal-edit" value="${getField(d.id,'competition')}" placeholder="Competitor…" oninput="saveField('${d.id}','competition',this.value);flash(this)"></td>
+      <td><input class="deal-edit" value="${getField(d.id,'notes')}" placeholder="Notes…" oninput="saveField('${d.id}','notes',this.value);flash(this)" style="min-width:140px"></td>
+    </tr>`).join('');
+}
+function flash(el){
+  const dot = document.createElement('span');
+  dot.className='save-indicator show';
+  el.parentNode.appendChild(dot);
+  setTimeout(()=>dot.remove(),1200);
+}
+renderDeals();
+</script>
 
-    print(f"\n--- 今週 In Call 集計値 ---")
-    for q in range(1, 5):
-        in_rows = [r for r in quarters[q] if r['call_type'] == 'In Call']
-        acv_sum = sum(r['acv'] for r in in_rows)
-        lw_acv  = last_wk[q][0]
-        print(f"   Q{q}: 今週={acv_sum:>12,.0f}  前週={lw_acv:>12,.0f}  WTW={acv_sum-lw_acv:>+12,.0f}")
-
-    print(f"\n{'='*60}")
-    print(f"  {'✅ 完了' if all_ok else '⚠️  完了（SUMIF要確認）'}: {output_file}")
-    print(f"{'='*60}\n")
-    return output_file, quarters, last_wk
-
-if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        sys.exit(1)
-    source_file, forecast_file = sys.argv[1], sys.argv[2]
-    for f in [source_file, forecast_file]:
-        if not os.path.exists(f):
-            print(f"❌ エラー: {f}")
-            sys.exit(1)
-    update_forecast(source_file, forecast_file)
+</body>
+</html>
