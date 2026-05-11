@@ -77,7 +77,7 @@ nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
 /* KPI Cards */
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
   margin-bottom: 28px;
 }
@@ -98,19 +98,37 @@ nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
 .kpi-card.book::before   { background: var(--gold); }
 .kpi-card.ai::before     { background: #a78bfa; }
 .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; }
-.kpi-value { font-size: 26px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+.kpi-value { font-size: 26px; font-weight: 700; line-height: 1; margin-bottom: 8px; }
 .kpi-card.acv  .kpi-value { color: var(--accent); }
 .kpi-card.lic  .kpi-value { color: var(--accent2); }
 .kpi-card.book .kpi-value { color: var(--gold); }
 .kpi-card.ai   .kpi-value { color: #a78bfa; }
-.kpi-sub { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
-.progress-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
-.progress-fill { height: 100%; border-radius: 2px; transition: width .8s ease; }
+.kpi-target-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 10px; flex-wrap: wrap;
+}
+.kpi-target-label { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.kpi-target-input {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text); border-radius: 5px;
+  padding: 3px 8px; font-size: 12px; width: 110px;
+  outline: none; text-align: right;
+}
+.kpi-target-input:focus { border-color: var(--accent); background: rgba(59,158,255,0.08); }
+.kpi-gap {
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+  padding: 2px 7px; border-radius: 4px;
+}
+.kpi-gap.neg { background: rgba(240,90,90,0.15); color: var(--red); }
+.kpi-gap.pos { background: rgba(76,201,122,0.15); color: var(--green); }
+.progress-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-bottom: 6px; }
+.progress-fill { height: 100%; border-radius: 2px; transition: width .5s ease; }
 .kpi-card.acv  .progress-fill { background: var(--accent); }
 .kpi-card.lic  .progress-fill { background: var(--accent2); }
 .kpi-card.book .progress-fill { background: var(--gold); }
 .kpi-card.ai   .progress-fill { background: #a78bfa; }
-.kpi-pct { font-size: 12px; font-weight: 600; margin-top: 6px; }
+.kpi-pct { font-size: 12px; font-weight: 600; }
 
 /* Section titles */
 .section-title {
@@ -177,16 +195,24 @@ tbody td { padding: 10px 14px; font-size: 13px; }
 tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
 .in-badge {
   display: inline-block;
-  background: rgba(59,158,255,0.15); color: var(--accent);
-  border-radius: 4px; padding: 1px 7px; font-size: 10px; font-weight: 600;
+  background: rgba(76,201,122,0.18); color: #4cc97a;
+  border: 1px solid rgba(76,201,122,0.35);
+  border-radius: 4px; padding: 2px 8px; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.3px;
 }
 .out-badge {
   display: inline-block;
-  background: rgba(107,138,170,0.15); color: var(--muted);
-  border-radius: 4px; padding: 1px 7px; font-size: 10px; font-weight: 600;
+  background: rgba(240,90,90,0.18); color: #f05a5a;
+  border: 1px solid rgba(240,90,90,0.35);
+  border-radius: 4px; padding: 2px 8px; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.3px;
 }
 .opp-id { font-size: 11px; color: var(--muted); margin-top: 1px; }
 .subtotal-row td { background: rgba(255,255,255,0.03); font-weight: 600; font-size: 12px; color: var(--text-dim); }
+tr.row-in:hover  { background: rgba(76,201,122,0.06) !important; }
+tr.row-out:hover { background: rgba(240,90,90,0.06) !important; }
+tr.row-in  td:first-child { border-left: 2px solid rgba(76,201,122,0.5); }
+tr.row-out td:first-child { border-left: 2px solid rgba(240,90,90,0.4); }
 
 /* Deal Management */
 .deal-filters { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
@@ -201,7 +227,7 @@ tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
   background: var(--navy-card); border: 1px solid var(--border);
   border-radius: var(--radius); overflow: auto;
 }
-.deal-table-wrap table { min-width: 1100px; }
+.deal-table-wrap table { min-width: 1400px; }
 .deal-table-wrap thead th { padding: 10px 12px; }
 .deal-table-wrap tbody td { padding: 9px 12px; }
 .deal-edit {
@@ -225,6 +251,11 @@ footer {
   margin-top: 20px;
 }
 </style>
+<script>
+function fmtM(n){ return n>=1e6?'€'+(n/1e6).toFixed(2)+'M':'€'+Math.round(n).toLocaleString('en-US'); }
+function fmtN(n){ return Math.round(n).toLocaleString('en-US'); }
+function fmt(n){ return '€'+Math.round(n).toLocaleString('en-US'); }
+</script>
 </head>
 <body>
 
@@ -249,36 +280,53 @@ footer {
 <div id="tab-kpi" class="tab-content active">
 <div class="page">
 
-  <div class="kpi-grid">
-    <div class="kpi-card acv">
-      <div class="kpi-label">Total ACV (In Call)</div>
-      <div class="kpi-value">€6.12M</div>
-      <div class="kpi-sub">Target: €9,191,819</div>
-      <div class="progress-bar"><div class="progress-fill" style="width:66.5%"></div></div>
-      <div class="kpi-pct" style="color:var(--accent)">66.5% achieved</div>
-    </div>
-    <div class="kpi-card lic">
-      <div class="kpi-label">Total License (In Call)</div>
-      <div class="kpi-value">€9.79M</div>
-      <div class="kpi-sub">Target: €11,717,775</div>
-      <div class="progress-bar"><div class="progress-fill" style="width:83.5%"></div></div>
-      <div class="kpi-pct" style="color:var(--accent2)">83.5% achieved</div>
-    </div>
-    <div class="kpi-card book">
-      <div class="kpi-label">Total Booking (In Call)</div>
-      <div class="kpi-value">€27.16M</div>
-      <div class="kpi-sub">Target: €40,802,500</div>
-      <div class="progress-bar"><div class="progress-fill" style="width:66.6%"></div></div>
-      <div class="kpi-pct" style="color:var(--gold)">66.6% achieved</div>
-    </div>
-    <div class="kpi-card ai">
-      <div class="kpi-label">AI Booking (In Call)</div>
-      <div class="kpi-value">€1.09M</div>
-      <div class="kpi-sub">Target: €3,752,500</div>
-      <div class="progress-bar"><div class="progress-fill" style="width:29.2%"></div></div>
-      <div class="kpi-pct" style="color:#a78bfa">29.2% achieved</div>
-    </div>
-  </div>
+  <div class="kpi-grid" id="kpiGrid"></div>
+  <script>
+  const KPI_STORE = 'ifs_fy26_kpi_targets';
+  const KPI_DEFS = [
+    {key:'acv',  label:'Total ACV (In Call)',     actual:6116789,  defTarget:9191819,  cls:'acv',  clr:'var(--accent)' },
+    {key:'lic',  label:'Total License (In Call)', actual:9792405,  defTarget:11717775, cls:'lic',  clr:'var(--accent2)'},
+    {key:'book', label:'Total Booking (In Call)', actual:27164403, defTarget:40802500, cls:'book', clr:'var(--gold)'   },
+    {key:'ai',   label:'AI Booking (In Call)',    actual:1094685,  defTarget:3752500,  cls:'ai',   clr:'#a78bfa'       },
+  ];
+  function loadKT(){ try{return JSON.parse(localStorage.getItem(KPI_STORE)||'{}');}catch(e){return{};} }
+  function saveKT(k,v){ const s=loadKT(); s[k]=v; localStorage.setItem(KPI_STORE,JSON.stringify(s)); }
+  function updateKpi(key){
+    const d = KPI_DEFS.find(x=>x.key===key);
+    const t = loadKT()[key]||d.defTarget;
+    const pct = Math.min(d.actual/t*100,100);
+    const gap = d.actual-t;
+    const gapStr=(gap>=0?'+':'')+((gap>=0?'\u20ac':'-\u20ac')+fmtN(Math.abs(gap)));
+    const card = document.getElementById('kpi-'+key);
+    card.querySelector('.progress-fill').style.width=pct.toFixed(1)+'%';
+    card.querySelector('.kpi-pct').textContent=pct.toFixed(1)+'% achieved';
+    const g=card.querySelector('.kpi-gap');
+    g.textContent='Gap: '+gapStr; g.className='kpi-gap '+(gap>=0?'pos':'neg');
+  }
+  function renderKpiGrid(){
+    const kt=loadKT();
+    document.getElementById('kpiGrid').innerHTML=KPI_DEFS.map(d=>{
+      const t=kt[d.key]||d.defTarget;
+      const pct=Math.min(d.actual/t*100,100);
+      const gap=d.actual-t;
+      const gapStr=(gap>=0?'+':'')+((gap>=0?'\u20ac':'-\u20ac')+fmtN(Math.abs(gap)));
+      return `<div class="kpi-card ${d.cls}" id="kpi-${d.key}">
+        <div class="kpi-label">${d.label}</div>
+        <div class="kpi-value">${fmtM(d.actual)}</div>
+        <div class="kpi-target-row">
+          <span class="kpi-target-label">Target \u20ac</span>
+          <input class="kpi-target-input" type="text" value="${fmtN(t)}"
+            onchange="const v=parseFloat(this.value.replace(/,/g,''));if(!isNaN(v)&&v>0){saveKT('${d.key}',v);updateKpi('${d.key}');}"
+            onblur="const v=parseFloat(this.value.replace(/,/g,''));if(!isNaN(v)&&v>0)this.value=fmtN(v);">
+          <span class="kpi-gap ${gap>=0?'pos':'neg'}">Gap: ${gapStr}</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct.toFixed(1)}%"></div></div>
+        <div class="kpi-pct" style="color:${d.clr}">${pct.toFixed(1)}% achieved</div>
+      </div>`;
+    }).join('');
+  }
+  renderKpiGrid();
+  </script>
 
   <div class="section-title">Quarter Performance (In Call ACV)</div>
   <div class="charts-row">
@@ -365,8 +413,6 @@ const DEALS = [
   {q:4,ct:'Out Call',id:'91739', desc:'NEC – KHI Energy Loops AI FY26Q4',      acv:202517,  lic:0,       book:202517,   ai:202517,    date:'2026-12-23'},
   {q:4,ct:'Out Call',id:'91740', desc:'IBM Japan – ROHM Loops AI FY26Q4',      acv:149999,  lic:0,       book:149999,   ai:149999,    date:'2026-12-24'},
 ];
-const fmt = n => '€' + Math.round(n).toLocaleString('en-US');
-const fmtN = n => Math.round(n).toLocaleString('en-US');
 </script>
 
 <div id="quarterly-content"></div>
@@ -387,7 +433,7 @@ const fmtN = n => Math.round(n).toLocaleString('en-US');
     const inAcv = inDeals.reduce((s,d)=>s+d.acv,0);
     const outAcv = outDeals.reduce((s,d)=>s+d.acv,0);
     const rowsHtml = (arr) => arr.map(d=>`
-      <tr>
+      <tr class="row-${d.ct==='In Call'?'in':'out'}">
         <td>
           <div><span class="${d.ct==='In Call'?'in-badge':'out-badge'}">${d.ct}</span></div>
         </td>
@@ -471,6 +517,9 @@ const fmtN = n => Math.round(n).toLocaleString('en-US');
       <thead><tr>
         <th>Q</th><th>Type</th><th>Opp No.</th><th>Opportunity</th>
         <th class="num">ACV (€)</th>
+        <th class="num">License (€)</th>
+        <th class="num">Booking (€)</th>
+        <th class="num">AI Booking (€)</th>
         <th>Sign Date</th>
         <th>Stage</th><th>Status</th><th>Competition</th><th>Notes</th>
       </tr></thead>
@@ -561,17 +610,20 @@ function renderDeals(){
   const statuses=['','On Track','At Risk','Stalled','Won','Lost'];
   const tbody = document.getElementById('dealTableBody');
   tbody.innerHTML = filtered.map(d=>`
-    <tr>
+    <tr class="row-${d.ct==='In Call'?'in':'out'}">
       <td><span style="color:var(--accent);font-weight:600">Q${d.q}</span></td>
       <td><span class="${d.ct==='In Call'?'in-badge':'out-badge'}">${d.ct}</span></td>
       <td style="color:var(--muted);font-size:11px">${d.id}</td>
-      <td style="max-width:280px">${d.desc}</td>
+      <td style="max-width:240px">${d.desc}</td>
       <td class="num">${fmtN(d.acv)}</td>
+      <td class="num" style="color:var(--accent2)">${d.lic ? fmtN(d.lic) : '—'}</td>
+      <td class="num" style="color:var(--gold)">${d.book ? fmtN(d.book) : '—'}</td>
+      <td class="num" style="color:#a78bfa">${d.ai ? fmtN(d.ai) : '—'}</td>
       <td style="font-size:12px;color:var(--muted)">${d.date}</td>
       <td><select class="deal-edit" onchange="saveField('${d.id}','stage',this.value);flash(this)">${stages.map(s=>`<option${getField(d.id,'stage')===s?' selected':''}>${s}</option>`).join('')}</select></td>
       <td><select class="deal-edit" onchange="saveField('${d.id}','status',this.value);flash(this)">${statuses.map(s=>`<option${getField(d.id,'status')===s?' selected':''}>${s}</option>`).join('')}</select></td>
       <td><input class="deal-edit" value="${getField(d.id,'competition')}" placeholder="Competitor…" oninput="saveField('${d.id}','competition',this.value);flash(this)"></td>
-      <td><input class="deal-edit" value="${getField(d.id,'notes')}" placeholder="Notes…" oninput="saveField('${d.id}','notes',this.value);flash(this)" style="min-width:140px"></td>
+      <td><input class="deal-edit" value="${getField(d.id,'notes')}" placeholder="Notes…" oninput="saveField('${d.id}','notes',this.value);flash(this)" style="min-width:130px"></td>
     </tr>`).join('');
 }
 function flash(el){
