@@ -267,7 +267,7 @@ function fmt(n){ return '€'+Math.round(n).toLocaleString('en-US'); }
     <div class="logo">IF</div>
     <div>
       <h1>IFS Japan &nbsp;–&nbsp; FY26 Forecast Dashboard</h1>
-      <div class="meta">Last updated: 2026-05-19</div>
+      <div class="meta">Last updated: 2026-05-25</div>
     </div>
   </div>
   <span class="badge">In Call Only &nbsp;·&nbsp; EUR</span>
@@ -287,11 +287,11 @@ function fmt(n){ return '€'+Math.round(n).toLocaleString('en-US'); }
   <script>
   const KPI_STORE = 'ifs_fy26_kpi_targets';
   const KPI_DEFS = [
-    {key:'acv',  label:'Total ACV (In Call)',     actual:6005267,  defTarget:9191819,  cls:'acv',  clr:'var(--accent)' },
-    {key:'lic',  label:'Total License (In Call)', actual:9515606,  defTarget:11717775, cls:'lic',  clr:'var(--accent2)'},
-    {key:'book', label:'Total Booking (In Call)', actual:27171810, defTarget:40802500, cls:'book', clr:'var(--gold)'   },
-{key:'ai_acv', label:'AI ACV (In Call)', actual:356387, defTarget:500000, cls:'ai_acv', clr:'#34d399'},
-    {key:'ai',   label:'AI Booking (In Call)',    actual:1623939,  defTarget:3752500,  cls:'ai',   clr:'#a78bfa'       },
+    {key:'acv',  label:'Total ACV (In Call)',     actual:5585852,  defTarget:9191819,  cls:'acv',  clr:'var(--accent)' },
+    {key:'lic',  label:'Total License (In Call)', actual:9435865,  defTarget:11717775, cls:'lic',  clr:'var(--accent2)'},
+    {key:'book', label:'Total Booking (In Call)', actual:25029221, defTarget:40802500, cls:'book', clr:'var(--gold)'   },
+{key:'ai_acv', label:'AI ACV (In Call)', actual:329494,  defTarget:500000, cls:'ai_acv', clr:'#34d399'},
+    {key:'ai',   label:'AI Booking (In Call)',    actual:1489472,  defTarget:3752500,  cls:'ai',   clr:'#a78bfa'       },
   ];
   function loadKT(){ try{return JSON.parse(localStorage.getItem(KPI_STORE)||'{}');}catch(e){return{};} }
   function saveKT(k,v){ const s=loadKT(); s[k]=v; localStorage.setItem(KPI_STORE,JSON.stringify(s)); }
@@ -353,18 +353,18 @@ function fmt(n){ return '€'+Math.round(n).toLocaleString('en-US'); }
     </div>
     <div class="wtw-card">
       <div class="wtw-q">Q2 · Apr–Jun</div>
-      <div class="wtw-val neg">-20,566</div>
-      <div class="wtw-sub">792,229 → 771,663</div>
+      <div class="wtw-val neg">-450,310</div>
+      <div class="wtw-sub">771,663 → 321,353</div>
     </div>
     <div class="wtw-card">
       <div class="wtw-q">Q3 · Jul–Sep</div>
-      <div class="wtw-val neg">-113,010</div>
-      <div class="wtw-sub">3,237,521 → 3,124,511</div>
+      <div class="wtw-val pos">+12,262</div>
+      <div class="wtw-sub">3,124,511 → 3,136,773</div>
     </div>
     <div class="wtw-card">
       <div class="wtw-q">Q4 · Oct–Dec</div>
-      <div class="wtw-val pos">+22,054</div>
-      <div class="wtw-sub">1,360,759 → 1,382,813</div>
+      <div class="wtw-val pos">+18,633</div>
+      <div class="wtw-sub">1,382,813 → 1,401,446</div>
     </div>
   </div>
 
@@ -382,18 +382,16 @@ const DEALS = [
   {q:1,ct:'In Call', id:'97124', desc:'JVCKENWOOD CORPORATION-JVC KENWOOD Additional Sales', acv:2033, lic:4723, book:10673, ai:0, ai_acv:0, date:'2026-03-06'},
   {q:1,ct:'In Call', id:'94851', desc:'Mitsubishi Electric Corporation-MELCO_DS_CRP', acv:263850, lic:73769, book:263850, ai:26907, ai_acv:26907, date:'2026-03-19'},
   {q:2,ct:'In Call', id:'89753', desc:'JAL Engineering Co.,LTD.-Renewal of BO 43549 - JAL Engineering - Uplift', acv:4993, lic:0, book:20806, ai:0, ai_acv:0, date:'2026-04-01'},
-  {q:2,ct:'In Call', id:'90748', desc:'FUTABA CORPORATION-Futaba_ERP_LIcense', acv:450310, lic:133824, book:2251552, ai:134467, ai_acv:26893, date:'2026-06-12'},
   {q:2,ct:'In Call', id:'94085', desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP1H2( July–December 2026)_', acv:247942, lic:0, book:247942, ai:0, ai_acv:0, date:'2026-06-15'},
   {q:2,ct:'In Call', id:'75026', desc:'SkyDrive Inc.-Skydrive - ICAM - Type Certificate Configuration Mgmt.', acv:68418, lic:52634, book:205254, ai:75556, ai_acv:25185, date:'2026-06-19'},
-  {q:2,ct:'Out Call', id:'67409', desc:'NEC Corporation-Renewal of BO 66190 - SUBARU -Add Use Place environment', acv:4171, lic:23127, book:8344, ai:0, ai_acv:0, date:'2026-06-20'},
-  {q:2,ct:'Out Call', id:'91278', desc:'Japan Airlines Co., Ltd.-Demand Planning Server', acv:5185, lic:0, book:20406, ai:0, ai_acv:0, date:'2026-06-24'},
+  {q:2,ct:'Out Call', id:'91278', desc:'Japan Airlines Co., Ltd.-Demand Planning Server', acv:9942, lic:0, book:14913, ai:0, ai_acv:0, date:'2026-06-24'},
   {q:2,ct:'Out Call', id:'99143', desc:'YKK AP Inc.-YKKAP - New - POKA - FY26Q2', acv:66122, lic:0, book:198366, ai:0, ai_acv:0, date:'2026-06-26'},
   {q:3,ct:'In Call', id:'95743', desc:'NEC Corporation-NEC_Kyushu Electric T&D EAM_telecom', acv:432170, lic:474788, book:2160851, ai:321799, ai_acv:64360, date:'2026-08-14'},
   {q:3,ct:'In Call', id:'98278', desc:'Mitsubishi Electric Corporation-MELCO_DS_Customer Success Oct 2026 – Mar 2029', acv:217931, lic:0, book:521399, ai:0, ai_acv:0, date:'2026-08-31'},
   {q:3,ct:'In Call', id:'90924', desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;', acv:2088437, lic:5090320, book:10442184, ai:134534, ai_acv:26907, date:'2026-09-18'},
-  {q:3,ct:'In Call', id:'73746', desc:'NEC Corporation-KHI-Energy&Marine Company-Manufacturing MES / PoC / NEC Ph2', acv:382032, lic:637579, book:1910158, ai:449786, ai_acv:89957, date:'2026-09-22'},
+  {q:3,ct:'In Call', id:'73746', desc:'NEC Corporation-KHI-Energy&Marine Company-Manufacturing MES / PoC / NEC Ph2', acv:394087, lic:697858, book:1970436, ai:449786, ai_acv:89957, date:'2026-09-22'},
   {q:3,ct:'Out Call', id:'100854', desc:'ITOKI CORPORATION-ITOKI MFG Mgmt. - New 600 User - FY26Q3', acv:353143, lic:99777, book:1765715, ai:642686, ai_acv:128537, date:'2026-09-22'},
-  {q:3,ct:'In Call', id:'96173', desc:'NEC Corporation-KHI-Energy&Marine Company - Oracle ASFU', acv:3941, lic:6568, book:6568, ai:0, ai_acv:0, date:'2026-09-22'},
+  {q:3,ct:'In Call', id:'96173', desc:'NEC Corporation-KHI-Energy&Marine Company - Oracle ASFU', acv:4148, lic:6568, book:6568, ai:0, ai_acv:0, date:'2026-09-22'},
   {q:3,ct:'Out Call', id:'75205', desc:'Inaba foods Co.,Ltd-Inaba Foods_ERP', acv:372194, lic:394790, book:1860968, ai:117595, ai_acv:23519, date:'2026-09-28'},
   {q:4,ct:'Out Call', id:'92221', desc:'Sankyu Inc.-Sankyu - ERP_Hitachi consulting', acv:656812, lic:833356, book:3284061, ai:125927, ai_acv:25185, date:'2026-10-16'},
   {q:4,ct:'In Call', id:'93171', desc:'NEC Corporation-KHI - Plant Procurement', acv:640392, lic:1452738, book:3201959, ai:125927, ai_acv:25185, date:'2026-10-20'},
@@ -401,7 +399,7 @@ const DEALS = [
   {q:4,ct:'Out Call', id:'70643', desc:'NEC Corporation-FUJIFILM Healthcare Manufacturing Corporation New MFG FY25', acv:143943, lic:259281, book:719713, ai:123938, ai_acv:24788, date:'2026-10-26'},
   {q:4,ct:'Out Call', id:'68562', desc:'Hitachi Construction Machinery Japan Co., Ltd.-Inbound-Hitachi Construction Machinery-ERP', acv:611585, lic:694423, book:1834755, ai:0, ai_acv:0, date:'2026-11-12'},
   {q:4,ct:'Out Call', id:'98566', desc:'Eurus Energy Holdings Corporation-Eurus_Wind Power ERP', acv:191570, lic:75659, book:957851, ai:135265, ai_acv:27053, date:'2026-11-19'},
-  {q:4,ct:'In Call', id:'96704', desc:'NEC Corporation-MHI AEL-Oracle', acv:24760, lic:88725, book:88725, ai:0, ai_acv:0, date:'2026-11-20'},
+  {q:4,ct:'In Call', id:'96704', desc:'NEC Corporation-MHI AEL-Oracle', acv:43393, lic:82529, book:137410, ai:0, ai_acv:0, date:'2026-11-20'},
   {q:4,ct:'In Call', id:'86759', desc:'NEC Corporation-SUBARU_ai', acv:22054, lic:0, book:110268, ai:110268, ai_acv:22054, date:'2026-11-20'},
   {q:4,ct:'In Call', id:'95268', desc:'ShinMaywa Industries, Ltd.-ShinMaywa - Ground Support vehicle - New Division - FY26Q4', acv:651468, lic:1066365, book:3257338, ai:125927, ai_acv:25185, date:'2026-11-23'},
   {q:4,ct:'Out Call', id:'89156', desc:'Kawasaki Heavy Industries, Ltd.-KHI - Poka', acv:87575, lic:65681, book:131362, ai:0, ai_acv:0, date:'2026-12-10'},
@@ -409,8 +407,8 @@ const DEALS = [
   {q:4,ct:'Out Call', id:'89290', desc:'Alphast Co.,Ltd.-Kyodo Yushi - NEW MFG - 400NU - FY26Q4', acv:383140, lic:562222, book:1149421, ai:70646, ai_acv:23549, date:'2026-12-16'},
   {q:4,ct:'Out Call', id:'96702', desc:'Otsuka Holdings Co.,Ltd.-Otsuka HD - Copperleaf', acv:689509, lic:0, book:2068526, ai:0, ai_acv:0, date:'2026-12-18'},
   {q:4,ct:'Out Call', id:'57736', desc:'Lasertec Corporation-Lasertec- ERP & FSM', acv:523591, lic:665161, book:2617957, ai:123938, ai_acv:24788, date:'2026-12-18'},
+  {q:4,ct:'Out Call', id:'99759', desc:'Kirin Holdings Company, Limited-Kirin_FSM', acv:516899, lic:0, book:2584495, ai:134753, ai_acv:26951, date:'2026-12-18'},
   {q:4,ct:'Out Call', id:'91738', desc:'YKK Corporation-YKK - Loops AI - FY26Q4', acv:149999, lic:0, book:149999, ai:149999, ai_acv:149999, date:'2026-12-18'},
-  {q:4,ct:'Out Call', id:'99759', desc:'Kirin Holdings Company, Limited-Kirin_FSM', acv:130731, lic:0, book:392192, ai:0, ai_acv:0, date:'2026-12-18'},
   {q:4,ct:'In Call', id:'84447', desc:'Honda Motor Co., Ltd.-Honda Marine- POKA', acv:44139, lic:0, book:220694, ai:0, ai_acv:0, date:'2026-12-18'},
   {q:4,ct:'Out Call', id:'91739', desc:'NEC Corporation-KHI Energy & Marine - Loops AI - FY26Q4', acv:202517, lic:0, book:202517, ai:202517, ai_acv:202517, date:'2026-12-23'},
   {q:4,ct:'Out Call', id:'91740', desc:'IBM Japan, Ltd-ROHM - LOOPS AI - FY26Q4', acv:149999, lic:0, book:149999, ai:149999, ai_acv:149999, date:'2026-12-24'},
