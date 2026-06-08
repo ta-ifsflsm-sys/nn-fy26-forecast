@@ -7,12 +7,12 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root {
-  --navy:      #0d1b2e; --navy-mid:  #162540; --navy-card: #1c2f4a;
-  --navy-hover:#213554; --accent:    #3b9eff; --accent2:   #00c2a8;
-  --gold:      #f5a623; --red:       #f05a5a; --green:     #4cc97a;
-  --purple:    #a78bfa; --teal:      #34d399; --muted:     #6b8aaa;
-  --text:      #e8f0fc; --text-dim:  #9db4ce; --border:    rgba(59,158,255,0.15);
-  --radius:    10px;
+  --navy:#0d1b2e; --navy-mid:#162540; --navy-card:#1c2f4a;
+  --navy-hover:#213554; --accent:#3b9eff; --accent2:#00c2a8;
+  --gold:#f5a623; --red:#f05a5a; --green:#4cc97a;
+  --purple:#a78bfa; --teal:#34d399; --muted:#6b8aaa;
+  --text:#e8f0fc; --text-dim:#9db4ce;
+  --border:rgba(59,158,255,0.15); --radius:10px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;}
@@ -28,7 +28,6 @@ nav button:hover{color:var(--text);}
 nav button.active{color:var(--accent);border-bottom-color:var(--accent);}
 .tab-content{display:none;}.tab-content.active{display:block;}
 .page{padding:24px 28px;max-width:1500px;}
-/* KPI Cards */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:28px;}
 .kpi-card{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden;}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
@@ -59,22 +58,18 @@ nav button.active{color:var(--accent);border-bottom-color:var(--accent);}
 .kpi-card.ai .progress-fill{background:var(--purple);}
 .kpi-card.ai_acv .progress-fill{background:var(--teal);}
 .kpi-pct{font-size:12px;font-weight:600;}
-/* Section */
 .section-title{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
-/* Charts */
 .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px;}
 .chart-card{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
 .chart-card h3{font-size:13px;font-weight:600;color:var(--text-dim);margin-bottom:16px;}
 .chart-wrap{height:220px;}
-/* WTW */
 .wtw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
 .wtw-card{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;}
 .wtw-q{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
 .wtw-val{font-size:22px;font-weight:700;}
 .wtw-val.pos{color:var(--green);}.wtw-val.neg{color:var(--red);}.wtw-val.zero{color:var(--muted);}
 .wtw-sub{font-size:10px;color:var(--muted);margin-top:2px;}
-/* Tables */
 .q-section{margin-bottom:28px;}
 .q-header{display:flex;align-items:center;gap:12px;background:var(--navy-mid);border:1px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;padding:12px 18px;}
 .q-tag{background:var(--accent);color:#fff;font-size:11px;font-weight:700;border-radius:4px;padding:2px 8px;}
@@ -98,26 +93,16 @@ tr.row-out:hover{background:rgba(240,90,90,0.06)!important;}
 tr.row-in td:first-child{border-left:2px solid rgba(76,201,122,0.5);}
 tr.row-out td:first-child{border-left:2px solid rgba(240,90,90,0.4);}
 .opp-id{font-size:11px;color:var(--muted);margin-top:1px;}
-/* Deal Management */
 .deal-filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
 .deal-filters input,.deal-filters select{background:var(--navy-card);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:7px 12px;font-size:13px;outline:none;}
 .deal-filters input{width:260px;}
 .deal-filters input:focus,.deal-filters select:focus{border-color:var(--accent);}
 .deal-table-wrap{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;}
 .deal-table-wrap table{min-width:1550px;}
-.deal-table-wrap thead th{padding:10px 12px;}
-.deal-table-wrap tbody td{padding:9px 12px;}
+.deal-table-wrap thead th,.deal-table-wrap tbody td{padding:10px 12px;}
 .deal-edit{background:var(--navy-hover);border:1px solid var(--border);color:var(--text);border-radius:5px;padding:4px 8px;font-size:12px;width:100%;outline:none;min-width:90px;}
 .deal-edit:focus{border-color:var(--accent);}
 select.deal-edit option{background:var(--navy-card);}
-/* Call Changes tab */
-.changes-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px;}
-.change-table-wrap{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
-.change-table-wrap table{width:100%;}
-.change-table-wrap thead th{background:rgba(255,255,255,0.04);font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);font-weight:600;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
-.change-table-wrap thead th.num{text-align:right;}
-.change-table-wrap tbody tr{border-bottom:1px solid rgba(255,255,255,0.04);}
-.change-table-wrap tbody td{padding:11px 14px;font-size:13px;}
 .type-badge{display:inline-block;border-radius:4px;padding:2px 9px;font-size:10px;font-weight:700;letter-spacing:0.3px;}
 .type-won{background:rgba(76,201,122,0.18);color:#4cc97a;border:1px solid rgba(76,201,122,0.35);}
 .type-lost{background:rgba(240,90,90,0.18);color:#f05a5a;border:1px solid rgba(240,90,90,0.35);}
@@ -127,22 +112,23 @@ select.deal-edit option{background:var(--navy-card);}
 .acv-pos{color:var(--green);font-weight:600;}
 .acv-neg{color:var(--red);font-weight:600;}
 .acv-zero{color:var(--muted);}
-/* KPI compare */
-.kpi-compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:28px;}
-.kpi-compare-card{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}
-.kcc-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;}
-.kcc-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
-.kcc-sub{font-size:11px;color:var(--muted);}
-.kcc-val{font-size:14px;font-weight:700;}
-.kcc-divider{height:1px;background:var(--border);margin:8px 0;}
-.kcc-gap{display:flex;justify-content:space-between;margin-top:6px;}
-.kcc-gap-label{font-size:11px;color:var(--muted);}
-.kcc-gap-val{font-size:12px;font-weight:600;}
-/* Net impact banner */
-.impact-banner{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.impact-banner{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 24px;margin-bottom:24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
 .impact-item{text-align:center;}
 .impact-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px;}
 .impact-val{font-size:18px;font-weight:700;}
+.kpi-compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:28px;}
+.kpi-compare-card{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}
+.kcc-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.kcc-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.kcc-sub{font-size:11px;color:var(--muted);}
+.kcc-val{font-size:14px;font-weight:700;}
+.kcc-divider{height:1px;background:var(--border);margin:8px 0;}
+.change-table-wrap{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;}
+.change-table-wrap table{width:100%;}
+.change-table-wrap thead th{background:rgba(255,255,255,0.04);font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);font-weight:600;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+.change-table-wrap thead th.num{text-align:right;}
+.change-table-wrap tbody tr{border-bottom:1px solid rgba(255,255,255,0.04);}
+.change-table-wrap tbody td{padding:11px 14px;font-size:13px;}
 footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-top:1px solid var(--border);margin-top:20px;}
 </style>
 </head>
@@ -152,7 +138,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-t
     <div class="logo">IF</div>
     <div>
       <h1>IFS Japan &nbsp;–&nbsp; FY26 Forecast Dashboard</h1>
-      <div class="meta">Last updated: 2026-06-01</div>
+      <div class="meta">Last updated: 2026-06-08</div>
     </div>
   </div>
   <span class="badge">In Call Only &nbsp;·&nbsp; EUR</span>
@@ -164,81 +150,72 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-t
   <button onclick="switchTab('deals')">Deal Management</button>
 </nav>
 
-<!-- ═══════ SHARED DATA ═══════ -->
 <script>
-function fmtM(n){ return n>=1e6?'€'+(n/1e6).toFixed(2)+'M':'€'+Math.round(n).toLocaleString('en-US'); }
-function fmtN(n){ return Math.round(n).toLocaleString('en-US'); }
-function fmt(n){ return '€'+Math.round(n).toLocaleString('en-US'); }
+function fmtM(n){return n>=1e6?'€'+(n/1e6).toFixed(2)+'M':'€'+Math.round(n).toLocaleString('en-US');}
+function fmtN(n){return Math.round(n).toLocaleString('en-US');}
+function fmt(n){return '€'+Math.round(n).toLocaleString('en-US');}
 
 const DEALS = [
-  {q:1,ct:'In Call', id:'94325', desc:'NEC – SUBARU New Non-production Env',acv:12599,  lic:10412,  book:12599,   ai:0,      ai_acv:0,     date:'2026-01-12'},
-  {q:1,ct:'In Call', id:'74989', desc:'ShinMaywa – Aircraft Div SCM/MES',  acv:447798, lic:423161, book:2238990, ai:118768, ai_acv:0,     date:'2026-02-26'},
-  {q:1,ct:'In Call', id:'97124', desc:'JVCKENWOOD – Additional Sales',      acv:2033,   lic:4723,   book:10673,   ai:0,      ai_acv:0,     date:'2026-03-06'},
-  {q:1,ct:'In Call', id:'94851', desc:'MELCO DS – CRP',                    acv:263850, lic:73769,  book:263850,  ai:26907,  ai_acv:50661, date:'2026-03-19'},
-  {q:2,ct:'In Call', id:'89753', desc:'JAL Engineering – Renewal',         acv:4993,   lic:0,      book:20806,   ai:0,      ai_acv:0,     date:'2026-04-01'},
-  {q:2,ct:'In Call', id:'94085', desc:'JAL – Customer Success CP2',        acv:495883, lic:4929,   book:254510,  ai:0,      ai_acv:0,     date:'2026-04-30'},
-  {q:2,ct:'In Call', id:'96173', desc:'NEC – KHI Oracle ASFU',             acv:4148,   lic:4929,   book:6568,    ai:0,      ai_acv:0,     date:'2026-06-02'},
-  {q:2,ct:'In Call', id:'75026', desc:'SkyDrive – ICAM Type Certificate',  acv:68418,  lic:0,      book:205254,  ai:75556,  ai_acv:0,     date:'2026-06-19'},
-  {q:2,ct:'Out Call',id:'99143', desc:'YKKAP – POKA',                      acv:66122,  lic:0,      book:198366,  ai:0,      ai_acv:0,     date:'2026-06-26'},
-  {q:3,ct:'In Call', id:'95743', desc:'NEC – Kyushu Electric T&D EAM',    acv:432170, lic:579477, book:2160851, ai:135265, ai_acv:64360, date:'2026-08-14'},
-  {q:3,ct:'In Call', id:'98278', desc:'MELCO DS – Customer Success',       acv:217931, lic:0,      book:521399,  ai:0,      ai_acv:0,     date:'2026-08-31'},
-  {q:3,ct:'In Call', id:'91278', desc:'JAL – Demand Planning Server',      acv:9942,   lic:0,      book:14913,   ai:0,      ai_acv:0,     date:'2026-09-09'},
-  {q:3,ct:'In Call', id:'90924', desc:'MELCO – A&D',                       acv:2297786,lic:5113939,book:11488929,ai:134534,ai_acv:0,     date:'2026-09-18'},
-  {q:3,ct:'In Call', id:'100854',desc:'ITOKI – MFG Mgmt. 600 User',       acv:353143, lic:99777,  book:1765715, ai:0,      ai_acv:128537,date:'2026-09-22'},
-  {q:3,ct:'In Call', id:'73746', desc:'NEC – KHI Energy&Marine MES',      acv:394087, lic:637579, book:1910158, ai:449786, ai_acv:89957, date:'2026-09-22'},
-  {q:3,ct:'Out Call',id:'75205', desc:'Inaba Foods – ERP',                 acv:372194, lic:394790, book:1860968, ai:117595, ai_acv:75611, date:'2026-09-28'},
-  {q:4,ct:'In Call', id:'93171', desc:'NEC – KHI Plant Procurement',       acv:640392, lic:1452738,book:3201959, ai:125927, ai_acv:125927,date:'2026-10-20'},
-  {q:4,ct:'In Call', id:'95590', desc:'JERA – O&M CPLF PoC',              acv:141108, lic:0,      book:141108,  ai:0,      ai_acv:0,     date:'2026-10-22'},
-  {q:4,ct:'In Call', id:'68562', desc:'Hitachi Construction – ERP',        acv:611585, lic:694423, book:1834755, ai:0,      ai_acv:0,     date:'2026-11-12'},
-  {q:4,ct:'In Call', id:'96704', desc:'NEC – MHI AEL-Oracle',              acv:43393,  lic:88725,  book:88725,   ai:0,      ai_acv:0,     date:'2026-11-20'},
-  {q:4,ct:'In Call', id:'86759', desc:'NEC – SUBARU AI',                   acv:22054,  lic:0,      book:110268,  ai:110268, ai_acv:22054, date:'2026-11-20'},
-  {q:4,ct:'In Call', id:'95268', desc:'ShinMaywa – Ground Support Vehicle',acv:651468, lic:1066365,book:3257338, ai:125927, ai_acv:125927,date:'2026-11-23'},
-  {q:4,ct:'In Call', id:'84447', desc:'Honda Motor – Honda Marine POKA',   acv:44139,  lic:0,      book:220694,  ai:0,      ai_acv:0,     date:'2026-12-18'},
-  {q:4,ct:'In Call', id:'99759', desc:'Kirin Holdings – Kirin FSM',        acv:564637, lic:108495, book:2823184, ai:134467, ai_acv:26951, date:'2026-12-18'},
-  {q:4,ct:'In Call', id:'57736', desc:'Lasertec – ERP & FSM',              acv:523591, lic:665161, book:2617957, ai:123938, ai_acv:24788, date:'2026-12-18'},
-  {q:4,ct:'Out Call',id:'92221', desc:'Sankyu – ERP',                      acv:656812, lic:833356, book:3284061, ai:125927, ai_acv:0,     date:'2026-10-16'},
-  {q:4,ct:'Out Call',id:'70643', desc:'NEC – FUJIFILM Healthcare MFG',     acv:143943, lic:259281, book:719713,  ai:123938, ai_acv:0,     date:'2026-10-26'},
-  {q:4,ct:'Out Call',id:'90817', desc:'MHI – JASDF POC 2',                 acv:507366, lic:486613, book:1014732, ai:47507,  ai_acv:0,     date:'2026-12-12'},
-  {q:4,ct:'Out Call',id:'96702', desc:'Otsuka HD – Copperleaf',            acv:689509, lic:0,      book:2068526, ai:0,      ai_acv:0,     date:'2026-12-18'},
-  {q:4,ct:'Out Call',id:'94852', desc:'NEC – SUBARU MES',                  acv:105090, lic:0,      book:0,       ai:0,      ai_acv:0,     date:'2026-12-21'},
-  {q:4,ct:'Out Call',id:'91739', desc:'NEC – KHI Energy Loops AI',         acv:202517, lic:0,      book:202517,  ai:202517, ai_acv:0,     date:'2026-12-23'},
-  {q:4,ct:'Out Call',id:'91740', desc:'IBM – ROHM Loops AI',               acv:149999, lic:0,      book:149999,  ai:149999, ai_acv:0,     date:'2026-12-24'},
+  {q:1,ct:'In Call', id:'94325', desc:'NEC – SUBARU New Non-production Env',       acv:12599,   lic:10412,   book:12599,    ai:0,      ai_acv:0,      date:'2026-01-12'},
+  {q:1,ct:'In Call', id:'74989', desc:'ShinMaywa – Aircraft Div SCM/MES',          acv:447798,  lic:423161,  book:2238990,  ai:118768, ai_acv:0,      date:'2026-02-26'},
+  {q:1,ct:'In Call', id:'97124', desc:'JVCKENWOOD – Additional Sales',              acv:2033,    lic:4723,    book:10673,    ai:0,      ai_acv:0,      date:'2026-03-06'},
+  {q:1,ct:'In Call', id:'94851', desc:'MELCO DS – CRP',                            acv:263850,  lic:73769,   book:263850,   ai:26907,  ai_acv:50661,  date:'2026-03-19'},
+  {q:2,ct:'In Call', id:'89753', desc:'JAL Engineering – Renewal',                 acv:4993,    lic:0,       book:20806,    ai:0,      ai_acv:0,      date:'2026-04-01'},
+  {q:2,ct:'In Call', id:'94085', desc:'JAL – Customer Success CP2',                acv:495883,  lic:4929,    book:254510,   ai:0,      ai_acv:0,      date:'2026-04-30'},
+  {q:2,ct:'In Call', id:'96173', desc:'NEC – KHI Oracle ASFU',                     acv:4148,    lic:4929,    book:6568,     ai:0,      ai_acv:0,      date:'2026-06-05'},
+  {q:3,ct:'In Call', id:'95743', desc:'NEC – Kyushu Electric T&D EAM',            acv:432170,  lic:474788,  book:2160851,  ai:321799, ai_acv:64360,  date:'2026-08-14'},
+  {q:3,ct:'In Call', id:'91278', desc:'JAL – Demand Planning Server',              acv:9942,    lic:0,       book:14913,    ai:0,      ai_acv:0,      date:'2026-09-09'},
+  {q:3,ct:'In Call', id:'95590', desc:'JERA – O&M CPLF PoC',                      acv:141108,  lic:0,       book:47036,    ai:0,      ai_acv:0,      date:'2026-09-18'},
+  {q:3,ct:'Out Call',id:'75026', desc:'SkyDrive – ICAM Type Certificate',          acv:68418,   lic:52634,   book:205254,   ai:75556,  ai_acv:25185,  date:'2026-09-18'},
+  {q:3,ct:'In Call', id:'98278', desc:'MELCO DS – Customer Success',               acv:217931,  lic:0,       book:521399,   ai:0,      ai_acv:0,      date:'2026-09-18'},
+  {q:3,ct:'In Call', id:'90924', desc:'MELCO – A&amp;D',                           acv:2297786, lic:5113939, book:11488929, ai:134534, ai_acv:0,      date:'2026-09-18'},
+  {q:3,ct:'In Call', id:'73746', desc:'NEC – KHI Energy&amp;Marine MES',          acv:394087,  lic:637579,  book:1910158,  ai:449786, ai_acv:89957,  date:'2026-09-22'},
+  {q:3,ct:'In Call', id:'100854',desc:'ITOKI – MFG Mgmt. 600 User',              acv:353143,  lic:99777,   book:1765715,  ai:0,      ai_acv:128537, date:'2026-09-22'},
+  {q:3,ct:'In Call', id:'75205', desc:'Inaba Foods – ERP',                         acv:372194,  lic:394790,  book:1860968,  ai:117595, ai_acv:23519,  date:'2026-09-28'},
+  {q:4,ct:'In Call', id:'93171', desc:'NEC – KHI Plant Procurement',               acv:640392,  lic:1452738, book:3201959,  ai:125927, ai_acv:125927, date:'2026-10-20'},
+  {q:4,ct:'Out Call',id:'99143', desc:'YKKAP – POKA',                              acv:66122,   lic:0,       book:198366,   ai:0,      ai_acv:0,      date:'2026-10-23'},
+  {q:4,ct:'Out Call',id:'70643', desc:'NEC – FUJIFILM Healthcare MFG',             acv:143943,  lic:259281,  book:719713,   ai:123938, ai_acv:0,      date:'2026-10-26'},
+  {q:4,ct:'In Call', id:'68562', desc:'Hitachi Construction Machinery – ERP',      acv:611585,  lic:694423,  book:1834755,  ai:0,      ai_acv:0,      date:'2026-11-12'},
+  {q:4,ct:'In Call', id:'86759', desc:'NEC – SUBARU AI',                           acv:22054,   lic:0,       book:110268,   ai:110268, ai_acv:22054,  date:'2026-11-20'},
+  {q:4,ct:'In Call', id:'96704', desc:'NEC – MHI AEL-Oracle',                      acv:43393,   lic:88725,   book:88725,    ai:0,      ai_acv:0,      date:'2026-11-20'},
+  {q:4,ct:'In Call', id:'95268', desc:'ShinMaywa – Ground Support Vehicle',        acv:651468,  lic:1066365, book:3257338,  ai:125927, ai_acv:125927, date:'2026-11-23'},
+  {q:4,ct:'In Call', id:'99759', desc:'Kirin Holdings – Kirin FSM',                acv:245672,  lic:112121,  book:1228362,  ai:134534, ai_acv:27237,  date:'2026-12-18'},
+  {q:4,ct:'Out Call',id:'84447', desc:'Honda Motor – Honda Marine POKA',           acv:44139,   lic:0,       book:220694,   ai:0,      ai_acv:0,      date:'2026-12-18'},
+  {q:4,ct:'Out Call',id:'94852', desc:'NEC – SUBARU MES',                          acv:105090,  lic:0,       book:0,        ai:0,      ai_acv:0,      date:'2026-12-21'},
+  {q:4,ct:'In Call', id:'91739', desc:'NEC – KHI Energy &amp; Marine Loops AI',   acv:202517,  lic:0,       book:202517,   ai:202517, ai_acv:202517, date:'2026-12-23'},
+  {q:4,ct:'Out Call',id:'91740', desc:'IBM Japan – ROHM Loops AI',                 acv:149999,  lic:0,       book:149999,   ai:149999, ai_acv:0,      date:'2026-12-24'},
+  {q:4,ct:'Out Call',id:'101346',desc:'文化シャッター（CRM登録済）',               acv:135813,  lic:0,       book:0,        ai:0,      ai_acv:0,      date:'2026-12-25'},
 ];
 
 const CHANGES = [
-  {type:'Q移動',   opp:'75026', desc:'SkyDrive – ICAM',           from:'Q2 In Call',  to:'Q3 In Call',    acv:0,       note:'元々In Call・Quarter変更のみ'},
-  {type:'Call変更',opp:'75205', desc:'Inaba Foods ERP',           from:'Q3 Out Call', to:'Q3 In Call',    acv:372194,  note:''},
-  {type:'Call変更',opp:'91739', desc:'KHI Energy – Loops AI',     from:'Q4 Out Call', to:'Q4 In Call',    acv:202517,  note:''},
-  {type:'Call変更',opp:'94852', desc:'SUBARU MES',                from:'Q4 Out Call', to:'Q4 In Call',    acv:105090,  note:''},
-  {type:'Call変更',opp:'68562', desc:'Hitachi Construction ERP',  from:'Q4 In Call',  to:'Q4 Out Call',   acv:-611585, note:''},
-  {type:'Call変更',opp:'84447', desc:'Honda Marine POKA',         from:'Q2 In Call',  to:'Q4 Out Call',   acv:-44139,  note:''},
-  {type:'Lost',    opp:'57736', desc:'Lasertec ERP & FSM',        from:'Q4 In Call',  to:'Lost',          acv:-523591, note:''},
-  {type:'Q移動',   opp:'99143', desc:'YKKAP POKA',                from:'Q2 Out Call', to:'Q4 Out Call',   acv:0,       note:''},
-  {type:'新規',    opp:'新規',  desc:'文化シャッター（CRM登録予定）',from:'—',          to:'Q4 In Call',    acv:135000,  note:'ACV仮置き €135K'},
-  {type:'Won',     opp:'89753', desc:'JAL Engineering Renewal',   from:'Q2 In Call',  to:'Won（受注確定）',acv:0,      note:'元々In Call・ステータス変更のみ'},
-  {type:'Won',     opp:'94085', desc:'JAL Customer Success',      from:'Q2 In Call',  to:'Won（受注確定）',acv:0,      note:'元々In Call・ステータス変更のみ'},
+  {type:'Q移動',    opp:'75026', desc:'SkyDrive – ICAM',          from:'Q2 In Call',  to:'Q3 Out Call',    acv:-68418,  note:'Sign Date後ろ倒し・Out Callへ変更'},
+  {type:'Call変更', opp:'75205', desc:'Inaba Foods ERP',          from:'Q3 Out Call', to:'Q3 In Call',     acv:372194,  note:''},
+  {type:'Call変更', opp:'95590', desc:'JERA O&M PoC',             from:'Q4 In Call',  to:'Q3 In Call',     acv:0,       note:'Q4→Q3前倒し（ACV変化なし）'},
+  {type:'Call変更', opp:'91739', desc:'KHI Energy – Loops AI',    from:'Q4 Out Call', to:'Q4 In Call',     acv:202517,  note:''},
+  {type:'消滅',     opp:'57736', desc:'Lasertec ERP & FSM',       from:'Q4 In Call',  to:'ソースから消滅', acv:-523591, note:'CRM確認要'},
+  {type:'Call変更', opp:'84447', desc:'Honda Marine POKA',        from:'Q4 In Call',  to:'Q4 Out Call',    acv:-44139,  note:''},
+  {type:'ACV改定',  opp:'99759', desc:'Kirin FSM',                from:'€564,637',    to:'€245,672',       acv:-318965, note:'ACV改定 -€318,965'},
 ];
 
-const KPI_CUR  = {acv:8247148,lic:10347740,book:34289403,ai:1630472,ai_acv:711018};
-const KPI_PROP = {acv:7882634,lic:10233186,book:32926402,ai:1623939,ai_acv:711018};
-const TARGETS  = {acv:9191819,lic:11717775,book:40802500,ai:3752500,ai_acv:1130000};
-const WTW = {'1':[726280,726280],'2':[321353,505024],'3':[3136773,3773477],'4':[1401446,2063052]};
-const KPI_STORE = 'ifs_fy26_kpi_targets_v2';
-function loadKT(){ try{return JSON.parse(localStorage.getItem(KPI_STORE)||'{}');}catch(e){return{};} }
-function saveKT(k,v){ const s=loadKT(); s[k]=v; localStorage.setItem(KPI_STORE,JSON.stringify(s)); }
+const KPI_CUR  = {acv:7866746, lic:10706322, book:32604284, ai:2512897, ai_acv:686119};
+const TARGETS  = {acv:9191819, lic:11717775, book:40802500, ai:3752500, ai_acv:1130000};
+const WTW = {'1':[726280,726280],'2':[573442,505024],'3':[3705059,4218361],'4':[3242367,2417081]};
+const KPI_STORE = 'ifs_fy26_kpi_v3';
+function loadKT(){try{return JSON.parse(localStorage.getItem(KPI_STORE)||'{}');}catch(e){return{};}}
+function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON.stringify(s));}
 </script>
 
-<!-- ═══════ TAB: KPI Overview ═══════ -->
+<!-- ═══ KPI TAB ═══ -->
 <div id="tab-kpi" class="tab-content active">
 <div class="page">
   <div class="kpi-grid" id="kpiGrid"></div>
   <script>
   const KPI_DEFS=[
-    {key:'acv',   label:'Total ACV (In Call)',     actual:KPI_CUR.acv,   cls:'acv',   clr:'var(--accent)' },
-    {key:'lic',   label:'Total License (In Call)', actual:KPI_CUR.lic,   cls:'lic',   clr:'var(--accent2)'},
-    {key:'book',  label:'Total Booking (In Call)', actual:KPI_CUR.book,  cls:'book',  clr:'var(--gold)'   },
-    {key:'ai',    label:'AI Booking (In Call)',     actual:KPI_CUR.ai,    cls:'ai',    clr:'var(--purple)' },
-    {key:'ai_acv',label:'AI ACV (In Call)',         actual:KPI_CUR.ai_acv,cls:'ai_acv',clr:'var(--teal)'  },
+    {key:'acv',   label:'Total ACV (In Call)',     actual:KPI_CUR.acv,    cls:'acv',    clr:'var(--accent)' },
+    {key:'lic',   label:'Total License (In Call)', actual:KPI_CUR.lic,    cls:'lic',    clr:'var(--accent2)'},
+    {key:'book',  label:'Total Booking (In Call)', actual:KPI_CUR.book,   cls:'book',   clr:'var(--gold)'   },
+    {key:'ai',    label:'AI Booking (In Call)',     actual:KPI_CUR.ai,     cls:'ai',     clr:'var(--purple)' },
+    {key:'ai_acv',label:'AI ACV (In Call)',         actual:KPI_CUR.ai_acv, cls:'ai_acv', clr:'var(--teal)'  },
   ];
   function renderKpiGrid(){
     const kt=loadKT();
@@ -246,7 +223,7 @@ function saveKT(k,v){ const s=loadKT(); s[k]=v; localStorage.setItem(KPI_STORE,J
       const t=kt[d.key]||TARGETS[d.key];
       const pct=Math.min(d.actual/t*100,100);
       const gap=d.actual-t;
-      const gapStr=(gap>=0?'+':'')+((gap>=0?'€':'-€')+fmtN(Math.abs(gap)));
+      const gs=(gap>=0?'+':'')+((gap>=0?'€':'-€')+fmtN(Math.abs(gap)));
       return `<div class="kpi-card ${d.cls}" id="kpi-${d.key}">
         <div class="kpi-label">${d.label}</div>
         <div class="kpi-value">${fmtM(d.actual)}</div>
@@ -255,7 +232,7 @@ function saveKT(k,v){ const s=loadKT(); s[k]=v; localStorage.setItem(KPI_STORE,J
           <input class="kpi-target-input" type="text" value="${fmtN(t)}"
             onchange="const v=parseFloat(this.value.replace(/,/g,''));if(!isNaN(v)&&v>0){saveKT('${d.key}',v);updateKpi('${d.key}');}"
             onblur="const v=parseFloat(this.value.replace(/,/g,''));if(!isNaN(v)&&v>0)this.value=fmtN(v);">
-          <span class="kpi-gap ${gap>=0?'pos':'neg'}">Gap: ${gapStr}</span>
+          <span class="kpi-gap ${gap>=0?'pos':'neg'}">Gap: ${gs}</span>
         </div>
         <div class="progress-bar"><div class="progress-fill" style="width:${pct.toFixed(1)}%"></div></div>
         <div class="kpi-pct" style="color:${d.clr}">${pct.toFixed(1)}% achieved</div>
@@ -267,38 +244,29 @@ function saveKT(k,v){ const s=loadKT(); s[k]=v; localStorage.setItem(KPI_STORE,J
     const t=loadKT()[key]||TARGETS[key];
     const pct=Math.min(d.actual/t*100,100);
     const gap=d.actual-t;
-    const gapStr=(gap>=0?'+':'')+((gap>=0?'€':'-€')+fmtN(Math.abs(gap)));
+    const gs=(gap>=0?'+':'')+((gap>=0?'€':'-€')+fmtN(Math.abs(gap)));
     const card=document.getElementById('kpi-'+key);
     card.querySelector('.progress-fill').style.width=pct.toFixed(1)+'%';
     card.querySelector('.kpi-pct').textContent=pct.toFixed(1)+'% achieved';
     const g=card.querySelector('.kpi-gap');
-    g.textContent='Gap: '+gapStr; g.className='kpi-gap '+(gap>=0?'pos':'neg');
+    g.textContent='Gap: '+gs; g.className='kpi-gap '+(gap>=0?'pos':'neg');
   }
   renderKpiGrid();
   </script>
-
   <div class="section-title">Quarter Performance (In Call ACV)</div>
   <div class="charts-row">
-    <div class="chart-card">
-      <h3>In Call ACV vs Target by Quarter (€)</h3>
-      <div class="chart-wrap"><canvas id="chartAcv"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <h3>In Call ACV – Quarter Breakdown</h3>
-      <div class="chart-wrap"><canvas id="chartPie"></canvas></div>
-    </div>
+    <div class="chart-card"><h3>In Call ACV vs Target by Quarter (€)</h3><div class="chart-wrap"><canvas id="chartAcv"></canvas></div></div>
+    <div class="chart-card"><h3>In Call ACV – Quarter Breakdown</h3><div class="chart-wrap"><canvas id="chartPie"></canvas></div></div>
   </div>
-
-  <div class="section-title">WTW (vs 2026-05-25)</div>
+  <div class="section-title">WTW (vs 2026-06-01)</div>
   <div class="wtw-grid" id="wtwGrid"></div>
   <script>
   (function(){
-    const qLabels={'1':'Q1 · Jan–Mar','2':'Q2 · Apr–Jun','3':'Q3 · Jul–Sep','4':'Q4 · Oct–Dec'};
+    const ql={'1':'Q1 · Jan–Mar','2':'Q2 · Apr–Jun','3':'Q3 · Jul–Sep','4':'Q4 · Oct–Dec'};
     document.getElementById('wtwGrid').innerHTML=Object.entries(WTW).map(([q,[lw,tw]])=>{
-      const diff=tw-lw;
-      const cls=diff>0?'pos':diff<0?'neg':'zero';
+      const diff=tw-lw,cls=diff>0?'pos':diff<0?'neg':'zero';
       const val=diff===0?'±0':(diff>0?'+':'')+fmtN(diff);
-      return `<div class="wtw-card"><div class="wtw-q">${qLabels[q]}</div>
+      return `<div class="wtw-card"><div class="wtw-q">${ql[q]}</div>
         <div class="wtw-val ${cls}">${val}</div>
         <div class="wtw-sub">${fmtN(lw)} → ${fmtN(tw)}</div></div>`;
     }).join('');
@@ -317,188 +285,136 @@ function saveKT(k,v){ const s=loadKT(); s[k]=v; localStorage.setItem(KPI_STORE,J
       options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#9db4ce',font:{size:11},padding:12}}}}});
   });
   </script>
-</div>
-</div>
+</div></div>
 
-<!-- ═══════ TAB: Call Changes ═══════ -->
+<!-- ═══ CALL CHANGES TAB ═══ -->
 <div id="tab-changes" class="tab-content">
 <div class="page">
-
-  <!-- Net Impact Banner -->
   <div class="impact-banner">
-    <div class="impact-item">
-      <div class="impact-label">変更前 In Call ACV</div>
-      <div class="impact-val" style="color:var(--accent)">€8,247,148</div>
-    </div>
+    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€8,247,148</div></div>
     <div style="font-size:24px;color:var(--muted)">→</div>
-    <div class="impact-item">
-      <div class="impact-label">変更後 In Call ACV</div>
-      <div class="impact-val" style="color:var(--accent)">€7,882,634</div>
-    </div>
+    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,866,746</div></div>
     <div style="font-size:24px;color:var(--muted)">=</div>
-    <div class="impact-item">
-      <div class="impact-label">純ACV影響</div>
-      <div class="impact-val" style="color:var(--red)">-€364,514</div>
-    </div>
+    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€380,402</div></div>
     <div style="margin-left:auto;text-align:right;">
-      <div class="impact-label">変更後 達成率</div>
-      <div class="impact-val" style="color:var(--gold)">85.8%</div>
+      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">85.6%</div>
     </div>
-    <div class="impact-item">
-      <div class="impact-label">残ギャップ</div>
-      <div class="impact-val" style="color:var(--red)">-€1,309,185</div>
-    </div>
+    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€1,325,073</div></div>
   </div>
-
-  <!-- Change List -->
-  <div class="section-title">変更内容一覧</div>
-  <div class="change-table-wrap" style="margin-bottom:28px;">
-    <table id="changeTable">
-      <thead><tr>
-        <th>区分</th><th>Opp No</th><th>案件名</th>
-        <th>変更前</th><th>変更後</th>
-        <th class="num">ACV影響 (€)</th><th>備考</th>
-      </tr></thead>
+  <div class="section-title">変更内容一覧（2026-06-01 → 2026-06-08）</div>
+  <div class="change-table-wrap">
+    <table>
+      <thead><tr><th>区分</th><th>Opp No</th><th>案件名</th><th>変更前</th><th>変更後</th><th class="num">ACV影響 (€)</th><th>備考</th></tr></thead>
       <tbody id="changeTbody"></tbody>
     </table>
   </div>
   <script>
   (function(){
-    const TYPE_CLS={Won:'type-won',Lost:'type-lost',Call変更:'type-call',Q移動:'type-move',新規:'type-new'};
+    const TC={Q移動:'type-move',Call変更:'type-call',消滅:'type-lost',ACV改定:'type-call',Won:'type-won',新規:'type-new'};
+    let net=0;
     const rows=CHANGES.map(ch=>{
-      const cls=TYPE_CLS[ch.type]||'';
-      const acvHtml=ch.acv===0
-        ?`<span class="acv-zero">—</span>`
+      net+=ch.acv;
+      const cls=TC[ch.type]||'';
+      const av=ch.acv===0?`<span class="acv-zero">—</span>`
         :`<span class="${ch.acv>0?'acv-pos':'acv-neg'}">${ch.acv>0?'+':''} €${fmtN(Math.abs(ch.acv))}</span>`;
-      return `<tr>
-        <td><span class="type-badge ${cls}">${ch.type}</span></td>
+      return `<tr><td><span class="type-badge ${cls}">${ch.type}</span></td>
         <td style="color:var(--muted);font-size:12px">${ch.opp}</td>
         <td>${ch.desc}</td>
         <td style="color:var(--muted);font-size:12px">${ch.from}</td>
         <td style="font-weight:600">${ch.to}</td>
-        <td class="num">${acvHtml}</td>
-        <td style="color:var(--muted);font-size:12px">${ch.note}</td>
-      </tr>`;
+        <td class="num">${av}</td>
+        <td style="color:var(--muted);font-size:12px">${ch.note}</td></tr>`;
     }).join('');
-    // 純影響合計行
-    const net=-364514;
-    const total=`<tr style="border-top:1px solid var(--border)">
+    const totRow=`<tr style="border-top:1px solid var(--border)">
       <td colspan="5" style="text-align:right;font-weight:600;color:var(--text-dim);font-size:12px;padding:10px 14px">純ACV影響合計</td>
-      <td class="num"><span class="${net>=0?'acv-pos':'acv-neg'}" style="font-size:14px">${net>=0?'+':''} €${fmtN(Math.abs(net))}</span></td>
-      <td></td>
-    </tr>`;
-    document.getElementById('changeTbody').innerHTML=rows+total;
+      <td class="num"><span class="${net>=0?'acv-pos':'acv-neg'}" style="font-size:14px">${net>=0?'+':''}€${fmtN(Math.abs(net))}</span></td>
+      <td></td></tr>`;
+    document.getElementById('changeTbody').innerHTML=rows+totRow;
   })();
   </script>
-
-  <!-- KPI Comparison -->
-  <div class="section-title">KPI 変更前後 比較</div>
-  <div class="kpi-compare-grid">
-  </div>
+  <div class="section-title">KPI 達成状況（今週）</div>
+  <div class="kpi-compare-grid" id="kpiCompare"></div>
   <script>
   (function(){
-    const kpiItems=[
-      {key:'acv',   label:'ACV',        cur:KPI_CUR.acv,   prop:KPI_PROP.acv,   tgt:TARGETS.acv,    clr:'var(--accent)' },
-      {key:'lic',   label:'License',    cur:KPI_CUR.lic,   prop:KPI_PROP.lic,   tgt:TARGETS.lic,    clr:'var(--accent2)'},
-      {key:'book',  label:'Booking',    cur:KPI_CUR.book,  prop:KPI_PROP.book,  tgt:TARGETS.book,   clr:'var(--gold)'   },
-      {key:'ai_acv',label:'AI ACV',     cur:KPI_CUR.ai_acv,prop:KPI_PROP.ai_acv,tgt:TARGETS.ai_acv, clr:'var(--teal)'   },
+    const items=[
+      {key:'acv',   label:'ACV',     clr:'var(--accent)' },
+      {key:'lic',   label:'License', clr:'var(--accent2)'},
+      {key:'book',  label:'Booking', clr:'var(--gold)'   },
+      {key:'ai_acv',label:'AI ACV',  clr:'var(--teal)'   },
     ];
-    const grid=document.querySelector('#tab-changes .kpi-compare-grid');
-    grid.innerHTML=kpiItems.map(d=>{
-      const curPct=(d.cur/d.tgt*100).toFixed(1);
-      const propPct=(d.prop/d.tgt*100).toFixed(1);
-      const curGap=d.cur-d.tgt; const propGap=d.prop-d.tgt;
-      const diff=d.prop-d.cur;
+    document.getElementById('kpiCompare').innerHTML=items.map(d=>{
+      const a=KPI_CUR[d.key],t=TARGETS[d.key],gap=a-t,pct=(a/t*100).toFixed(1);
+      const gfc=gap>=0?'var(--green)':'var(--red)',gbg=gap>=0?'rgba(76,201,122,0.15)':'rgba(240,90,90,0.15)';
       return `<div class="kpi-compare-card">
         <div class="kcc-label" style="color:${d.clr}">${d.label}</div>
-        <div class="kcc-row"><span class="kcc-sub">変更前</span><span class="kcc-val" style="color:${d.clr}">${fmtM(d.cur)}</span></div>
-        <div class="kcc-row"><span class="kcc-sub">変更後</span><span class="kcc-val" style="color:${d.clr}">${fmtM(d.prop)}</span></div>
-        <div class="kcc-row"><span class="kcc-sub" style="font-size:10px">差分</span>
-          <span style="font-size:12px;font-weight:600;color:${diff>=0?'var(--green)':'var(--red)'}">${diff>=0?'+':''}€${fmtN(Math.abs(diff))}</span></div>
+        <div class="kcc-row"><span class="kcc-sub">実績</span><span class="kcc-val" style="color:${d.clr}">${fmtM(a)}</span></div>
+        <div class="kcc-row"><span class="kcc-sub">Target</span><span style="font-size:12px;color:var(--muted)">${fmtM(t)}</span></div>
         <div class="kcc-divider"></div>
-        <div class="kcc-row"><span class="kcc-sub">Target</span><span style="font-size:12px;color:var(--muted)">${fmtM(d.tgt)}</span></div>
-        <div class="kcc-gap">
-          <span class="kcc-gap-label">Gap (変更後)</span>
-          <span class="kcc-gap-val" style="color:${propGap>=0?'var(--green)':'var(--red)'}">${propGap>=0?'+':''}€${fmtN(Math.abs(propGap))}</span>
-        </div>
-        <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:${Math.min(propPct,100)}%;background:${d.clr}"></div></div>
-        <div style="font-size:11px;color:${d.clr};margin-top:4px;font-weight:600">${propPct}% achieved</div>
+        <div class="kcc-row"><span class="kcc-sub">Gap</span>
+          <span style="font-weight:600;font-size:13px;color:${gfc}">${gap>=0?'+':''}€${fmtN(Math.abs(gap))}</span></div>
+        <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:${Math.min(pct,100)}%;background:${d.clr}"></div></div>
+        <div style="font-size:11px;color:${gfc};margin-top:4px;font-weight:600">${pct}% achieved</div>
       </div>`;
     }).join('');
   })();
   </script>
-
-  <!-- RTB Note -->
   <div style="background:rgba(59,158,255,0.06);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:8px;">
     <div style="font-size:12px;color:var(--text-dim);line-height:1.8">
-      <strong style="color:var(--accent)">★ 残ギャップ €1,309,185 の補填候補：</strong><br>
-      Out Call から <strong>Otsuka HD Copperleaf（€689,509）</strong> または <strong>Sankyu ERP（€656,812）</strong> のいずれか1件を In Call 化することで100%到達。
-      両案件を合わせると €346K のオーバー達成。
+      <strong style="color:var(--accent)">★ 残ギャップ €1,325,073 の状況：</strong><br>
+      現 Out Call 7件合計 €713,524。全件 In Call 化しても €611,549 不足。<br>
+      文化シャッターを <strong>€747,400</strong> まで積み上げた上で他 Out Call 全件 In Call 化で100%到達。<br>
+      また Otsuka HD / Sankyu / MHI JASDF POC 2（合計 <strong>€1.85M</strong>）がCRMから消えており確認が必要。
     </div>
   </div>
-</div>
-</div>
+</div></div>
 
-<!-- ═══════ TAB: Quarterly Breakdown ═══════ -->
+<!-- ═══ QUARTERLY TAB ═══ -->
 <div id="tab-quarterly" class="tab-content">
-<div class="page">
-<div id="quarterly-content"></div>
+<div class="page"><div id="quarterly-content"></div>
 <script>
 (function(){
-  const qInfo={1:{label:'Q1',range:'January – March 2026'},2:{label:'Q2',range:'April – June 2026'},
-               3:{label:'Q3',range:'July – September 2026'},4:{label:'Q4',range:'October – December 2026'}};
+  const qi={1:{l:'Q1',r:'January – March 2026'},2:{l:'Q2',r:'April – June 2026'},
+            3:{l:'Q3',r:'July – September 2026'},4:{l:'Q4',r:'October – December 2026'}};
   let html='';
   for(let q=1;q<=4;q++){
     const all=DEALS.filter(d=>d.q===q);
-    const inD=all.filter(d=>d.ct==='In Call'), outD=all.filter(d=>d.ct==='Out Call');
+    const inD=all.filter(d=>d.ct==='In Call'),outD=all.filter(d=>d.ct==='Out Call');
     const inAcv=inD.reduce((s,d)=>s+d.acv,0);
-    const rowsHtml=(arr)=>arr.map(d=>`
-      <tr class="row-${d.ct==='In Call'?'in':'out'}">
-        <td><span class="${d.ct==='In Call'?'in-badge':'out-badge'}">${d.ct}</span></td>
-        <td><div>${d.desc}</div><div class="opp-id">#${d.id}</div></td>
-        <td class="num">${fmtN(d.acv)}</td><td class="num">${fmtN(d.lic)}</td>
-        <td class="num">${fmtN(d.book)}</td>
-        <td class="num">${d.ai?fmtN(d.ai):'—'}</td>
-        <td class="num" style="color:var(--teal)">${d.ai_acv?fmtN(d.ai_acv):'—'}</td>
-        <td>${d.date}</td>
-      </tr>`).join('');
+    const rowH=(arr)=>arr.map(d=>`<tr class="row-${d.ct==='In Call'?'in':'out'}">
+      <td><span class="${d.ct==='In Call'?'in-badge':'out-badge'}">${d.ct}</span></td>
+      <td><div>${d.desc}</div><div class="opp-id">#${d.id}</div></td>
+      <td class="num">${fmtN(d.acv)}</td><td class="num">${d.lic?fmtN(d.lic):'—'}</td>
+      <td class="num">${d.book?fmtN(d.book):'—'}</td>
+      <td class="num">${d.ai?fmtN(d.ai):'—'}</td>
+      <td class="num" style="color:var(--teal)">${d.ai_acv?fmtN(d.ai_acv):'—'}</td>
+      <td>${d.date}</td></tr>`).join('');
+    const sub=(arr,col)=>arr.reduce((s,d)=>s+d[col],0);
     html+=`<div class="q-section">
-      <div class="q-header">
-        <span class="q-tag">${qInfo[q].label}</span>
-        <span class="q-dates">${qInfo[q].range}</span>
-        <div class="q-acv-total">In Call ACV: <span>${fmt(inAcv)}</span></div>
-      </div>
+      <div class="q-header"><span class="q-tag">${qi[q].l}</span><span class="q-dates">${qi[q].r}</span>
+        <div class="q-acv-total">In Call ACV: <span>${fmt(inAcv)}</span></div></div>
       <div class="q-table-wrap"><table>
         <thead><tr><th style="width:100px">Type</th><th>Opportunity</th>
           <th class="num">ACV (€)</th><th class="num">License (€)</th>
           <th class="num">Booking (€)</th><th class="num">AI Booking (€)</th>
           <th class="num">AI ACV (€)</th><th>Sign Date</th></tr></thead>
         <tbody>
-          ${rowsHtml(inD)}
+          ${rowH(inD)}
           <tr class="subtotal-row"><td colspan="2" style="padding-left:14px">In Call Subtotal</td>
-            <td class="num">${fmtN(inD.reduce((s,d)=>s+d.acv,0))}</td>
-            <td class="num">${fmtN(inD.reduce((s,d)=>s+d.lic,0))}</td>
-            <td class="num">${fmtN(inD.reduce((s,d)=>s+d.book,0))}</td>
-            <td class="num">${fmtN(inD.reduce((s,d)=>s+d.ai,0))}</td>
-            <td class="num" style="color:var(--teal)">${fmtN(inD.reduce((s,d)=>s+d.ai_acv,0))}</td>
-            <td></td></tr>
-          ${outD.length?rowsHtml(outD)+'<tr class="subtotal-row"><td colspan="2" style="padding-left:14px">Out Call Subtotal</td>'
-            +`<td class="num">${fmtN(outD.reduce((s,d)=>s+d.acv,0))}</td>`
-            +`<td class="num">${fmtN(outD.reduce((s,d)=>s+d.lic,0))}</td>`
-            +`<td class="num">${fmtN(outD.reduce((s,d)=>s+d.book,0))}</td>`
-            +`<td class="num">${fmtN(outD.reduce((s,d)=>s+d.ai,0))}</td>`
-            +`<td class="num" style="color:var(--teal)">${fmtN(outD.reduce((s,d)=>s+d.ai_acv,0))}</td><td></td></tr>`:''}
-        </tbody>
-      </table></div>
-    </div>`;
+            <td class="num">${fmtN(sub(inD,'acv'))}</td><td class="num">${fmtN(sub(inD,'lic'))}</td>
+            <td class="num">${fmtN(sub(inD,'book'))}</td><td class="num">${fmtN(sub(inD,'ai'))}</td>
+            <td class="num" style="color:var(--teal)">${fmtN(sub(inD,'ai_acv'))}</td><td></td></tr>
+          ${outD.length?rowH(outD)+`<tr class="subtotal-row"><td colspan="2" style="padding-left:14px">Out Call Subtotal</td>
+            <td class="num">${fmtN(sub(outD,'acv'))}</td><td class="num">${fmtN(sub(outD,'lic'))}</td>
+            <td class="num">${fmtN(sub(outD,'book'))}</td><td class="num">${fmtN(sub(outD,'ai'))}</td>
+            <td class="num" style="color:var(--teal)">${fmtN(sub(outD,'ai_acv'))}</td><td></td></tr>`:''}
+        </tbody></table></div></div>`;
   }
   document.getElementById('quarterly-content').innerHTML=html;
 })();
 </script>
-</div>
-</div>
+</div></div>
 
-<!-- ═══════ TAB: Deal Management ═══════ -->
+<!-- ═══ DEAL MANAGEMENT TAB ═══ -->
 <div id="tab-deals" class="tab-content">
 <div class="page">
   <div class="deal-filters">
@@ -510,8 +426,7 @@ function saveKT(k,v){ const s=loadKT(); s[k]=v; localStorage.setItem(KPI_STORE,J
     </select>
     <select id="filterCt" onchange="renderDeals()">
       <option value="">In & Out Call</option>
-      <option value="In Call">In Call</option>
-      <option value="Out Call">Out Call</option>
+      <option value="In Call">In Call</option><option value="Out Call">Out Call</option>
     </select>
   </div>
   <div class="deal-table-wrap">
@@ -526,11 +441,10 @@ function saveKT(k,v){ const s=loadKT(); s[k]=v; localStorage.setItem(KPI_STORE,J
       <tbody id="dealTableBody"></tbody>
     </table>
   </div>
-  <div style="margin-top:10px;font-size:11px;color:var(--muted)">Stage / Status / Competition / Notes はブラウザに自動保存されます（localStorage）</div>
-</div>
-</div>
+  <div style="margin-top:10px;font-size:11px;color:var(--muted)">Stage / Status / Competition / Notes はブラウザに自動保存（localStorage）</div>
+</div></div>
 
-<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-06-01 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
+<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-06-08 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
 
 <script>
 function switchTab(id){
@@ -538,26 +452,26 @@ function switchTab(id){
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   ['kpi','changes','quarterly','deals'].forEach((t,i)=>{
-    if(t===id) document.querySelectorAll('nav button')[i].classList.add('active');
+    if(t===id)document.querySelectorAll('nav button')[i].classList.add('active');
   });
 }
-const DEAL_STORE='ifs_fy26_deals_v2';
-function loadDS(){try{return JSON.parse(localStorage.getItem(DEAL_STORE)||'{}');}catch(e){return{};}}
-function saveDF(id,field,val){const s=loadDS();if(!s[id])s[id]={};s[id][field]=val;localStorage.setItem(DEAL_STORE,JSON.stringify(s));}
-function getDF(id,field){const s=loadDS();return(s[id]&&s[id][field])||'';}
+const DS='ifs_fy26_deals_v3';
+function loadDS(){try{return JSON.parse(localStorage.getItem(DS)||'{}');}catch(e){return{};}}
+function saveDF(id,f,v){const s=loadDS();if(!s[id])s[id]={};s[id][f]=v;localStorage.setItem(DS,JSON.stringify(s));}
+function getDF(id,f){const s=loadDS();return(s[id]&&s[id][f])||'';}
 function renderDeals(){
   const q=document.getElementById('filterQ').value;
   const ct=document.getElementById('filterCt').value;
-  const search=document.getElementById('dealSearch').value.toLowerCase();
-  const filtered=DEALS.filter(d=>{
+  const srch=document.getElementById('dealSearch').value.toLowerCase();
+  const fl=DEALS.filter(d=>{
     if(q&&d.q!==parseInt(q))return false;
     if(ct&&d.ct!==ct)return false;
-    if(search&&!d.desc.toLowerCase().includes(search)&&!d.id.includes(search))return false;
+    if(srch&&!d.desc.toLowerCase().includes(srch)&&!d.id.includes(srch))return false;
     return true;
   });
   const stages=['','Qualify','Demo/POC','Proposal','Negotiation','Closed Won','Closed Lost'];
   const statuses=['','On Track','At Risk','Stalled','Won','Lost'];
-  document.getElementById('dealTableBody').innerHTML=filtered.map(d=>`
+  document.getElementById('dealTableBody').innerHTML=fl.map(d=>`
     <tr class="row-${d.ct==='In Call'?'in':'out'}">
       <td><span style="color:var(--accent);font-weight:600">Q${d.q}</span></td>
       <td><span class="${d.ct==='In Call'?'in-badge':'out-badge'}">${d.ct}</span></td>
