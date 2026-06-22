@@ -130,6 +130,26 @@ select.deal-edit option{background:var(--navy-card);}
 .change-table-wrap tbody tr{border-bottom:1px solid rgba(255,255,255,0.04);}
 .change-table-wrap tbody td{padding:11px 14px;font-size:13px;}
 footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-top:1px solid var(--border);margin-top:20px;}
+
+.gap-section { margin-bottom: 28px; }
+.gap-waterfall { background: var(--navy-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.gap-waterfall table { width: 100%; border-collapse: collapse; }
+.gap-waterfall thead th { background: rgba(255,255,255,0.04); font-size:11px; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); font-weight:600; padding:10px 16px; text-align:left; border-bottom:1px solid var(--border); }
+.gap-waterfall thead th.num { text-align:right; }
+.gap-waterfall tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); }
+.gap-waterfall tbody td { padding: 11px 16px; font-size:13px; }
+.gap-row-pos td { background: rgba(76,201,122,0.05); }
+.gap-row-neg td { background: rgba(240,90,90,0.05); }
+.gap-row-base td { background: rgba(59,158,255,0.08); font-weight:600; }
+.gap-row-total td { background: rgba(245,166,35,0.08); font-weight:700; font-size:14px; }
+.gap-row-lost td { background: rgba(240,90,90,0.12); }
+.gap-bar-wrap { width: 140px; }
+.gap-bar { height: 6px; border-radius: 3px; }
+.gap-summary-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:24px; }
+.gap-summary-card { background:var(--navy-card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; }
+.gap-summary-label { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:8px; }
+.gap-summary-val { font-size:22px; font-weight:700; }
+.gap-summary-sub { font-size:11px; color:var(--muted); margin-top:4px; }
 </style>
 </head>
 <body>
@@ -138,7 +158,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-t
     <div class="logo">IF</div>
     <div>
       <h1>IFS Japan &nbsp;–&nbsp; FY26 Forecast Dashboard</h1>
-      <div class="meta">Last updated: 2026-06-16</div>
+      <div class="meta">Last updated: 2026-06-22</div>
     </div>
   </div>
   <span class="badge">In Call Only &nbsp;·&nbsp; EUR</span>
@@ -148,6 +168,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-t
   <button onclick="switchTab('changes')">Call Changes</button>
   <button onclick="switchTab('quarterly')">Quarterly Breakdown</button>
   <button onclick="switchTab('deals')">Deal Management</button>
+  <button onclick="switchTab('gap')">Gap Analysis</button>
 </nav>
 
 <script>
@@ -164,22 +185,23 @@ const DEALS = [
   {q:2,ct:'In Call',id:'94085',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP2( July–Dece',acv:247942,lic:0,book:247942,ai:0,ai_acv:0,date:'2026-04-30'},
   {q:2,ct:'In Call',id:'96173',desc:'NEC Corporation-KHI-Energy&Marine Company - Oracle ASFU',acv:4148,lic:4929,book:6568,ai:0,ai_acv:0,date:'2026-06-05'},
   {q:3,ct:'Out Call',id:'102456',desc:'NEC Corporation-Renewal of BO 66190 - SUBARU -Add Use Place ',acv:27521,lic:22745,book:27521,ai:0,ai_acv:0,date:'2026-07-29'},
-  {q:3,ct:'In Call',id:'95743',desc:'NEC Corporation-NEC_Kyushu Electric T&D EAM_telecom',acv:432170,lic:474788,book:2160851,ai:321799,ai_acv:64360,date:'2026-08-14'},
   {q:3,ct:'In Call',id:'91278',desc:'Japan Airlines Co., Ltd.-JAL Demand Planning Server',acv:9942,lic:0,book:14913,ai:0,ai_acv:0,date:'2026-09-09'},
-  {q:3,ct:'In Call',id:'90924',desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;',acv:1978889,lic:5114973,book:11494048,ai:136183,ai_acv:27237,date:'2026-09-18'},
-  {q:3,ct:'In Call',id:'95590',desc:'JERA Co., Inc.-JERA O&M CPLF Asset  PoV',acv:141108,lic:0,book:47036,ai:0,ai_acv:0,date:'2026-09-18'},
   {q:3,ct:'In Call',id:'98278',desc:'Mitsubishi Electric Corporation-MELCO_DS_Customer Success Oc',acv:85475,lic:0,book:521399,ai:0,ai_acv:0,date:'2026-09-18'},
   {q:3,ct:'Out Call',id:'75026',desc:'SkyDrive Inc.-Skydrive - ICAM - Type Certificate Configurati',acv:68418,lic:52634,book:205254,ai:75556,ai_acv:25185,date:'2026-09-18'},
+  {q:3,ct:'In Call',id:'95590',desc:'JERA Co., Inc.-JERA O&M CPLF Asset  PoV',acv:47036,lic:0,book:47036,ai:0,ai_acv:0,date:'2026-09-18'},
+  {q:3,ct:'In Call',id:'90924',desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;',acv:1978889,lic:5114973,book:11494048,ai:136183,ai_acv:27237,date:'2026-09-18'},
   {q:3,ct:'In Call',id:'100854',desc:'ITOKI CORPORATION-ITOKI MFG Mgmt. - New 600 User - FY26Q3',acv:353143,lic:99777,book:1765715,ai:642686,ai_acv:128537,date:'2026-09-22'},
   {q:3,ct:'In Call',id:'73746',desc:'NEC Corporation-KHI-Energy&Marine Company-Manufacturing MES ',acv:394087,lic:697858,book:1970436,ai:449786,ai_acv:89957,date:'2026-09-22'},
   {q:3,ct:'In Call',id:'75205',desc:'Inaba foods Co.,Ltd-Inaba Foods_ERP',acv:372194,lic:394790,book:1860968,ai:117595,ai_acv:23519,date:'2026-09-28'},
   {q:3,ct:'In Call',id:'102296',desc:'Mitsubishi Electric Corporation-Upside - MELCO DS Add Env+Ad',acv:149999,lic:340908,book:749997,ai:0,ai_acv:0,date:'2026-09-28'},
+  {q:4,ct:'Out Call',id:'102535',desc:'NEC Corporation-NEC_Chubu Electric PG Warehouse MGT',acv:395937,lic:190580,book:1979686,ai:136183,ai_acv:27237,date:'2026-10-19'},
   {q:4,ct:'In Call',id:'93171',desc:'NEC Corporation-KHI - Plant Procurement',acv:640392,lic:1452738,book:3201959,ai:125927,ai_acv:25185,date:'2026-10-20'},
   {q:4,ct:'Out Call',id:'99143',desc:'YKK AP Inc.-YKKAP - New - POKA',acv:66122,lic:0,book:198366,ai:0,ai_acv:0,date:'2026-10-23'},
   {q:4,ct:'In Call',id:'68562',desc:'Hitachi Construction Machinery Japan Co., Ltd.-Inbound-Hitac',acv:611585,lic:694423,book:1834755,ai:0,ai_acv:0,date:'2026-11-12'},
-  {q:4,ct:'In Call',id:'96704',desc:'NEC Corporation-MHI AEL-Oracle',acv:43393,lic:82529,book:137410,ai:0,ai_acv:0,date:'2026-11-20'},
   {q:4,ct:'In Call',id:'86759',desc:'NEC Corporation-SUBARU_ai',acv:22054,lic:0,book:110268,ai:110268,ai_acv:22054,date:'2026-11-20'},
+  {q:4,ct:'In Call',id:'96704',desc:'NEC Corporation-MHI AEL-Oracle',acv:43393,lic:82529,book:137410,ai:0,ai_acv:0,date:'2026-11-20'},
   {q:4,ct:'In Call',id:'95268',desc:'ShinMaywa Industries, Ltd.-ShinMaywa - Ground Support vehicl',acv:709696,lic:1066365,book:3548481,ai:134994,ai_acv:26999,date:'2026-11-23'},
+  {q:4,ct:'Out Call',id:'92865',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP3/CP4 (Janua',acv:449720,lic:0,book:469079,ai:0,ai_acv:0,date:'2026-12-01'},
   {q:4,ct:'In Call',id:'99759',desc:'Kirin Holdings Company, Limited-Kirin_FSM',acv:245672,lic:112121,book:1228362,ai:136183,ai_acv:27237,date:'2026-12-18'},
   {q:4,ct:'Out Call',id:'84447',desc:'Honda Motor Co., Ltd.-Honda Marine- POKA',acv:44139,lic:0,book:220694,ai:0,ai_acv:0,date:'2026-12-18'},
   {q:4,ct:'Out Call',id:'94852',desc:'NEC Corporation- SUBARU MES',acv:105090,lic:172279,book:262725,ai:0,ai_acv:0,date:'2026-12-21'},
@@ -189,18 +211,13 @@ const DEALS = [
 ];
 
 const CHANGES = [
-  {type:'ACV改定', opp:'94085', desc:'JAL Customer Success',        from:'€495,883',   to:'€247,942',   acv:-247941, note:'ACV改定 -€247,941'},
-  {type:'ACV改定', opp:'90924', desc:'MELCO A&D',                   from:'€2,297,786', to:'€1,978,889', acv:-318897, note:'大型案件の金額修正'},
-  {type:'ACV改定', opp:'98278', desc:'MELCO DS Customer Success',   from:'€217,931',   to:'€85,475',    acv:-132456, note:''},
-  {type:'新規',    opp:'102296',desc:'MELCO DS Add ERP（Upside）', from:'—',          to:'Q3 In Call', acv:149999,  note:'新規追加'},
-  {type:'Call変更',opp:'101346',desc:'文化シャッター',              from:'Q4 Out Call','to':'Q4 In Call',acv:351999,  note:'ACV €351,999'},
-  {type:'Call変更',opp:'91740', desc:'ROHM Loops AI',               from:'Q4 Out Call','to':'Q4 In Call',acv:149999,  note:''},
-  {type:'ACV改定', opp:'95268', desc:'ShinMaywa Ground Support',    from:'€651,468',   to:'€709,696',   acv:58228,   note:'ACV増額 +€58,228'},
+  {type:'消滅',    opp:'95743', desc:'Kyushu Electric T&D EAM',  from:'Q3 In Call',  to:'失注確定',   acv:-432170, note:'❌ 失注確定'},
+  {type:'ACV改定', opp:'95590', desc:'JERA O&M PoC',             from:'€141,108',    to:'€47,036',    acv:-94072,  note:'ACV改定 -€94,072'},
 ];
 
-const KPI_CUR  = {acv:7877677,lic:11609277,book:35560536,ai:2998824,ai_acv:903304};
+const KPI_CUR  = {acv:7351435,lic:11134489,book:33399685,ai:2677025,ai_acv:838944};
 const TARGETS  = {acv:9191819, lic:11717775, book:40802500, ai:3752500, ai_acv:1130000};
-const WTW = {'1':[726280,726280],'2':[505024,257083],'3':[4218361,3917007],'4':[2417081,2977307]};
+const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[3917007,3390765],'4':[2977307,2977307]};
 const KPI_STORE = 'ifs_fy26_kpi_v3';
 function loadKT(){try{return JSON.parse(localStorage.getItem(KPI_STORE)||'{}');}catch(e){return{};}}
 function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON.stringify(s));}
@@ -259,7 +276,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
     <div class="chart-card"><h3>In Call ACV vs Target by Quarter (€)</h3><div class="chart-wrap"><canvas id="chartAcv"></canvas></div></div>
     <div class="chart-card"><h3>In Call ACV – Quarter Breakdown</h3><div class="chart-wrap"><canvas id="chartPie"></canvas></div></div>
   </div>
-  <div class="section-title">WTW (vs 2026-06-08)</div>
+  <div class="section-title">WTW (vs 2026-06-16)</div>
   <div class="wtw-grid" id="wtwGrid"></div>
   <script>
   (function(){
@@ -292,15 +309,15 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 <div id="tab-changes" class="tab-content">
 <div class="page">
   <div class="impact-banner">
-    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€8,247,148</div></div>
+    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,877,677</div></div>
     <div style="font-size:24px;color:var(--muted)">→</div>
-    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,877,677</div></div>
+    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,351,435</div></div>
     <div style="font-size:24px;color:var(--muted)">=</div>
-    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">+€10,931</div></div>
+    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€526,242</div></div>
     <div style="margin-left:auto;text-align:right;">
-      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">85.7%</div>
+      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">80.0%</div>
     </div>
-    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€1,314,142</div></div>
+    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€1,840,384</div></div>
   </div>
   <div class="section-title">変更内容一覧（2026-06-01 → 2026-06-08）</div>
   <div class="change-table-wrap">
@@ -445,14 +462,144 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
   <div style="margin-top:10px;font-size:11px;color:var(--muted)">Stage / Status / Competition / Notes はブラウザに自動保存（localStorage）</div>
 </div></div>
 
-<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-06-16 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
+
+<!-- ═══ GAP ANALYSIS TAB ═══ -->
+<div id="tab-gap" class="tab-content">
+<div class="page">
+
+  <div class="gap-summary-grid">
+    <div class="gap-summary-card">
+      <div class="gap-summary-label">FY26 ACV Target</div>
+      <div class="gap-summary-val" style="color:var(--accent)">€9,191,819</div>
+    </div>
+    <div class="gap-summary-card">
+      <div class="gap-summary-label">ピーク In Call ACV</div>
+      <div class="gap-summary-val" style="color:var(--accent2)">€8,247,148</div>
+      <div class="gap-summary-sub">2026-06-01 時点</div>
+    </div>
+    <div class="gap-summary-card">
+      <div class="gap-summary-label">現 In Call ACV</div>
+      <div class="gap-summary-val" style="color:var(--gold)">€7,351,435</div>
+      <div class="gap-summary-sub">2026-06-22 時点 / 80.0%</div>
+    </div>
+    <div class="gap-summary-card" style="border-color:rgba(240,90,90,0.4)">
+      <div class="gap-summary-label">残ギャップ</div>
+      <div class="gap-summary-val" style="color:var(--red)">-€1,840,384</div>
+      <div class="gap-summary-sub">Out Call合計 €322,622 — 補填困難な状況</div>
+    </div>
+  </div>
+
+  <div class="section-title">Gap 発生要因 ウォーターフォール（ピーク比）</div>
+  <div class="gap-waterfall gap-section">
+    <table>
+      <thead><tr>
+        <th>時期</th><th>要因</th><th>区分</th>
+        <th class="num">ACV影響 (€)</th>
+        <th class="num">累積 In Call (€)</th>
+        <th>補足</th>
+      </tr></thead>
+      <tbody id="gapTableBody"></tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Out Call 残案件（補填候補）</div>
+  <div style="background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px;">
+    <div id="outCallSummary"></div>
+  </div>
+
+  <div style="background:rgba(240,90,90,0.06);border:1px solid rgba(240,90,90,0.3);border-radius:var(--radius);padding:18px;">
+    <div style="font-size:13px;font-weight:600;color:var(--red);margin-bottom:10px">⚠️ 現状評価</div>
+    <div style="font-size:13px;color:var(--text-dim);line-height:2">
+      現在のOut Call候補合計 <strong style="color:var(--text)">€322,622</strong> に対し残ギャップは <strong style="color:var(--red)">€1,840,384</strong>。<br>
+      Gap全体の <strong style="color:var(--text)">17.5%</strong> しかカバーできない状況。<br>
+      消滅した大型案件（Otsuka HD €690K・Sankyu €657K・MHI JASDF €507K）の復活、<br>
+      または新規パイプラインの追加なしには目標達成が困難。
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+(function(){
+  const TARGET = 9191819;
+  const waterfall = [
+    {date:'06-01', cat:'ベースライン',    type:'base',  acv:0,       cumul:8247148,    note:'ピーク In Call ACV'},
+    {date:'06-08', cat:'Lasertec 消滅',   type:'neg',   acv:-523591, cumul:7723557,   note:'ソースから削除'},
+    {date:'06-08', cat:'Kirin FSM 改定',  type:'neg',   acv:-318965, cumul:7404592,   note:'€564K→€245K'},
+    {date:'06-08', cat:'Honda Marine Out',type:'neg',   acv:-44139,  cumul:7360453,   note:'In Call→Out Call'},
+    {date:'06-08', cat:'SkyDrive Out',    type:'neg',   acv:-68418,  cumul:7292035,   note:'Q3 Out Callへ移動'},
+    {date:'06-16', cat:'文化シャッター In',type:'pos',  acv:351999,  cumul:7644034,   note:'Recovery追加'},
+    {date:'06-16', cat:'ROHM Loops AI In',type:'pos',  acv:149999,  cumul:7794033,   note:'Out Call→In Call'},
+    {date:'06-16', cat:'JAL CS 改定',     type:'neg',  acv:-247941, cumul:7546092,   note:'€495K→€247K'},
+    {date:'06-16', cat:'MELCO A&D 改定',  type:'neg',  acv:-318897, cumul:7227195,   note:'€2,297K→€1,978K'},
+    {date:'06-16', cat:'MELCO DS CS 改定',type:'neg',  acv:-132456, cumul:7094739,   note:'€217K→€85K'},
+    {date:'06-16', cat:'MELCO DS Add ERP',type:'pos',  acv:149999,  cumul:7244738,   note:'新規Recovery Upside'},
+    {date:'06-16', cat:'ShinMaywa 増額',  type:'pos',  acv:58228,   cumul:7302966,   note:'ACV増額'},
+    {date:'06-22', cat:'Kyushu Electric 失注',type:'lost',acv:-432170,cumul:2870796,  note:'❌ 失注確定 -€432K'},
+    {date:'06-22', cat:'JERA 改定',       type:'neg',  acv:-94072,  cumul:7351435, note:'€141K→€47K'},
+  ];
+
+  const typeStyle = {
+    base: {bg:'rgba(59,158,255,0.08)',  fc:'#3b9eff', label:'ベース'},
+    pos:  {bg:'rgba(76,201,122,0.05)',  fc:'#4cc97a', label:'プラス'},
+    neg:  {bg:'rgba(240,90,90,0.05)',   fc:'#f05a5a', label:'マイナス'},
+    lost: {bg:'rgba(240,90,90,0.14)',   fc:'#f05a5a', label:'❌ 失注'},
+  };
+
+  const rows = waterfall.map(r => {
+    const s = typeStyle[r.type];
+    const acvStr = r.acv === 0
+      ? '<span style="color:var(--muted)">ベース</span>'
+      : `<span style="color:${r.acv>0?'#4cc97a':'#f05a5a'};font-weight:600">${r.acv>0?'+':''}€${Math.abs(r.acv).toLocaleString('en-US')}</span>`;
+    const pct = Math.min(r.cumul / TARGET * 100, 100);
+    return `<tr style="background:${s.bg};border-bottom:1px solid rgba(255,255,255,0.04)">
+      <td style="color:var(--muted);font-size:12px">${r.date}</td>
+      <td style="font-weight:${r.type==='lost'?700:400}">${r.cat}</td>
+      <td><span style="font-size:10px;font-weight:600;color:${s.fc};background:${s.bg};border:1px solid ${s.fc}33;border-radius:4px;padding:1px 7px">${s.label}</span></td>
+      <td style="text-align:right">${acvStr}</td>
+      <td style="text-align:right">
+        <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px">
+          <div style="width:80px;background:rgba(255,255,255,0.06);border-radius:3px;height:5px;overflow:hidden">
+            <div style="width:${pct}%;height:100%;background:${pct>=100?'#4cc97a':pct>=80?'#f5a623':'#3b9eff'};border-radius:3px"></div>
+          </div>
+          <span style="font-weight:600;font-size:12px">€${r.cumul.toLocaleString('en-US')}</span>
+        </div>
+      </td>
+      <td style="font-size:12px;color:var(--muted)">${r.note}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('gapTableBody').innerHTML = rows;
+
+  // Out Call残案件
+  const outD = DEALS.filter(d => d.ct === 'Out Call');
+  const outTotal = outD.reduce((s,d)=>s+d.acv,0);
+  const outRows = outD.sort((a,b)=>b.acv-a.acv).map(d=>
+    `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+      <div><span style="color:var(--muted);font-size:11px;margin-right:8px">Q${d.q}</span>${d.desc}</div>
+      <span style="font-weight:600;color:var(--text-dim)">€${d.acv.toLocaleString('en-US')}</span>
+    </div>`).join('');
+  document.getElementById('outCallSummary').innerHTML =
+    outRows +
+    `<div style="display:flex;justify-content:space-between;padding:12px 0 4px;font-weight:700">
+      <span>Out Call 合計</span>
+      <span style="color:var(--gold)">€${outTotal.toLocaleString('en-US')}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)">
+      <span>vs 残ギャップ €1,840,384</span>
+      <span style="color:var(--red)">${(outTotal/1840384*100).toFixed(1)}% しかカバーできない</span>
+    </div>`;
+})();
+</script>
+
+<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-06-22 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
 
 <script>
 function switchTab(id){
   document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
-  ['kpi','changes','quarterly','deals'].forEach((t,i)=>{
+  ['kpi','changes','quarterly','deals','gap'].forEach((t,i)=>{
     if(t===id)document.querySelectorAll('nav button')[i].classList.add('active');
   });
 }
