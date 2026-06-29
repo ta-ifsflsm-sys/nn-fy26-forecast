@@ -158,7 +158,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-t
     <div class="logo">IF</div>
     <div>
       <h1>IFS Japan &nbsp;–&nbsp; FY26 Forecast Dashboard</h1>
-      <div class="meta">Last updated: 2026-06-22</div>
+      <div class="meta">Last updated: 2026-06-29</div>
     </div>
   </div>
   <span class="badge">In Call Only &nbsp;·&nbsp; EUR</span>
@@ -184,40 +184,39 @@ const DEALS = [
   {q:2,ct:'In Call',id:'89753',desc:'JAL Engineering Co.,LTD.-Renewal of BO 43549 - JAL Engineeri',acv:4993,lic:0,book:20806,ai:0,ai_acv:0,date:'2026-04-01'},
   {q:2,ct:'In Call',id:'94085',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP2( July–Dece',acv:247942,lic:0,book:247942,ai:0,ai_acv:0,date:'2026-04-30'},
   {q:2,ct:'In Call',id:'96173',desc:'NEC Corporation-KHI-Energy&Marine Company - Oracle ASFU',acv:4148,lic:4929,book:6568,ai:0,ai_acv:0,date:'2026-06-05'},
+  {q:3,ct:'Out Call',id:'102836',desc:'IBM Japan, Ltd-Additional 50 BuildPlace Users',acv:6954,lic:0,book:9852,ai:0,ai_acv:0,date:'2026-07-10'},
   {q:3,ct:'Out Call',id:'102456',desc:'NEC Corporation-Renewal of BO 66190 - SUBARU -Add Use Place ',acv:27521,lic:22745,book:27521,ai:0,ai_acv:0,date:'2026-07-29'},
   {q:3,ct:'In Call',id:'91278',desc:'Japan Airlines Co., Ltd.-JAL Demand Planning Server',acv:9942,lic:0,book:14913,ai:0,ai_acv:0,date:'2026-09-09'},
   {q:3,ct:'In Call',id:'98278',desc:'Mitsubishi Electric Corporation-MELCO_DS_Customer Success Oc',acv:85475,lic:0,book:521399,ai:0,ai_acv:0,date:'2026-09-18'},
-  {q:3,ct:'Out Call',id:'75026',desc:'SkyDrive Inc.-Skydrive - ICAM - Type Certificate Configurati',acv:68418,lic:52634,book:205254,ai:75556,ai_acv:25185,date:'2026-09-18'},
   {q:3,ct:'In Call',id:'95590',desc:'JERA Co., Inc.-JERA O&M CPLF Asset  PoV',acv:47036,lic:0,book:47036,ai:0,ai_acv:0,date:'2026-09-18'},
+  {q:3,ct:'Out Call',id:'75026',desc:'SkyDrive Inc.-Skydrive - ICAM - Type Certificate Configurati',acv:68418,lic:48856,book:205254,ai:81710,ai_acv:27237,date:'2026-09-18'},
   {q:3,ct:'In Call',id:'90924',desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;',acv:1978889,lic:5114973,book:11494048,ai:136183,ai_acv:27237,date:'2026-09-18'},
   {q:3,ct:'In Call',id:'100854',desc:'ITOKI CORPORATION-ITOKI MFG Mgmt. - New 600 User - FY26Q3',acv:353143,lic:99777,book:1765715,ai:642686,ai_acv:128537,date:'2026-09-22'},
   {q:3,ct:'In Call',id:'73746',desc:'NEC Corporation-KHI-Energy&Marine Company-Manufacturing MES ',acv:394087,lic:697858,book:1970436,ai:449786,ai_acv:89957,date:'2026-09-22'},
-  {q:3,ct:'In Call',id:'75205',desc:'Inaba foods Co.,Ltd-Inaba Foods_ERP',acv:372194,lic:394790,book:1860968,ai:117595,ai_acv:23519,date:'2026-09-28'},
   {q:3,ct:'In Call',id:'102296',desc:'Mitsubishi Electric Corporation-Upside - MELCO DS Add Env+Ad',acv:149999,lic:340908,book:749997,ai:0,ai_acv:0,date:'2026-09-28'},
-  {q:4,ct:'Out Call',id:'102535',desc:'NEC Corporation-NEC_Chubu Electric PG Warehouse MGT',acv:395937,lic:190580,book:1979686,ai:136183,ai_acv:27237,date:'2026-10-19'},
+  {q:3,ct:'In Call',id:'75205',desc:'Inaba foods Co.,Ltd-Inaba Foods_ERP',acv:372194,lic:394790,book:1860968,ai:117595,ai_acv:23519,date:'2026-09-28'},
   {q:4,ct:'In Call',id:'93171',desc:'NEC Corporation-KHI - Plant Procurement',acv:640392,lic:1452738,book:3201959,ai:125927,ai_acv:25185,date:'2026-10-20'},
   {q:4,ct:'Out Call',id:'99143',desc:'YKK AP Inc.-YKKAP - New - POKA',acv:66122,lic:0,book:198366,ai:0,ai_acv:0,date:'2026-10-23'},
   {q:4,ct:'In Call',id:'68562',desc:'Hitachi Construction Machinery Japan Co., Ltd.-Inbound-Hitac',acv:611585,lic:694423,book:1834755,ai:0,ai_acv:0,date:'2026-11-12'},
-  {q:4,ct:'In Call',id:'86759',desc:'NEC Corporation-SUBARU_ai',acv:22054,lic:0,book:110268,ai:110268,ai_acv:22054,date:'2026-11-20'},
   {q:4,ct:'In Call',id:'96704',desc:'NEC Corporation-MHI AEL-Oracle',acv:43393,lic:82529,book:137410,ai:0,ai_acv:0,date:'2026-11-20'},
+  {q:4,ct:'In Call',id:'86759',desc:'NEC Corporation-SUBARU_ai',acv:22054,lic:0,book:110268,ai:110268,ai_acv:22054,date:'2026-11-20'},
   {q:4,ct:'In Call',id:'95268',desc:'ShinMaywa Industries, Ltd.-ShinMaywa - Ground Support vehicl',acv:709696,lic:1066365,book:3548481,ai:134994,ai_acv:26999,date:'2026-11-23'},
-  {q:4,ct:'Out Call',id:'92865',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP3/CP4 (Janua',acv:449720,lic:0,book:469079,ai:0,ai_acv:0,date:'2026-12-01'},
-  {q:4,ct:'In Call',id:'99759',desc:'Kirin Holdings Company, Limited-Kirin_FSM',acv:245672,lic:112121,book:1228362,ai:136183,ai_acv:27237,date:'2026-12-18'},
+  {q:4,ct:'Out Call',id:'92865',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP3/CP4 (Janua',acv:375,lic:0,book:469079,ai:0,ai_acv:0,date:'2026-12-01'},
   {q:4,ct:'Out Call',id:'84447',desc:'Honda Motor Co., Ltd.-Honda Marine- POKA',acv:44139,lic:0,book:220694,ai:0,ai_acv:0,date:'2026-12-18'},
+  {q:4,ct:'In Call',id:'99759',desc:'Kirin Holdings Company, Limited-Kirin_FSM',acv:245672,lic:112121,book:1228362,ai:136183,ai_acv:27237,date:'2026-12-18'},
   {q:4,ct:'Out Call',id:'94852',desc:'NEC Corporation- SUBARU MES',acv:105090,lic:172279,book:262725,ai:0,ai_acv:0,date:'2026-12-21'},
   {q:4,ct:'In Call',id:'91739',desc:'NEC Corporation-KHI Energy & Marine - Loops AI - FY26Q4',acv:202517,lic:0,book:202517,ai:202517,ai_acv:202517,date:'2026-12-23'},
   {q:4,ct:'In Call',id:'91740',desc:'IBM Japan, Ltd-ROHM - LOOPS AI - FY26Q4',acv:149999,lic:0,book:149999,ai:149999,ai_acv:149999,date:'2026-12-24'},
-  {q:4,ct:'In Call',id:'101346',desc:'Bunka Shutter Co., Ltd.-Bunka Shutter Co., Ltd.-ERP',acv:351999,lic:561013,book:1759994,ai:325212,ai_acv:65042,date:'2026-12-25'},
+  {q:4,ct:'In Call',id:'101346',desc:'Bunka Shutter Co., Ltd.-Bunka Shutter Co., Ltd.-ERP',acv:350187,lic:487544,book:1750937,ai:325212,ai_acv:65042,date:'2026-12-25'},
 ];
 
 const CHANGES = [
-  {type:'消滅',    opp:'95743', desc:'Kyushu Electric T&D EAM',  from:'Q3 In Call',  to:'失注確定',   acv:-432170, note:'❌ 失注確定'},
-  {type:'ACV改定', opp:'95590', desc:'JERA O&M PoC',             from:'€141,108',    to:'€47,036',    acv:-94072,  note:'ACV改定 -€94,072'},
+  {type:'ACV改定', opp:'101346', desc:'Bunka Shutter Co., Ltd. – ERP', from:'€351,999', to:'€350,187', acv:-1812,  note:'微修正 / License -€73,469'},
 ];
 
-const KPI_CUR  = {acv:7351435,lic:11134489,book:33399685,ai:2677025,ai_acv:838944};
+const KPI_CUR  = {acv:7349623,lic:11061020,book:33390628,ai:2677025,ai_acv:838944};
 const TARGETS  = {acv:9191819, lic:11717775, book:40802500, ai:3752500, ai_acv:1130000};
-const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[3917007,3390765],'4':[2977307,2977307]};
+const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[3390765,3390765],'4':[2977307,2975495]};
 const KPI_STORE = 'ifs_fy26_kpi_v3';
 function loadKT(){try{return JSON.parse(localStorage.getItem(KPI_STORE)||'{}');}catch(e){return{};}}
 function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON.stringify(s));}
@@ -276,7 +275,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
     <div class="chart-card"><h3>In Call ACV vs Target by Quarter (€)</h3><div class="chart-wrap"><canvas id="chartAcv"></canvas></div></div>
     <div class="chart-card"><h3>In Call ACV – Quarter Breakdown</h3><div class="chart-wrap"><canvas id="chartPie"></canvas></div></div>
   </div>
-  <div class="section-title">WTW (vs 2026-06-16)</div>
+  <div class="section-title">WTW (vs 2026-06-22)</div>
   <div class="wtw-grid" id="wtwGrid"></div>
   <script>
   (function(){
@@ -309,15 +308,15 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 <div id="tab-changes" class="tab-content">
 <div class="page">
   <div class="impact-banner">
-    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,877,677</div></div>
+    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,351,435</div></div>
     <div style="font-size:24px;color:var(--muted)">→</div>
-    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,351,435</div></div>
+    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,349,623</div></div>
     <div style="font-size:24px;color:var(--muted)">=</div>
-    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€526,242</div></div>
+    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€1,812</div></div>
     <div style="margin-left:auto;text-align:right;">
       <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">80.0%</div>
     </div>
-    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€1,840,384</div></div>
+    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€1,842,196</div></div>
   </div>
   <div class="section-title">変更内容一覧（2026-06-01 → 2026-06-08）</div>
   <div class="change-table-wrap">
@@ -592,7 +591,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 })();
 </script>
 
-<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-06-22 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
+<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-06-29 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
 
 <script>
 function switchTab(id){
