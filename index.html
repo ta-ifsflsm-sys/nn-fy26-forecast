@@ -180,10 +180,10 @@ function fmtN(n){return Math.round(n).toLocaleString('en-US');}
 function fmt(n){return '€'+Math.round(n).toLocaleString('en-US');}
 
 const DEALS = [
-  {q:1,ct:'In Call',id:'94325',desc:'NEC Corporation-SUBARU New Non-production environments',acv:12599,lic:10412,book:12599,ai:0,ai_acv:0,date:'2026-01-12'},
-  {q:1,ct:'In Call',id:'74989',desc:'ShinMaywa Industries, Ltd.-ShinMaywa Aircraft Div - SCM/MES ',acv:447798,lic:423161,book:2238990,ai:118768,ai_acv:23754,date:'2026-02-26'},
-  {q:1,ct:'In Call',id:'97124',desc:'JVCKENWOOD CORPORATION-JVC KENWOOD Additional Sales',acv:2033,lic:4723,book:10673,ai:0,ai_acv:0,date:'2026-03-06'},
-  {q:1,ct:'In Call',id:'94851',desc:'Mitsubishi Electric Corporation-MELCO_DS_CRP',acv:263850,lic:73769,book:263850,ai:26907,ai_acv:26907,date:'2026-03-19'},
+  {q:1,ct:'Won',    id:'94325',desc:'NEC Corporation-SUBARU New Non-production environments',acv:12599,lic:10412,book:12599,ai:0,ai_acv:0,date:'2026-01-12'},
+  {q:1,ct:'Won',    id:'74989',desc:'ShinMaywa Industries, Ltd.-ShinMaywa Aircraft Div - SCM/MES ',acv:447798,lic:423161,book:2238990,ai:118768,ai_acv:23754,date:'2026-02-26'},
+  {q:1,ct:'Won',    id:'97124',desc:'JVCKENWOOD CORPORATION-JVC KENWOOD Additional Sales',acv:2033,lic:4723,book:10673,ai:0,ai_acv:0,date:'2026-03-06'},
+  {q:1,ct:'Won',    id:'94851',desc:'Mitsubishi Electric Corporation-MELCO_DS_CRP',acv:263850,lic:73769,book:263850,ai:26907,ai_acv:26907,date:'2026-03-19'},
   {q:2,ct:'Won',id:'89753',desc:'JAL Engineering Co.,LTD.-Renewal of BO 43549 - JAL Engineeri',acv:4993,lic:0,book:20806,ai:0,ai_acv:0,date:'2026-04-01'},
   {q:2,ct:'Won',id:'94085',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP2( July–Dece',acv:247942,lic:0,book:247942,ai:0,ai_acv:0,date:'2026-04-30'},
   {q:2,ct:'Won',id:'96173',desc:'NEC Corporation-KHI-Energy&Marine Company - Oracle ASFU',acv:4148,lic:4929,book:6568,ai:0,ai_acv:0,date:'2026-06-05'},
@@ -411,8 +411,8 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
   let html='';
   for(let q=1;q<=4;q++){
     const all=DEALS.filter(d=>d.q===q);
-    const inD=all.filter(d=>d.ct==='In Call'),outD=all.filter(d=>d.ct==='Out Call');
-    const inAcv=inD.reduce((s,d)=>s+d.acv,0);
+    const inD=all.filter(d=>d.ct==='In Call'),wonD=all.filter(d=>d.ct==='Won'),outD=all.filter(d=>d.ct==='Out Call');
+    const inAcv=inD.reduce((s,d)=>s+d.acv,0)+wonD.reduce((s,d)=>s+d.acv,0);
     const rowH=(arr)=>arr.map(d=>`<tr class="row-${d.ct==='In Call'?'in':d.ct==='Won'?'won':'out'}">
       <td><span class="${d.ct==='In Call'?'in-badge':'out-badge'}">${d.ct}</span></td>
       <td><div>${d.desc}</div><div class="opp-id">#${d.id}</div></td>
@@ -432,10 +432,11 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
           <th class="num">AI ACV (€)</th><th>Sign Date</th></tr></thead>
         <tbody>
           ${rowH(inD)}
-          <tr class="subtotal-row"><td colspan="2" style="padding-left:14px">In Call Subtotal</td>
-            <td class="num">${fmtN(sub(inD,'acv'))}</td><td class="num">${fmtN(sub(inD,'lic'))}</td>
-            <td class="num">${fmtN(sub(inD,'book'))}</td><td class="num">${fmtN(sub(inD,'ai'))}</td>
-            <td class="num" style="color:var(--teal)">${fmtN(sub(inD,'ai_acv'))}</td><td></td></tr>
+          ${wonD.length?rowH(wonD):''}
+          <tr class="subtotal-row"><td colspan="2" style="padding-left:14px">In Call + Won Subtotal</td>
+            <td class="num">${fmtN(sub(inD,'acv')+sub(wonD,'acv'))}</td><td class="num">${fmtN(sub(inD,'lic')+sub(wonD,'lic'))}</td>
+            <td class="num">${fmtN(sub(inD,'book')+sub(wonD,'book'))}</td><td class="num">${fmtN(sub(inD,'ai')+sub(wonD,'ai'))}</td>
+            <td class="num" style="color:var(--teal)">${fmtN(sub(inD,'ai_acv')+sub(wonD,'ai_acv'))}</td><td></td></tr>
           ${outD.length?rowH(outD)+`<tr class="subtotal-row"><td colspan="2" style="padding-left:14px">Out Call Subtotal</td>
             <td class="num">${fmtN(sub(outD,'acv'))}</td><td class="num">${fmtN(sub(outD,'lic'))}</td>
             <td class="num">${fmtN(sub(outD,'book'))}</td><td class="num">${fmtN(sub(outD,'ai'))}</td>
@@ -446,6 +447,379 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 })();
 </script>
 </div></div>
+
+<!-- ═══ DEAL MANAGEMENT TAB ═══ -->
+<div id="tab-deals" class="tab-content">
+<div class="page">
+  <div class="deal-filters">
+    <input type="text" id="dealSearch" placeholder="Search deals…" oninput="renderDeals()">
+    <select id="filterQ" onchange="renderDeals()">
+      <option value="">All Quarters</option>
+      <option value="1">Q1</option><option value="2">Q2</option>
+      <option value="3">Q3</option><option value="4">Q4</option>
+    </select>
+    <select id="filterCt" onchange="renderDeals()">
+      <option value="">In & Out Call</option>
+      <option value="In Call">In Call</option><option value="Out Call">Out Call</option>
+    </select>
+  </div>
+  <div class="deal-table-wrap">
+    <table>
+      <thead><tr>
+        <th>Q</th><th>Type</th><th>Opp No.</th><th>Opportunity</th>
+        <th class="num">ACV (€)</th><th class="num">License (€)</th>
+        <th class="num">Booking (€)</th><th class="num">AI Booking (€)</th>
+        <th class="num">AI ACV (€)</th><th>Sign Date</th>
+        <th>Stage</th><th>Status</th><th>Competition</th><th>Notes</th>
+      </tr></thead>
+      <tbody id="dealTableBody"></tbody>
+    </table>
+  </div>
+  <div style="margin-top:10px;font-size:11px;color:var(--muted)">Stage / Status / Competition / Notes はブラウザに自動保存（localStorage）</div>
+</div></div>
+
+
+<!-- ═══ GAP ANALYSIS TAB ═══ -->
+<div id="tab-gap" class="tab-content">
+<div class="page">
+
+  <div class="section-title">WTW Deal-Level Breakdown（前週比 案件別増減）</div>
+
+  <div id="wtwBreakdown"></div>
+
+</div>
+</div>
+
+<script>
+(function(){
+  // ── 週次 WTW データ（案件別増減）
+  const WTW_WEEKS = [
+    {
+      date: '07-07', prev_date: '06-29',
+      prev_acv: 7349623, cur_acv: 7311606,
+      net: -38017,
+      changes: [
+
+        {q:'Q3', opp:'90924', desc:'MELCO A&D',                       delta:-69647, type:'neg',  note:'ACV改定'},
+        {q:'Q3', opp:'100854',desc:'ITOKI MFG',                       delta:21423,  type:'pos',  note:'ACV増額'},
+        {q:'Q4', opp:'101346',desc:'Bunka Shutter Co., Ltd. – ERP',  delta:11951,  type:'pos',  note:'ACV微修正'},
+        {q:'Q4', opp:'93171', desc:'NEC – KHI Plant Procurement',     delta:-23509, type:'neg',  note:'ACV改定'},
+        {q:'Q4', opp:'95268', desc:'ShinMaywa – Ground Support',      delta:21765,  type:'pos',  note:'ACV増額'},
+      ]
+    },
+    {
+      date: '06-29', prev_date: '06-22',
+      prev_acv: 7351435, cur_acv: 7349623,
+      net: -1812,
+      changes: [
+        {q:'Q4', opp:'101346',desc:'Bunka Shutter Co., Ltd. – ERP',  delta:-1812,  type:'neg',  note:'ACV微修正'},
+      ]
+    },
+    {
+      date: '06-22', prev_date: '06-16',
+      prev_acv: 7877677, cur_acv: 7351435,
+      net: -526242,
+      changes: [
+        {q:'Q3', opp:'95743', desc:'NEC – Kyushu Electric T&D EAM',  delta:-432170, type:'lost', note:'❌ 失注確定'},
+        {q:'Q3', opp:'95590', desc:'JERA – O&M CPLF PoC',            delta:-94072,  type:'neg',  note:'ACV改定（€141K→€47K）'},
+      ]
+    },
+    {
+      date: '06-16', prev_date: '06-08',
+      prev_acv: 7866746, cur_acv: 7877677,
+      net: 10931,
+      changes: [
+        {q:'Q4', opp:'101346',desc:'Bunka Shutter Co., Ltd. – ERP',  delta:351999,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'91740', desc:'IBM – ROHM Loops AI',             delta:149999,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'95268', desc:'ShinMaywa – Ground Support',      delta:58228,   type:'pos',  note:'ACV増額'},
+        {q:'Q2', opp:'94085', desc:'JAL Customer Success',            delta:-247941, type:'neg',  note:'ACV改定（€495K→€247K）'},
+        {q:'Q3', opp:'90924', desc:'MELCO A&D',                       delta:-318897, type:'neg',  note:'ACV改定'},
+        {q:'Q3', opp:'98278', desc:'MELCO DS – Customer Success',     delta:-132456, type:'neg',  note:'ACV改定'},
+        {q:'Q3', opp:'102296',desc:'MELCO DS Add ERP（Upside）',     delta:149999,  type:'new',  note:'新規追加'},
+      ]
+    },
+    {
+      date: '06-08', prev_date: '06-01',
+      prev_acv: 8247148, cur_acv: 7866746,
+      net: -380402,
+      changes: [
+        {q:'Q4', opp:'57736', desc:'Lasertec – ERP & FSM',            delta:-523591, type:'lost', note:'ソース消滅'},
+        {q:'Q4', opp:'99759', desc:'Kirin Holdings – Kirin FSM',      delta:-318965, type:'neg',  note:'ACV改定（€564K→€245K）'},
+        {q:'Q3', opp:'75205', desc:'Inaba Foods – ERP',               delta:372194,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q3', opp:'95590', desc:'JERA – O&M PoC',                  delta:141108,  type:'new',  note:'Q4→Q3 In Call化'},
+        {q:'Q4', opp:'91739', desc:'NEC – KHI Energy Loops AI',       delta:202517,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q2', opp:'75026', desc:'SkyDrive – ICAM',                  delta:-68418,  type:'neg',  note:'Q2 In Call → Q3 Out Call'},
+        {q:'Q4', opp:'84447', desc:'Honda Marine POKA',               delta:-44139,  type:'neg',  note:'In Call → Out Call'},
+        {q:'Q4', opp:'95590', desc:'JERA – O&M PoC（Q4分）',         delta:-141108, type:'neg',  note:'Q4→Q3移動'},
+      ]
+    },
+    {
+      date: '06-01', prev_date: '05-25',
+      prev_acv: 5585852, cur_acv: 8247148,
+      net: 2661296,
+      changes: [
+        {q:'Q4', opp:'68562', desc:'Hitachi Construction – ERP',      delta:611585,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'95268', desc:'ShinMaywa – Ground Support',      delta:651468,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'99759', desc:'Kirin FSM',                       delta:564637,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'57736', desc:'Lasertec – ERP & FSM',            delta:523591,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'93171', desc:'KHI Plant Procurement',           delta:640392,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'95590', desc:'JERA – O&M PoC',                  delta:141108,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q3', opp:'100854',desc:'ITOKI MFG',                       delta:353143,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q3', opp:'75205', desc:'Inaba Foods – ERP',               delta:-372194, type:'neg',  note:'削除（前週比）'},
+        {q:'Q3', opp:'90047', desc:'IHI Non-PROD Env',                delta:-251119, type:'lost', note:'ソース消滅'},
+        {q:'Q3', opp:'90924', desc:'MELCO A&D',                       delta:138109,  type:'pos',  note:'ACV増額'},
+        {q:'Q2', opp:'90748', desc:'FUTABA – ERP License',            delta:-450310, type:'lost', note:'ソース消滅'},
+        {q:'Q4', opp:'84447', desc:'Honda Marine POKA',               delta:-44139,  type:'neg',  note:'In Call → Out Call'},
+      ]
+    },
+  ];
+
+  const TYPE_STYLE = {
+    pos:  {bg:'rgba(76,201,122,0.08)',  fc:'#4cc97a', icon:'▲'},
+    neg:  {bg:'rgba(240,90,90,0.08)',   fc:'#f05a5a', icon:'▼'},
+    new:  {bg:'rgba(59,158,255,0.08)',  fc:'#3b9eff', icon:'＋'},
+    lost: {bg:'rgba(240,90,90,0.14)',   fc:'#f05a5a', icon:'✕'},
+    won:  {bg:'rgba(76,201,122,0.05)',  fc:'#4cc97a', icon:'★'},
+  };
+
+  const TARGET = 9191819;
+
+  const html = WTW_WEEKS.map(week => {
+    const netColor = week.net > 0 ? '#4cc97a' : week.net < 0 ? '#f05a5a' : '#6b8aaa';
+    const netSign  = week.net > 0 ? '+' : '';
+    const netStr   = week.net === 0 ? '±0' : `${netSign}€${Math.abs(week.net).toLocaleString('en-US')}`;
+
+    const dealRows = week.changes.map(ch => {
+      const s = TYPE_STYLE[ch.type] || TYPE_STYLE.neg;
+      const dStr = ch.delta === 0
+        ? `<span style="color:var(--muted)">ACV変化なし</span>`
+        : `<span style="color:${ch.delta>0?'#4cc97a':'#f05a5a'};font-weight:600">
+            ${s.icon} ${ch.delta>0?'+':''}€${Math.abs(ch.delta).toLocaleString('en-US')}
+           </span>`;
+      return `<tr style="background:${s.bg};border-bottom:1px solid rgba(255,255,255,0.04)">
+        <td style="width:50px;text-align:center;color:var(--accent);font-weight:600;font-size:12px">${ch.q}</td>
+        <td style="font-size:12px;color:var(--muted)">${ch.opp}</td>
+        <td style="font-size:13px">${ch.desc}</td>
+        <td style="font-size:12px;color:var(--muted)">${ch.note}</td>
+        <td style="text-align:right;font-size:13px">${dStr}</td>
+      </tr>`;
+    }).join('');
+
+    const pct = (week.cur_acv / TARGET * 100).toFixed(1);
+
+    return `
+    <div style="background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;">
+      <!-- week header -->
+      <div style="display:flex;align-items:center;gap:16px;padding:14px 20px;background:rgba(255,255,255,0.03);border-bottom:1px solid var(--border);">
+        <div style="font-size:15px;font-weight:700;color:var(--text);min-width:80px">${week.prev_date} → ${week.date}</div>
+        <div style="font-size:22px;font-weight:700;color:${netColor}">${netStr}</div>
+        <div style="color:var(--muted);font-size:12px">
+          €${week.prev_acv.toLocaleString('en-US')} → <strong style="color:var(--text)">€${week.cur_acv.toLocaleString('en-US')}</strong>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+          <div style="width:100px;background:rgba(255,255,255,0.06);border-radius:3px;height:6px;overflow:hidden">
+            <div style="width:${Math.min(pct,100)}%;height:100%;background:var(--accent);border-radius:3px"></div>
+          </div>
+          <span style="font-size:12px;color:var(--muted);min-width:38px">${pct}%</span>
+        </div>
+      </div>
+      <!-- deal rows -->
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.06)">
+          <th style="padding:8px 14px;font-size:10px;text-transform:uppercase;color:var(--muted);text-align:center;width:50px">Q</th>
+          <th style="padding:8px 14px;font-size:10px;text-transform:uppercase;color:var(--muted);width:80px">Opp No</th>
+          <th style="padding:8px 14px;font-size:10px;text-transform:uppercase;color:var(--muted)">案件名</th>
+          <th style="padding:8px 14px;font-size:10px;text-transform:uppercase;color:var(--muted)">変化内容</th>
+          <th style="padding:8px 14px;font-size:10px;text-transform:uppercase;color:var(--muted);text-align:right">ACV増減</th>
+        </tr></thead>
+        <tbody>${dealRows}</tbody>
+      </table>
+    </div>`;
+  }).join('');
+
+  document.getElementById('wtwBreakdown').innerHTML = html;
+})();
+</script>
+
+
+<!-- ═══ DEAL MANAGEMENT TAB ═══ -->
+<div id="tab-deals" class="tab-content">
+<div class="page">
+  <div class="deal-filters">
+    <input type="text" id="dealSearch" placeholder="Search deals…" oninput="renderDeals()">
+    <select id="filterQ" onchange="renderDeals()">
+      <option value="">All Quarters</option>
+      <option value="1">Q1</option><option value="2">Q2</option>
+      <option value="3">Q3</option><option value="4">Q4</option>
+    </select>
+    <select id="filterCt" onchange="renderDeals()">
+      <option value="">In & Out Call</option>
+      <option value="In Call">In Call</option><option value="Out Call">Out Call</option>
+    </select>
+  </div>
+  <div class="deal-table-wrap">
+    <table>
+      <thead><tr>
+        <th>Q</th><th>Type</th><th>Opp No.</th><th>Opportunity</th>
+        <th class="num">ACV (€)</th><th class="num">License (€)</th>
+        <th class="num">Booking (€)</th><th class="num">AI Booking (€)</th>
+        <th class="num">AI ACV (€)</th><th>Sign Date</th>
+        <th>Stage</th><th>Status</th><th>Competition</th><th>Notes</th>
+      </tr></thead>
+      <tbody id="dealTableBody"></tbody>
+    </table>
+  </div>
+  <div style="margin-top:10px;font-size:11px;color:var(--muted)">Stage / Status / Competition / Notes はブラウザに自動保存（localStorage）</div>
+</div></div>
+
+
+<!-- ═══ GAP ANALYSIS TAB ═══ -->
+<div id="tab-gap" class="tab-content">
+<div class="page">
+
+  <!-- サマリカード -->
+  <div class="gap-summary-grid">
+    <div class="gap-summary-card">
+      <div class="gap-summary-label">FY26 ACV Target</div>
+      <div class="gap-summary-val" style="color:var(--accent)">€9,191,819</div>
+    </div>
+    <div class="gap-summary-card">
+      <div class="gap-summary-label">前週 In Call ACV</div>
+      <div class="gap-summary-val" style="color:var(--accent2)">€7,349,623</div>
+      <div class="gap-summary-sub">2026-06-29</div>
+    </div>
+    <div class="gap-summary-card">
+      <div class="gap-summary-label">今週 In Call + Won ACV</div>
+      <div class="gap-summary-val" style="color:var(--gold)">€7,311,606</div>
+      <div class="gap-summary-sub">2026-07-07 / 79.5%</div>
+    </div>
+    <div class="gap-summary-card" style="border-color:rgba(240,90,90,0.4)">
+      <div class="gap-summary-label">残ギャップ</div>
+      <div class="gap-summary-val" style="color:var(--red)">-€1,880,213</div>
+      <div class="gap-summary-sub">Out Call合計 €318,619 / カバー率 16.9%</div>
+    </div>
+  </div>
+
+  <!-- 週次推移テーブル -->
+  <div class="section-title">週次 In Call ACV 推移（前週比）</div>
+  <div class="gap-waterfall gap-section">
+    <table>
+      <thead><tr>
+        <th>日付</th>
+        <th>主な変化内容</th>
+        <th class="num">WTW差分 (€)</th>
+        <th class="num">In Call ACV (€)</th>
+        <th>達成率</th>
+      </tr></thead>
+      <tbody>
+        <tr style="background:rgba(255,255,255,0.02)">
+          <td style="color:var(--muted);font-size:12px;font-weight:600">06-01</td>
+          <td style="font-size:12px">ピーク</td>
+          <td class="num"><span style="font-weight:600;color:var(--muted)">±0</span></td>
+          <td class="num" style="font-weight:600">€8,247,148</td>
+          <td><div style="display:flex;align-items:center;gap:8px">
+            <div style="width:80px;background:rgba(255,255,255,0.06);border-radius:3px;height:5px;overflow:hidden">
+              <div style="width:89.7%;height:100%;background:#3b9eff;border-radius:3px"></div>
+            </div>
+            <span style="font-size:11px;color:var(--muted)">89.7%</span>
+          </div></td>
+        </tr><tr style="background:rgba(240,90,90,0.06)">
+          <td style="color:var(--muted);font-size:12px;font-weight:600">06-08</td>
+          <td style="font-size:12px">Lasertec消滅・Kirin改定</td>
+          <td class="num"><span style="font-weight:600;color:var(--red)">-€{abs(chg):,.0f}</span></td>
+          <td class="num" style="font-weight:600">€7,866,746</td>
+          <td><div style="display:flex;align-items:center;gap:8px">
+            <div style="width:80px;background:rgba(255,255,255,0.06);border-radius:3px;height:5px;overflow:hidden">
+              <div style="width:85.6%;height:100%;background:#3b9eff;border-radius:3px"></div>
+            </div>
+            <span style="font-size:11px;color:var(--muted)">85.6%</span>
+          </div></td>
+        </tr><tr style="background:rgba(76,201,122,0.04)">
+          <td style="color:var(--muted);font-size:12px;font-weight:600">06-16</td>
+          <td style="font-size:12px">文化シャッター/ROHM In Call化</td>
+          <td class="num"><span style="font-weight:600;color:var(--green)">+€{abs(chg):,.0f}</span></td>
+          <td class="num" style="font-weight:600">€7,877,677</td>
+          <td><div style="display:flex;align-items:center;gap:8px">
+            <div style="width:80px;background:rgba(255,255,255,0.06);border-radius:3px;height:5px;overflow:hidden">
+              <div style="width:85.7%;height:100%;background:#3b9eff;border-radius:3px"></div>
+            </div>
+            <span style="font-size:11px;color:var(--muted)">85.7%</span>
+          </div></td>
+        </tr><tr style="background:rgba(240,90,90,0.06)">
+          <td style="color:var(--muted);font-size:12px;font-weight:600">06-22</td>
+          <td style="font-size:12px">Kyushu Electric 失注</td>
+          <td class="num"><span style="font-weight:600;color:var(--red)">-€{abs(chg):,.0f}</span></td>
+          <td class="num" style="font-weight:600">€7,351,435</td>
+          <td><div style="display:flex;align-items:center;gap:8px">
+            <div style="width:80px;background:rgba(255,255,255,0.06);border-radius:3px;height:5px;overflow:hidden">
+              <div style="width:80.0%;height:100%;background:#3b9eff;border-radius:3px"></div>
+            </div>
+            <span style="font-size:11px;color:var(--muted)">80.0%</span>
+          </div></td>
+        </tr><tr style="background:rgba(240,90,90,0.06)">
+          <td style="color:var(--muted);font-size:12px;font-weight:600">06-29</td>
+          <td style="font-size:12px">Bunka Shutter微修正</td>
+          <td class="num"><span style="font-weight:600;color:var(--red)">-€{abs(chg):,.0f}</span></td>
+          <td class="num" style="font-weight:600">€7,349,623</td>
+          <td><div style="display:flex;align-items:center;gap:8px">
+            <div style="width:80px;background:rgba(255,255,255,0.06);border-radius:3px;height:5px;overflow:hidden">
+              <div style="width:80.0%;height:100%;background:#3b9eff;border-radius:3px"></div>
+            </div>
+            <span style="font-size:11px;color:var(--muted)">80.0%</span>
+          </div></td>
+        </tr><tr style="background:rgba(240,90,90,0.06)">
+          <td style="color:var(--muted);font-size:12px;font-weight:600">07-07</td>
+          <td style="font-size:12px">MELCO改定・Q2 Won化</td>
+          <td class="num"><span style="font-weight:600;color:var(--red)">-€{abs(chg):,.0f}</span></td>
+          <td class="num" style="font-weight:600">€7,311,606</td>
+          <td><div style="display:flex;align-items:center;gap:8px">
+            <div style="width:80px;background:rgba(255,255,255,0.06);border-radius:3px;height:5px;overflow:hidden">
+              <div style="width:79.5%;height:100%;background:#3b9eff;border-radius:3px"></div>
+            </div>
+            <span style="font-size:11px;color:var(--muted)">79.5%</span>
+          </div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Out Call残案件 -->
+  <div class="section-title">Out Call 残案件（補填候補）</div>
+  <div style="background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px;">
+    <div id="outCallSummary2"></div>
+  </div>
+
+  <div style="background:rgba(240,90,90,0.06);border:1px solid rgba(240,90,90,0.3);border-radius:var(--radius);padding:18px;">
+    <div style="font-size:13px;font-weight:600;color:var(--red);margin-bottom:10px">⚠️ 現状評価（2026-07-07）</div>
+    <div style="font-size:13px;color:var(--text-dim);line-height:2">
+      現 Out Call候補合計 <strong style="color:var(--text)">€318,619</strong>（7件）はGapの <strong style="color:var(--gold)">16.9%</strong> のみ。<br>
+      消滅した大型案件（Otsuka HD / Sankyu / MHI JASDF POC 2、計 <strong style="color:var(--text)">€1.85M</strong>）の状況確認が必要。<br>
+      新規パイプラインなしでは目標達成困難。現実的な着地は <strong style="color:var(--gold)">85〜90%</strong> 程度。
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+(function(){
+  const outD2 = DEALS.filter(d => d.ct === 'Out Call');
+  const total2 = outD2.reduce((s,d)=>s+d.acv,0);
+  const gap2   = 1880213;
+  document.getElementById('outCallSummary2').innerHTML =
+    outD2.sort((a,b)=>b.acv-a.acv).map(d=>
+      `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div><span style="color:var(--muted);font-size:11px;margin-right:8px">Q${d.q}</span>${d.desc}</div>
+        <span style="font-weight:600;color:var(--text-dim)">€${fmtN(d.acv)}</span>
+      </div>`).join('') +
+    `<div style="display:flex;justify-content:space-between;padding:12px 0 4px;font-weight:700">
+      <span>Out Call合計</span><span style="color:var(--gold)">€${fmtN(total2)}</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)">
+      <span>vs 残ギャップ €${fmtN(gap2)}</span>
+      <span style="color:var(--red)">${(total2/gap2*100).toFixed(1)}% しかカバーできない</span></div>`;
+})();
+</script>
+
 
 <!-- ═══ DEAL MANAGEMENT TAB ═══ -->
 <div id="tab-deals" class="tab-content">
