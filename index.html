@@ -87,6 +87,9 @@ tbody td{padding:10px 14px;font-size:13px;}
 tbody td.num{text-align:right;font-variant-numeric:tabular-nums;}
 .in-badge{display:inline-block;background:rgba(76,201,122,0.18);color:#4cc97a;border:1px solid rgba(76,201,122,0.35);border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;}
 .out-badge{display:inline-block;background:rgba(240,90,90,0.18);color:#f05a5a;border:1px solid rgba(240,90,90,0.35);border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;}
+.won-badge{display:inline-block;background:rgba(76,201,122,0.18);color:#4cc97a;border:1px solid rgba(76,201,122,0.5);border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;letter-spacing:0.3px;}
+tr.row-won:hover{background:rgba(76,201,122,0.04)!important;}
+tr.row-won td:first-child{border-left:2px solid rgba(76,201,122,0.6);}
 .subtotal-row td{background:rgba(255,255,255,0.03);font-weight:600;font-size:12px;color:var(--text-dim);}
 tr.row-in:hover{background:rgba(76,201,122,0.06)!important;}
 tr.row-out:hover{background:rgba(240,90,90,0.06)!important;}
@@ -158,7 +161,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-t
     <div class="logo">IF</div>
     <div>
       <h1>IFS Japan &nbsp;–&nbsp; FY26 Forecast Dashboard</h1>
-      <div class="meta">Last updated: 2026-06-29</div>
+      <div class="meta">Last updated: 2026-07-07</div>
     </div>
   </div>
   <span class="badge">In Call Only &nbsp;·&nbsp; EUR</span>
@@ -181,42 +184,49 @@ const DEALS = [
   {q:1,ct:'In Call',id:'74989',desc:'ShinMaywa Industries, Ltd.-ShinMaywa Aircraft Div - SCM/MES ',acv:447798,lic:423161,book:2238990,ai:118768,ai_acv:23754,date:'2026-02-26'},
   {q:1,ct:'In Call',id:'97124',desc:'JVCKENWOOD CORPORATION-JVC KENWOOD Additional Sales',acv:2033,lic:4723,book:10673,ai:0,ai_acv:0,date:'2026-03-06'},
   {q:1,ct:'In Call',id:'94851',desc:'Mitsubishi Electric Corporation-MELCO_DS_CRP',acv:263850,lic:73769,book:263850,ai:26907,ai_acv:26907,date:'2026-03-19'},
-  {q:2,ct:'In Call',id:'89753',desc:'JAL Engineering Co.,LTD.-Renewal of BO 43549 - JAL Engineeri',acv:4993,lic:0,book:20806,ai:0,ai_acv:0,date:'2026-04-01'},
-  {q:2,ct:'In Call',id:'94085',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP2( July–Dece',acv:247942,lic:0,book:247942,ai:0,ai_acv:0,date:'2026-04-30'},
-  {q:2,ct:'In Call',id:'96173',desc:'NEC Corporation-KHI-Energy&Marine Company - Oracle ASFU',acv:4148,lic:4929,book:6568,ai:0,ai_acv:0,date:'2026-06-05'},
-  {q:3,ct:'Out Call',id:'102836',desc:'IBM Japan, Ltd-Additional 50 BuildPlace Users',acv:6954,lic:0,book:9852,ai:0,ai_acv:0,date:'2026-07-10'},
+  {q:2,ct:'Won',id:'89753',desc:'JAL Engineering Co.,LTD.-Renewal of BO 43549 - JAL Engineeri',acv:4993,lic:0,book:20806,ai:0,ai_acv:0,date:'2026-04-01'},
+  {q:2,ct:'Won',id:'94085',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP2( July–Dece',acv:247942,lic:0,book:247942,ai:0,ai_acv:0,date:'2026-04-30'},
+  {q:2,ct:'Won',id:'96173',desc:'NEC Corporation-KHI-Energy&Marine Company - Oracle ASFU',acv:4148,lic:4929,book:6568,ai:0,ai_acv:0,date:'2026-06-05'},
+  {q:3,ct:'Out Call',id:'102836',desc:'IBM Japan, Ltd-Additional 50 BuildPlace Users - ROHM',acv:6954,lic:0,book:9852,ai:0,ai_acv:0,date:'2026-07-10'},
   {q:3,ct:'Out Call',id:'102456',desc:'NEC Corporation-Renewal of BO 66190 - SUBARU -Add Use Place ',acv:27521,lic:22745,book:27521,ai:0,ai_acv:0,date:'2026-07-29'},
   {q:3,ct:'In Call',id:'91278',desc:'Japan Airlines Co., Ltd.-JAL Demand Planning Server',acv:9942,lic:0,book:14913,ai:0,ai_acv:0,date:'2026-09-09'},
-  {q:3,ct:'In Call',id:'98278',desc:'Mitsubishi Electric Corporation-MELCO_DS_Customer Success Oc',acv:85475,lic:0,book:521399,ai:0,ai_acv:0,date:'2026-09-18'},
   {q:3,ct:'In Call',id:'95590',desc:'JERA Co., Inc.-JERA O&M CPLF Asset  PoV',acv:47036,lic:0,book:47036,ai:0,ai_acv:0,date:'2026-09-18'},
+  {q:3,ct:'In Call',id:'98278',desc:'Mitsubishi Electric Corporation-MELCO_DS_Customer Success Oc',acv:85475,lic:0,book:521399,ai:0,ai_acv:0,date:'2026-09-18'},
   {q:3,ct:'Out Call',id:'75026',desc:'SkyDrive Inc.-Skydrive - ICAM - Type Certificate Configurati',acv:68418,lic:48856,book:205254,ai:81710,ai_acv:27237,date:'2026-09-18'},
-  {q:3,ct:'In Call',id:'90924',desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;',acv:1978889,lic:5114973,book:11494048,ai:136183,ai_acv:27237,date:'2026-09-18'},
-  {q:3,ct:'In Call',id:'100854',desc:'ITOKI CORPORATION-ITOKI MFG Mgmt. - New 600 User - FY26Q3',acv:353143,lic:99777,book:1765715,ai:642686,ai_acv:128537,date:'2026-09-22'},
+  {q:3,ct:'In Call',id:'90924',desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;',acv:1909242,lic:4715881,book:11090872,ai:136183,ai_acv:27237,date:'2026-09-18'},
+  {q:3,ct:'In Call',id:'100854',desc:'ITOKI CORPORATION-ITOKI MFG Mgmt. - New 600 User - FY26Q3',acv:374566,lic:99777,book:1872829,ai:749801,ai_acv:149960,date:'2026-09-22'},
   {q:3,ct:'In Call',id:'73746',desc:'NEC Corporation-KHI-Energy&Marine Company-Manufacturing MES ',acv:394087,lic:697858,book:1970436,ai:449786,ai_acv:89957,date:'2026-09-22'},
   {q:3,ct:'In Call',id:'102296',desc:'Mitsubishi Electric Corporation-Upside - MELCO DS Add Env+Ad',acv:149999,lic:340908,book:749997,ai:0,ai_acv:0,date:'2026-09-28'},
   {q:3,ct:'In Call',id:'75205',desc:'Inaba foods Co.,Ltd-Inaba Foods_ERP',acv:372194,lic:394790,book:1860968,ai:117595,ai_acv:23519,date:'2026-09-28'},
-  {q:4,ct:'In Call',id:'93171',desc:'NEC Corporation-KHI - Plant Procurement',acv:640392,lic:1452738,book:3201959,ai:125927,ai_acv:25185,date:'2026-10-20'},
+  {q:4,ct:'In Call',id:'93171',desc:'NEC Corporation-KHI - Plant Procurement',acv:616883,lic:1335191,book:3084413,ai:125927,ai_acv:25185,date:'2026-10-20'},
   {q:4,ct:'Out Call',id:'99143',desc:'YKK AP Inc.-YKKAP - New - POKA',acv:66122,lic:0,book:198366,ai:0,ai_acv:0,date:'2026-10-23'},
   {q:4,ct:'In Call',id:'68562',desc:'Hitachi Construction Machinery Japan Co., Ltd.-Inbound-Hitac',acv:611585,lic:694423,book:1834755,ai:0,ai_acv:0,date:'2026-11-12'},
   {q:4,ct:'In Call',id:'96704',desc:'NEC Corporation-MHI AEL-Oracle',acv:43393,lic:82529,book:137410,ai:0,ai_acv:0,date:'2026-11-20'},
   {q:4,ct:'In Call',id:'86759',desc:'NEC Corporation-SUBARU_ai',acv:22054,lic:0,book:110268,ai:110268,ai_acv:22054,date:'2026-11-20'},
-  {q:4,ct:'In Call',id:'95268',desc:'ShinMaywa Industries, Ltd.-ShinMaywa - Ground Support vehicl',acv:709696,lic:1066365,book:3548481,ai:134994,ai_acv:26999,date:'2026-11-23'},
-  {q:4,ct:'Out Call',id:'92865',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP3/CP4 (Janua',acv:375,lic:0,book:469079,ai:0,ai_acv:0,date:'2026-12-01'},
+  {q:4,ct:'In Call',id:'95268',desc:'ShinMaywa Industries, Ltd.-ShinMaywa - Ground Support vehicl',acv:731461,lic:1175189,book:3657305,ai:134994,ai_acv:26999,date:'2026-11-23'},
+  {q:4,ct:'Out Call',id:'92865',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP3/CP4 (Janua',acv:449720,lic:0,book:469079,ai:0,ai_acv:0,date:'2026-12-01'},
   {q:4,ct:'Out Call',id:'84447',desc:'Honda Motor Co., Ltd.-Honda Marine- POKA',acv:44139,lic:0,book:220694,ai:0,ai_acv:0,date:'2026-12-18'},
   {q:4,ct:'In Call',id:'99759',desc:'Kirin Holdings Company, Limited-Kirin_FSM',acv:245672,lic:112121,book:1228362,ai:136183,ai_acv:27237,date:'2026-12-18'},
   {q:4,ct:'Out Call',id:'94852',desc:'NEC Corporation- SUBARU MES',acv:105090,lic:172279,book:262725,ai:0,ai_acv:0,date:'2026-12-21'},
   {q:4,ct:'In Call',id:'91739',desc:'NEC Corporation-KHI Energy & Marine - Loops AI - FY26Q4',acv:202517,lic:0,book:202517,ai:202517,ai_acv:202517,date:'2026-12-23'},
   {q:4,ct:'In Call',id:'91740',desc:'IBM Japan, Ltd-ROHM - LOOPS AI - FY26Q4',acv:149999,lic:0,book:149999,ai:149999,ai_acv:149999,date:'2026-12-24'},
-  {q:4,ct:'In Call',id:'101346',desc:'Bunka Shutter Co., Ltd.-Bunka Shutter Co., Ltd.-ERP',acv:350187,lic:487544,book:1750937,ai:325212,ai_acv:65042,date:'2026-12-25'},
+  {q:4,ct:'In Call',id:'101346',desc:'Bunka Shutter Co., Ltd.-Bunka Shutter Co., Ltd.-ERP',acv:362138,lic:547298,book:1810691,ai:325212,ai_acv:65042,date:'2026-12-25'},
 ];
 
 const CHANGES = [
-  {type:'ACV改定', opp:'101346', desc:'Bunka Shutter Co., Ltd. – ERP', from:'€351,999', to:'€350,187', acv:-1812,  note:'微修正 / License -€73,469'},
+  {type:'Won',     opp:'89753', desc:'JAL Engineering – Renewal',        from:'Q2 In Call', to:'Won（受注確定）', acv:0,      note:'元々In Call・ステータス変更のみ'},
+  {type:'Won',     opp:'94085', desc:'JAL Customer Success',             from:'Q2 In Call', to:'Won（受注確定）', acv:0,      note:'元々In Call・ステータス変更のみ'},
+  {type:'Won',     opp:'96173', desc:'NEC – KHI Oracle ASFU',            from:'Q2 In Call', to:'Won（受注確定）', acv:0,      note:'元々In Call・ステータス変更のみ'},
+  {type:'ACV改定', opp:'90924', desc:'MELCO A&D',                        from:'€1,978,889', to:'€1,909,242',     acv:-69647, note:'案件金額修正'},
+  {type:'ACV改定', opp:'100854',desc:'ITOKI MFG',                        from:'€353,143',   to:'€374,566',       acv:21423,  note:'ACV増額'},
+  {type:'ACV改定', opp:'101346',desc:'Bunka Shutter Co., Ltd. – ERP',   from:'€350,187',   to:'€362,138',       acv:11951,  note:''},
+  {type:'ACV改定', opp:'93171', desc:'NEC – KHI Plant Procurement',      from:'€640,392',   to:'€616,883',       acv:-23509, note:''},
+  {type:'ACV改定', opp:'95268', desc:'ShinMaywa – Ground Support',       from:'€709,696',   to:'€731,461',       acv:21765,  note:''},
 ];
 
-const KPI_CUR  = {acv:7349623,lic:11061020,book:33390628,ai:2677025,ai_acv:838944};
+const KPI_CUR  = {acv:7311606,lic:10712959,book:33145598,ai:2784140,ai_acv:860367};
 const TARGETS  = {acv:9191819, lic:11717775, book:40802500, ai:3752500, ai_acv:1130000};
-const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[3390765,3390765],'4':[2977307,2975495]};
+const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[3390765,3342541],'4':[2975495,2985702]};
 const KPI_STORE = 'ifs_fy26_kpi_v3';
 function loadKT(){try{return JSON.parse(localStorage.getItem(KPI_STORE)||'{}');}catch(e){return{};}}
 function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON.stringify(s));}
@@ -275,7 +285,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
     <div class="chart-card"><h3>In Call ACV vs Target by Quarter (€)</h3><div class="chart-wrap"><canvas id="chartAcv"></canvas></div></div>
     <div class="chart-card"><h3>In Call ACV – Quarter Breakdown</h3><div class="chart-wrap"><canvas id="chartPie"></canvas></div></div>
   </div>
-  <div class="section-title">WTW (vs 2026-06-22)</div>
+  <div class="section-title">WTW (vs 2026-06-29)</div>
   <div class="wtw-grid" id="wtwGrid"></div>
   <script>
   (function(){
@@ -308,15 +318,15 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 <div id="tab-changes" class="tab-content">
 <div class="page">
   <div class="impact-banner">
-    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,351,435</div></div>
+    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,349,623</div></div>
     <div style="font-size:24px;color:var(--muted)">→</div>
-    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,349,623</div></div>
+    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€7,311,606</div></div>
     <div style="font-size:24px;color:var(--muted)">=</div>
-    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€1,812</div></div>
+    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€38,017</div></div>
     <div style="margin-left:auto;text-align:right;">
-      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">80.0%</div>
+      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">79.5%</div>
     </div>
-    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€1,842,196</div></div>
+    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€1,880,213</div></div>
   </div>
   <div class="section-title">変更内容一覧（2026-06-01 → 2026-06-08）</div>
   <div class="change-table-wrap">
@@ -376,11 +386,17 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
   })();
   </script>
   <div style="background:rgba(59,158,255,0.06);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:8px;">
-    <div style="font-size:12px;color:var(--text-dim);line-height:1.8">
-      <strong style="color:var(--accent)">★ 残ギャップ €1,325,073 の状況：</strong><br>
-      現 Out Call 7件合計 €713,524。全件 In Call 化しても €611,549 不足。<br>
-      文化シャッターを <strong>€747,400</strong> まで積み上げた上で他 Out Call 全件 In Call 化で100%到達。<br>
-      また Otsuka HD / Sankyu / MHI JASDF POC 2（合計 <strong>€1.85M</strong>）がCRMから消えており確認が必要。
+    <div style="font-size:12px;color:var(--text-dim);line-height:1.9">
+      <strong style="color:var(--accent)">📌 今週の変化（2026-06-29）</strong><br>
+      実質的な変化なし。Bunka Shutter Co., Ltd. – ERP のACV / Licenseが微修正（-€1,812 / -€73,469）のみ。<br><br>
+      <strong style="color:var(--accent)">📌 残ギャップ €1,842,196 の対策</strong><br>
+      現 Out Call 7件合計 <strong style="color:var(--gold)">€318,619</strong>。
+      全件 In Call 化しても <strong style="color:var(--red)">€1,523,577</strong> 不足。<br>
+      Out Callの貢献度はGapの <strong style="color:var(--gold)">17.3%</strong> にとどまる。<br><br>
+      <strong style="color:var(--text)">対策案：</strong><br>
+      ① 消滅した大型案件（Otsuka HD €689K・Sankyu €657K・MHI JASDF POC 2 €507K）のCRM状況を確認、復活可能性を追求。<br>
+      ② 新規パイプラインの追加なしにはTarget到達は困難。現実的な着地は <strong style="color:var(--gold)">85〜90%</strong> 程度と想定。<br>
+      ③ 当面はIn Call現状維持のうえ、Q3・Q4の既存案件の受注確度を高めることを優先。
     </div>
   </div>
 </div></div>
@@ -397,7 +413,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
     const all=DEALS.filter(d=>d.q===q);
     const inD=all.filter(d=>d.ct==='In Call'),outD=all.filter(d=>d.ct==='Out Call');
     const inAcv=inD.reduce((s,d)=>s+d.acv,0);
-    const rowH=(arr)=>arr.map(d=>`<tr class="row-${d.ct==='In Call'?'in':'out'}">
+    const rowH=(arr)=>arr.map(d=>`<tr class="row-${d.ct==='In Call'?'in':d.ct==='Won'?'won':'out'}">
       <td><span class="${d.ct==='In Call'?'in-badge':'out-badge'}">${d.ct}</span></td>
       <td><div>${d.desc}</div><div class="opp-id">#${d.id}</div></td>
       <td class="num">${fmtN(d.acv)}</td><td class="num">${d.lic?fmtN(d.lic):'—'}</td>
@@ -591,7 +607,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 })();
 </script>
 
-<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-06-29 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
+<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-07-07 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
 
 <script>
 function switchTab(id){
