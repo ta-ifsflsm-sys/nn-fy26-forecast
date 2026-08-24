@@ -187,8 +187,8 @@ const DEALS = [
   {q:2,ct:'Won',id:'89753',desc:'JAL Engineering Co.,LTD.-Renewal of BO 43549 - JAL Engineeri',acv:4993,lic:0,book:20806,ai:0,ai_acv:0,date:'2026-04-01'},
   {q:2,ct:'Won',id:'94085',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP2( July–Dece',acv:247942,lic:0,book:247942,ai:0,ai_acv:0,date:'2026-04-30'},
   {q:2,ct:'Won',id:'96173',desc:'NEC Corporation-KHI-Energy&Marine Company - Oracle ASFU',acv:4148,lic:4929,book:6568,ai:0,ai_acv:0,date:'2026-06-05'},
-  {q:3,ct:'In Call',id:'103971',desc:'Japan Airlines Co., Ltd.-JAL VPN Tunnels',acv:409,lic:0,book:511,ai:0,ai_acv:0,date:'2026-08-07'},
-  {q:3,ct:'In Call',id:'103662',desc:'Japan Airlines Co., Ltd.-JAL Confirm Solution Phase Extensio',acv:132475,lic:0,book:397426,ai:0,ai_acv:0,date:'2026-08-20'},
+  {q:3,ct:'Won',    id:'103971',desc:'Japan Airlines Co., Ltd.-JAL VPN Tunnels',acv:409,lic:0,book:511,ai:0,ai_acv:0,date:'2026-08-07'},
+  {q:3,ct:'Won',    id:'103662',desc:'Japan Airlines Co., Ltd.-JAL Confirm Solution Phase Extensio',acv:132475,lic:0,book:397426,ai:0,ai_acv:0,date:'2026-08-20'},
   {q:3,ct:'In Call',id:'91278',desc:'Japan Airlines Co., Ltd.-JAL Demand Planning Server',acv:11621,lic:0,book:14526,ai:0,ai_acv:0,date:'2026-09-09'},
   {q:3,ct:'In Call',id:'73746',desc:'NEC Corporation-KHI-Energy&Marine Company-Manufacturing MES ',acv:494470,lic:681984,book:2472350,ai:669015,ai_acv:187078,date:'2026-09-25'},
   {q:3,ct:'In Call',id:'98278',desc:'Mitsubishi Electric Corporation-MELCO_DS_Customer Success Oc',acv:85475,lic:0,book:521399,ai:0,ai_acv:0,date:'2026-09-30'},
@@ -207,7 +207,9 @@ const DEALS = [
 ];
 
 const CHANGES = [
-  {type:'新規', opp:'103662', desc:'JAL – Confirm Solution Phase Extension', from:'—', to:'Q3 In Call', acv:132475, note:'新規追加 +€132,475'},
+  {type:'新規', opp:'103662', desc:'JAL – Confirm Solution Phase Extension', from:'—',          to:'Q3 In Call',      acv:132475, note:'新規追加 +€132,475'},
+  {type:'Won',  opp:'103971', desc:'JAL – VPN Tunnels',                      from:'Q3 In Call', to:'Won（受注確定）', acv:0,      note:'元々In Call・ステータス変更のみ'},
+  {type:'Won',  opp:'103662', desc:'JAL – Confirm Solution Phase Extension', from:'Q3 In Call', to:'Won（受注確定）', acv:0,      note:'元々In Call・ステータス変更のみ'},
 ];
 
 const KPI_CUR  = {acv:5727979,lic:8753301,book:26294596,ai:1603057,ai_acv:406308};
