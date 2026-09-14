@@ -161,7 +161,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-t
     <div class="logo">IF</div>
     <div>
       <h1>IFS Japan &nbsp;–&nbsp; FY26 Forecast Dashboard</h1>
-      <div class="meta">Last updated: 2026-09-01</div>
+      <div class="meta">Last updated: 2026-09-14</div>
     </div>
   </div>
   <span class="badge">In Call Only &nbsp;·&nbsp; EUR</span>
@@ -190,33 +190,30 @@ const DEALS = [
   {q:3,ct:'Won',id:'103971',desc:'Japan Airlines Co., Ltd.-JAL VPN Tunnels',acv:409,lic:0,book:511,ai:0,ai_acv:0,date:'2026-08-07'},
   {q:3,ct:'Won',id:'103662',desc:'Japan Airlines Co., Ltd.-JAL Confirm Solution Phase Extensio',acv:132475,lic:0,book:397426,ai:0,ai_acv:0,date:'2026-08-20'},
   {q:3,ct:'Won',id:'91278',desc:'Japan Airlines Co., Ltd.-JAL Demand Planning Server',acv:11621,lic:0,book:14526,ai:0,ai_acv:0,date:'2026-09-09'},
-  {q:3,ct:'In Call',id:'73746',desc:'NEC Corporation-KHI-Energy&Marine Company-Manufacturing MES ',acv:494470,lic:681984,book:2472350,ai:669015,ai_acv:187078,date:'2026-09-25'},
-  {q:3,ct:'In Call',id:'90924',desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;',acv:2116292,lic:4975011,book:12230870,ai:136170,ai_acv:27234,date:'2026-09-30'},
   {q:3,ct:'In Call',id:'98278',desc:'Mitsubishi Electric Corporation-MELCO_DS_Customer Success Oc',acv:85475,lic:0,book:521399,ai:0,ai_acv:0,date:'2026-09-30'},
+  {q:3,ct:'In Call',id:'73746',desc:'NEC Corporation-KHI-Energy&Marine Company-New Instance - 200',acv:494470,lic:681984,book:2472350,ai:669015,ai_acv:187078,date:'2026-09-30'},
+  {q:3,ct:'In Call',id:'90924',desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;',acv:2111547,lic:4938441,book:12204775,ai:136170,ai_acv:27234,date:'2026-09-30'},
   {q:4,ct:'In Call',id:'95590',desc:'JERA Co., Inc.-JERA O&M CPLF Asset  PoV',acv:47036,lic:0,book:47036,ai:0,ai_acv:0,date:'2026-11-20'},
-  {q:4,ct:'In Call',id:'96704',desc:'NEC Corporation-MHI AEL-Oracle',acv:43393,lic:81210,book:133794,ai:0,ai_acv:0,date:'2026-11-20'},
+  {q:4,ct:'In Call',id:'86759',desc:'NEC Corporation-SUBARU_ai',acv:22054,lic:0,book:110268,ai:110268,ai_acv:22054,date:'2026-11-26'},
   {q:4,ct:'In Call',id:'75026',desc:'SkyDrive Inc.-Skydrive - ICAM - Type Certificate Configurati',acv:86207,lic:79882,book:258620,ai:81710,ai_acv:27237,date:'2026-11-26'},
   {q:4,ct:'Out Call',id:'102456',desc:'NEC Corporation-  SUBARU -Add Use Place environment',acv:27521,lic:22745,book:27521,ai:0,ai_acv:0,date:'2026-11-26'},
-  {q:4,ct:'In Call',id:'86759',desc:'NEC Corporation-SUBARU_ai',acv:22054,lic:0,book:110268,ai:110268,ai_acv:22054,date:'2026-11-26'},
-  {q:4,ct:'In Call',id:'101346',desc:'Bunka Shutter Co., Ltd.-Bunka Shutter Co., Ltd.-ERP',acv:362138,lic:547298,book:1810691,ai:325212,ai_acv:65042,date:'2026-11-30'},
+  {q:4,ct:'In Call',id:'101346',desc:'Alphast Co.,Ltd.-Bunka Shutter Co., Ltd.- New - ERP - FY26',acv:362138,lic:584079,book:1810691,ai:325183,ai_acv:65037,date:'2026-11-30'},
   {q:4,ct:'Out Call',id:'92865',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP3/CP4 (Janua',acv:328,lic:0,book:469079,ai:0,ai_acv:0,date:'2026-12-01'},
+  {q:4,ct:'In Call',id:'96704',desc:'NEC Corporation-MHI AEL-Oracle',acv:43918,lic:82194,book:135414,ai:0,ai_acv:0,date:'2026-12-18'},
   {q:4,ct:'Out Call',id:'84447',desc:'Honda Motor Co., Ltd.-Honda Marine- POKA',acv:44139,lic:0,book:220694,ai:0,ai_acv:0,date:'2026-12-18'},
   {q:4,ct:'Out Call',id:'94852',desc:'NEC Corporation- SUBARU MES',acv:105090,lic:172279,book:262725,ai:0,ai_acv:0,date:'2026-12-21'},
   {q:4,ct:'In Call',id:'95268',desc:'ShinMaywa Industries, Ltd.-ShinMaywa - Ground Support vehicl',acv:731461,lic:1175189,book:3657305,ai:134994,ai_acv:26999,date:'2026-12-28'},
 ];
 
 const CHANGES = [
-  {type:'消滅',    opp:'68562', desc:'Hitachi Construction – ERP',              from:'Q4 In Call',  to:'消滅',           acv:-611585, note:'❌ ソース削除 -€611,585'},
-  {type:'Q移動',   opp:'95590', desc:'JERA – O&M CPLF Asset PoV',              from:'Q3 In Call',  to:'Q4 In Call',     acv:0,       note:'Sign Date変更によりQ4へ'},
-  {type:'新規',    opp:'103662',desc:'JAL – Confirm Solution Phase Extension',  from:'—',           to:'Q3 In Call',     acv:132475,  note:'新規 +€132,475'},
-  {type:'Won',     opp:'91278', desc:'JAL – Demand Planning Server',            from:'Q3 In Call',  to:'Won（受注確定）', acv:0,       note:'Won列に値あり'},
-  {type:'Won',     opp:'103971',desc:'JAL – VPN Tunnels',                       from:'Q3 In Call',  to:'Won（受注確定）', acv:0,       note:'Won列に値あり'},
-  {type:'Won',     opp:'103662',desc:'JAL – Confirm Solution Phase Extension',  from:'Q3 In Call',  to:'Won（受注確定）', acv:0,       note:'Won列に値あり'},
+  {type:'ACV改定', opp:'90924', desc:'MELCO A&D',                    from:'€2,116,292', to:'€2,111,547', acv:-4745,  note:'ACV微減 / License -€36,570'},
+  {type:'ACV改定', opp:'96704', desc:'NEC – MHI AEL-Oracle',          from:'€43,393',    to:'€43,918',    acv:525,    note:'ACV微増 +€525'},
+  {type:'ACV改定', opp:'101346',desc:'Bunka Shutter Co., Ltd. – ERP', from:'—',          to:'—',          acv:0,      note:'License +€36,781（ACV変化なし）'},
 ];
 
-const KPI_CUR  = {acv:5116394,lic:8057568,book:24456224,ai:1603044,ai_acv:406305};
+const KPI_CUR  = {acv:5112174,lic:8058763,book:24431749,ai:1603015,ai_acv:406300};
 const TARGETS  = {acv:9191819, lic:11717775, book:40802500, ai:3752500, ai_acv:1130000};
-const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[2755303,2840742],'4':[1856838,1292289]};
+const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[2840742,2835997],'4':[1292289,1292814]};
 const KPI_STORE = 'ifs_fy26_kpi_v3';
 function loadKT(){try{return JSON.parse(localStorage.getItem(KPI_STORE)||'{}');}catch(e){return{};}}
 function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON.stringify(s));}
@@ -275,7 +272,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
     <div class="chart-card"><h3>In Call ACV vs Target by Quarter (€)</h3><div class="chart-wrap"><canvas id="chartAcv"></canvas></div></div>
     <div class="chart-card"><h3>In Call ACV – Quarter Breakdown</h3><div class="chart-wrap"><canvas id="chartPie"></canvas></div></div>
   </div>
-  <div class="section-title">WTW (vs 2026-08-18)</div>
+  <div class="section-title">WTW (vs 2026-08-31)</div>
   <div class="wtw-grid" id="wtwGrid"></div>
   <script>
   (function(){
@@ -308,15 +305,15 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 <div id="tab-changes" class="tab-content">
 <div class="page">
   <div class="impact-banner">
-    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,595,504</div></div>
+    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,116,394</div></div>
     <div style="font-size:24px;color:var(--muted)">→</div>
-    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,116,394</div></div>
+    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,112,174</div></div>
     <div style="font-size:24px;color:var(--muted)">=</div>
-    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€479,110</div></div>
+    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€4,220</div></div>
     <div style="margin-left:auto;text-align:right;">
-      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">55.7%</div>
+      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">55.6%</div>
     </div>
-    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€4,075,425</div></div>
+    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€4,079,645</div></div>
   </div>
   <div class="section-title">変更内容一覧（2026-06-01 → 2026-06-08）</div>
   <div class="change-table-wrap">
@@ -483,7 +480,17 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 <script>
 (function(){
   // ── 週次 WTW データ（案件別増減）
-  const WTW_WEEKS = [
+    const WTW_WEEKS = [
+    {
+      date: '09-14', prev_date: '08-31',
+      prev_acv: 5116394, cur_acv: 5112174,
+      net: -4220,
+      changes: [
+        {q:'Q3', opp:'90924', desc:'MELCO A&D',                    delta:-4745, type:'neg', note:'ACV微減 -€4,745 / License -€36,570'},
+        {q:'Q4', opp:'96704', desc:'NEC – MHI AEL-Oracle',          delta:525,   type:'pos', note:'ACV微増 +€525 / License +€984'},
+        {q:'Q4', opp:'101346',desc:'Bunka Shutter Co., Ltd. – ERP', delta:0,     type:'pos', note:'License +€36,781（ACV変化なし）'},
+      ]
+    },
     {
       date: '09-01', prev_date: '08-18',
       prev_acv: 5595504, cur_acv: 5116394,
@@ -509,12 +516,11 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       net: -1021269,
       changes: [
         {q:'Q4', opp:'99759', desc:'Kirin Holdings – Kirin FSM',            delta:-245672, type:'lost', note:'❌ 失注確定'},
-        {q:'Q4', opp:'93171', desc:'NEC – KHI Plant Procurement',           delta:-616883, type:'move', note:'KHI MES案件にQ3統合（ACV反映済）'},
-        {q:'Q4', opp:'103980',desc:'NEC – KHI Energy & Marine Loops AI',   delta:-202517, type:'move', note:'KHI MES案件にQ3統合（ACV反映済）'},
-        {q:'Q4', opp:'91740', desc:'IBM – ROHM Loops AI',                   delta:-140161, type:'neg',  note:'既存顧客担当に移管・Forecastから除外'},
-        {q:'Q4', opp:'75026', desc:'SkyDrive – ICAM Type Certificate',      delta:86207,   type:'new',  note:'Sign Date変更によりQ4 In Call化'},
-        {q:'Q3', opp:'73746', desc:'NEC – KHI Energy&Marine MES',           delta:100383,  type:'pos',  note:'KHI Plant + Loops AI統合により増額'},
-        {q:'Q3', opp:'102836',desc:'IBM – Add BuildPlace Users (ROHM)',     delta:-4714,   type:'neg',  note:'ソース削除'},
+        {q:'Q4', opp:'93171', desc:'NEC – KHI Plant Procurement',           delta:-616883, type:'move', note:'KHI MES案件にQ3統合'},
+        {q:'Q4', opp:'103980',desc:'NEC – KHI Energy & Marine Loops AI',   delta:-202517, type:'move', note:'KHI MES案件にQ3統合'},
+        {q:'Q4', opp:'91740', desc:'IBM – ROHM Loops AI',                   delta:-140161, type:'neg',  note:'既存顧客担当に移管'},
+        {q:'Q4', opp:'75026', desc:'SkyDrive – ICAM Type Certificate',      delta:86207,   type:'new',  note:'Q4 In Call化'},
+        {q:'Q3', opp:'73746', desc:'NEC – KHI Energy&Marine MES',           delta:100383,  type:'pos',  note:'KHI統合により増額'},
         {q:'Q3', opp:'103971',desc:'JAL – VPN Tunnels',                     delta:409,     type:'new',  note:'新規 In Call'},
         {q:'Q3', opp:'91278', desc:'JAL – Demand Planning Server',          delta:1679,    type:'pos',  note:'ACV増額'},
       ]
@@ -524,9 +530,9 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       prev_acv: 6357205, cur_acv: 6616773,
       net: 259568,
       changes: [
-        {q:'Q3', opp:'90924', desc:'MELCO A&D',                               delta:207050,  type:'pos',  note:'大幅増額 +€207,050'},
-        {q:'Q3', opp:'102296',desc:'MELCO DS Add ERP（Upside）',              delta:-149999, type:'lost', note:'ソース削除'},
-        {q:'Q4', opp:'103980',desc:'NEC – KHI Energy & Marine Loops AI（新）',delta:202517,  type:'new',  note:'新Opp番号で再登録・Out Call → In Call'},
+        {q:'Q3', opp:'90924', desc:'MELCO A&D',                                delta:207050,  type:'pos',  note:'大幅増額'},
+        {q:'Q3', opp:'102296',desc:'MELCO DS Add ERP',                         delta:-149999, type:'lost', note:'ソース削除'},
+        {q:'Q4', opp:'103980',desc:'NEC – KHI Energy & Marine Loops AI（新）', delta:202517,  type:'new',  note:'新Opp番号・In Call化'},
       ]
     },
     {
@@ -534,9 +540,8 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       prev_acv: 6723203, cur_acv: 6357205,
       net: -365998,
       changes: [
-        {q:'Q3', opp:'75205', desc:'Inaba Foods – ERP',                  delta:-368027, type:'lost', note:'❌ ソース削除'},
-        {q:'Q3', opp:'102836',desc:'IBM – Add BuildPlace Users (ROHM)',  delta:2029,    type:'pos',  note:'件数変更 ACV増額'},
-        {q:'Q3', opp:'73746', desc:'NEC – KHI Energy&Marine MES',        delta:0,       type:'pos',  note:'License微修正のみ（ACV変化なし）'},
+        {q:'Q3', opp:'75205', desc:'Inaba Foods – ERP', delta:-368027, type:'lost', note:'❌ ソース削除'},
+        {q:'Q3', opp:'102836',desc:'IBM – Add BuildPlace Users (ROHM)', delta:2029, type:'pos', note:'件数変更'},
       ]
     },
     {
@@ -544,10 +549,8 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       prev_acv: 7311606, cur_acv: 6723203,
       net: -588403,
       changes: [
-        {q:'Q3', opp:'100854',desc:'ITOKI MFG – New 600 User',            delta:-374566, type:'lost', note:'❌ 失注確定'},
-        {q:'Q3', opp:'75205', desc:'Inaba Foods – ERP',                   delta:-4167,   type:'neg',  note:'ACV微修正'},
-        {q:'Q3', opp:'102836',desc:'IBM – Add 50 BuildPlace (ROHM)',      delta:2685,    type:'new',  note:'Out Call → In Call'},
-        {q:'Q4', opp:'91739', desc:'NEC – KHI Energy & Marine Loops AI',  delta:-202517, type:'lost', note:'ソース削除'},
+        {q:'Q3', opp:'100854',desc:'ITOKI MFG',                           delta:-374566, type:'lost', note:'❌ 失注確定'},
+        {q:'Q4', opp:'91739', desc:'NEC – KHI Energy & Marine Loops AI', delta:-202517, type:'lost', note:'ソース削除'},
         {q:'Q4', opp:'91740', desc:'IBM – ROHM Loops AI',                 delta:-9838,   type:'neg',  note:'ACV改定'},
       ]
     },
@@ -556,12 +559,11 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       prev_acv: 7349623, cur_acv: 7311606,
       net: -38017,
       changes: [
-
-        {q:'Q3', opp:'90924', desc:'MELCO A&D',                       delta:-69647, type:'neg',  note:'ACV改定'},
-        {q:'Q3', opp:'100854',desc:'ITOKI MFG',                       delta:21423,  type:'pos',  note:'ACV増額'},
-        {q:'Q4', opp:'101346',desc:'Bunka Shutter Co., Ltd. – ERP',  delta:11951,  type:'pos',  note:'ACV微修正'},
-        {q:'Q4', opp:'93171', desc:'NEC – KHI Plant Procurement',     delta:-23509, type:'neg',  note:'ACV改定'},
-        {q:'Q4', opp:'95268', desc:'ShinMaywa – Ground Support',      delta:21765,  type:'pos',  note:'ACV増額'},
+        {q:'Q3', opp:'90924',  desc:'MELCO A&D',                      delta:-69647, type:'neg', note:'ACV改定'},
+        {q:'Q3', opp:'100854', desc:'ITOKI MFG',                      delta:21423,  type:'pos', note:'ACV増額'},
+        {q:'Q4', opp:'101346', desc:'Bunka Shutter Co., Ltd. – ERP', delta:11951,  type:'pos', note:'ACV微修正'},
+        {q:'Q4', opp:'93171',  desc:'NEC – KHI Plant Procurement',    delta:-23509, type:'neg', note:'ACV改定'},
+        {q:'Q4', opp:'95268',  desc:'ShinMaywa – Ground Support',     delta:21765,  type:'pos', note:'ACV増額'},
       ]
     },
     {
@@ -569,7 +571,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       prev_acv: 7351435, cur_acv: 7349623,
       net: -1812,
       changes: [
-        {q:'Q4', opp:'101346',desc:'Bunka Shutter Co., Ltd. – ERP',  delta:-1812,  type:'neg',  note:'ACV微修正'},
+        {q:'Q4', opp:'101346', desc:'Bunka Shutter Co., Ltd. – ERP', delta:-1812, type:'neg', note:'ACV微修正'},
       ]
     },
     {
@@ -577,8 +579,8 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       prev_acv: 7877677, cur_acv: 7351435,
       net: -526242,
       changes: [
-        {q:'Q3', opp:'95743', desc:'NEC – Kyushu Electric T&D EAM',  delta:-432170, type:'lost', note:'❌ 失注確定'},
-        {q:'Q3', opp:'95590', desc:'JERA – O&M CPLF PoC',            delta:-94072,  type:'neg',  note:'ACV改定（€141K→€47K）'},
+        {q:'Q3', opp:'95743', desc:'NEC – Kyushu Electric T&D EAM', delta:-432170, type:'lost', note:'❌ 失注確定'},
+        {q:'Q3', opp:'95590', desc:'JERA – O&M CPLF PoC',           delta:-94072,  type:'neg',  note:'ACV改定'},
       ]
     },
     {
@@ -586,13 +588,11 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       prev_acv: 7866746, cur_acv: 7877677,
       net: 10931,
       changes: [
-        {q:'Q4', opp:'101346',desc:'Bunka Shutter Co., Ltd. – ERP',  delta:351999,  type:'new',  note:'Out Call → In Call'},
-        {q:'Q4', opp:'91740', desc:'IBM – ROHM Loops AI',             delta:149999,  type:'new',  note:'Out Call → In Call'},
-        {q:'Q4', opp:'95268', desc:'ShinMaywa – Ground Support',      delta:58228,   type:'pos',  note:'ACV増額'},
-        {q:'Q2', opp:'94085', desc:'JAL Customer Success',            delta:-247941, type:'neg',  note:'ACV改定（€495K→€247K）'},
-        {q:'Q3', opp:'90924', desc:'MELCO A&D',                       delta:-318897, type:'neg',  note:'ACV改定'},
-        {q:'Q3', opp:'98278', desc:'MELCO DS – Customer Success',     delta:-132456, type:'neg',  note:'ACV改定'},
-        {q:'Q3', opp:'102296',desc:'MELCO DS Add ERP（Upside）',     delta:149999,  type:'new',  note:'新規追加'},
+        {q:'Q4', opp:'101346', desc:'Bunka Shutter Co., Ltd. – ERP', delta:351999,  type:'new', note:'Out Call → In Call'},
+        {q:'Q4', opp:'91740',  desc:'IBM – ROHM Loops AI',           delta:149999,  type:'new', note:'Out Call → In Call'},
+        {q:'Q4', opp:'95268',  desc:'ShinMaywa – Ground Support',    delta:58228,   type:'pos', note:'ACV増額'},
+        {q:'Q2', opp:'94085',  desc:'JAL Customer Success',          delta:-247941, type:'neg', note:'ACV改定'},
+        {q:'Q3', opp:'90924',  desc:'MELCO A&D',                     delta:-318897, type:'neg', note:'ACV改定'},
       ]
     },
     {
@@ -600,14 +600,10 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       prev_acv: 8247148, cur_acv: 7866746,
       net: -380402,
       changes: [
-        {q:'Q4', opp:'57736', desc:'Lasertec – ERP & FSM',            delta:-523591, type:'lost', note:'ソース消滅'},
-        {q:'Q4', opp:'99759', desc:'Kirin Holdings – Kirin FSM',      delta:-318965, type:'neg',  note:'ACV改定（€564K→€245K）'},
-        {q:'Q3', opp:'75205', desc:'Inaba Foods – ERP',               delta:372194,  type:'new',  note:'Out Call → In Call'},
-        {q:'Q3', opp:'95590', desc:'JERA – O&M PoC',                  delta:141108,  type:'new',  note:'Q4→Q3 In Call化'},
-        {q:'Q4', opp:'91739', desc:'NEC – KHI Energy Loops AI',       delta:202517,  type:'new',  note:'Out Call → In Call'},
-        {q:'Q2', opp:'75026', desc:'SkyDrive – ICAM',                  delta:-68418,  type:'neg',  note:'Q2 In Call → Q3 Out Call'},
-        {q:'Q4', opp:'84447', desc:'Honda Marine POKA',               delta:-44139,  type:'neg',  note:'In Call → Out Call'},
-        {q:'Q4', opp:'95590', desc:'JERA – O&M PoC（Q4分）',         delta:-141108, type:'neg',  note:'Q4→Q3移動'},
+        {q:'Q4', opp:'57736', desc:'Lasertec – ERP & FSM',       delta:-523591, type:'lost', note:'ソース消滅'},
+        {q:'Q4', opp:'99759', desc:'Kirin Holdings – Kirin FSM', delta:-318965, type:'neg',  note:'ACV改定'},
+        {q:'Q3', opp:'75205', desc:'Inaba Foods – ERP',          delta:372194,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'91739', desc:'NEC – KHI Energy Loops AI', delta:202517,  type:'new',  note:'Out Call → In Call'},
       ]
     },
     {
@@ -615,18 +611,15 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       prev_acv: 5585852, cur_acv: 8247148,
       net: 2661296,
       changes: [
-        {q:'Q4', opp:'68562', desc:'Hitachi Construction – ERP',      delta:611585,  type:'new',  note:'Out Call → In Call'},
-        {q:'Q4', opp:'95268', desc:'ShinMaywa – Ground Support',      delta:651468,  type:'new',  note:'Out Call → In Call'},
-        {q:'Q4', opp:'99759', desc:'Kirin FSM',                       delta:564637,  type:'new',  note:'Out Call → In Call'},
-        {q:'Q4', opp:'57736', desc:'Lasertec – ERP & FSM',            delta:523591,  type:'new',  note:'Out Call → In Call'},
-        {q:'Q4', opp:'93171', desc:'KHI Plant Procurement',           delta:640392,  type:'new',  note:'Out Call → In Call'},
-        {q:'Q4', opp:'95590', desc:'JERA – O&M PoC',                  delta:141108,  type:'new',  note:'Out Call → In Call'},
-        {q:'Q3', opp:'100854',desc:'ITOKI MFG',                       delta:353143,  type:'new',  note:'Out Call → In Call'},
-        {q:'Q3', opp:'75205', desc:'Inaba Foods – ERP',               delta:-372194, type:'neg',  note:'削除（前週比）'},
-        {q:'Q3', opp:'90047', desc:'IHI Non-PROD Env',                delta:-251119, type:'lost', note:'ソース消滅'},
-        {q:'Q3', opp:'90924', desc:'MELCO A&D',                       delta:138109,  type:'pos',  note:'ACV増額'},
-        {q:'Q2', opp:'90748', desc:'FUTABA – ERP License',            delta:-450310, type:'lost', note:'ソース消滅'},
-        {q:'Q4', opp:'84447', desc:'Honda Marine POKA',               delta:-44139,  type:'neg',  note:'In Call → Out Call'},
+        {q:'Q4', opp:'68562', desc:'Hitachi Construction – ERP',  delta:611585,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'95268', desc:'ShinMaywa – Ground Support',  delta:651468,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'99759', desc:'Kirin FSM',                   delta:564637,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'57736', desc:'Lasertec – ERP & FSM',        delta:523591,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q4', opp:'93171', desc:'KHI Plant Procurement',       delta:640392,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q3', opp:'100854',desc:'ITOKI MFG',                   delta:353143,  type:'new',  note:'Out Call → In Call'},
+        {q:'Q3', opp:'90047', desc:'IHI Non-PROD Env',            delta:-251119, type:'lost', note:'ソース消滅'},
+        {q:'Q3', opp:'90924', desc:'MELCO A&D',                   delta:138109,  type:'pos',  note:'ACV増額'},
+        {q:'Q2', opp:'90748', desc:'FUTABA – ERP License',        delta:-450310, type:'lost', note:'ソース消滅'},
       ]
     },
   ];
@@ -1039,7 +1032,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 })();
 </script>
 
-<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-09-01 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
+<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-09-14 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
 
 <script>
 function switchTab(id){
