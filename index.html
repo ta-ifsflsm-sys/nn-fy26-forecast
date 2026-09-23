@@ -161,7 +161,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-t
     <div class="logo">IF</div>
     <div>
       <h1>IFS Japan &nbsp;–&nbsp; FY26 Forecast Dashboard</h1>
-      <div class="meta">Last updated: 2026-09-14</div>
+      <div class="meta">Last updated: 2026-09-23</div>
     </div>
   </div>
   <span class="badge">In Call Only &nbsp;·&nbsp; EUR</span>
@@ -190,30 +190,29 @@ const DEALS = [
   {q:3,ct:'Won',id:'103971',desc:'Japan Airlines Co., Ltd.-JAL VPN Tunnels',acv:409,lic:0,book:511,ai:0,ai_acv:0,date:'2026-08-07'},
   {q:3,ct:'Won',id:'103662',desc:'Japan Airlines Co., Ltd.-JAL Confirm Solution Phase Extensio',acv:132475,lic:0,book:397426,ai:0,ai_acv:0,date:'2026-08-20'},
   {q:3,ct:'Won',id:'91278',desc:'Japan Airlines Co., Ltd.-JAL Demand Planning Server',acv:11621,lic:0,book:14526,ai:0,ai_acv:0,date:'2026-09-09'},
-  {q:3,ct:'In Call',id:'98278',desc:'Mitsubishi Electric Corporation-MELCO_DS_Customer Success Oc',acv:85475,lic:0,book:521399,ai:0,ai_acv:0,date:'2026-09-30'},
-  {q:3,ct:'In Call',id:'73746',desc:'NEC Corporation-KHI-Energy&Marine Company-New Instance - 200',acv:494470,lic:681984,book:2472350,ai:669015,ai_acv:187078,date:'2026-09-30'},
   {q:3,ct:'In Call',id:'90924',desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;',acv:2111547,lic:4938441,book:12204775,ai:136170,ai_acv:27234,date:'2026-09-30'},
-  {q:4,ct:'In Call',id:'95590',desc:'JERA Co., Inc.-JERA O&M CPLF Asset  PoV',acv:47036,lic:0,book:47036,ai:0,ai_acv:0,date:'2026-11-20'},
+  {q:3,ct:'In Call',id:'98278',desc:'Mitsubishi Electric Corporation-MELCO_DS_Customer Success Oc',acv:85475,lic:0,book:521399,ai:0,ai_acv:0,date:'2026-09-30'},
+  {q:3,ct:'In Call',id:'73746',desc:'NEC Corporation-KHI-Energy&Marine Company-New Instance - 200',acv:436311,lic:622165,book:2290632,ai:752734,ai_acv:143378,date:'2026-09-30'},
+  {q:4,ct:'In Call',id:'96704',desc:'NEC Corporation-MHI AEL-Oracle',acv:44779,lic:85166,book:141801,ai:0,ai_acv:0,date:'2026-11-02'},
+  {q:4,ct:'Out Call',id:'102456',desc:'NEC Corporation-  SUBARU -Add Use Place environment',acv:27521,lic:22745,book:27521,ai:0,ai_acv:0,date:'2026-11-26'},
   {q:4,ct:'In Call',id:'86759',desc:'NEC Corporation-SUBARU_ai',acv:22054,lic:0,book:110268,ai:110268,ai_acv:22054,date:'2026-11-26'},
   {q:4,ct:'In Call',id:'75026',desc:'SkyDrive Inc.-Skydrive - ICAM - Type Certificate Configurati',acv:86207,lic:79882,book:258620,ai:81710,ai_acv:27237,date:'2026-11-26'},
-  {q:4,ct:'Out Call',id:'102456',desc:'NEC Corporation-  SUBARU -Add Use Place environment',acv:27521,lic:22745,book:27521,ai:0,ai_acv:0,date:'2026-11-26'},
-  {q:4,ct:'In Call',id:'101346',desc:'Alphast Co.,Ltd.-Bunka Shutter Co., Ltd.- New - ERP - FY26',acv:362138,lic:584079,book:1810691,ai:325183,ai_acv:65037,date:'2026-11-30'},
   {q:4,ct:'Out Call',id:'92865',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP3/CP4 (Janua',acv:328,lic:0,book:469079,ai:0,ai_acv:0,date:'2026-12-01'},
-  {q:4,ct:'In Call',id:'96704',desc:'NEC Corporation-MHI AEL-Oracle',acv:43918,lic:82194,book:135414,ai:0,ai_acv:0,date:'2026-12-18'},
+  {q:4,ct:'In Call',id:'101346',desc:'Alphast Co.,Ltd.-Bunka Shutter Co., Ltd.- New - ERP - FY26',acv:362138,lic:584079,book:1810691,ai:325183,ai_acv:65037,date:'2026-12-14'},
   {q:4,ct:'Out Call',id:'84447',desc:'Honda Motor Co., Ltd.-Honda Marine- POKA',acv:44139,lic:0,book:220694,ai:0,ai_acv:0,date:'2026-12-18'},
   {q:4,ct:'Out Call',id:'94852',desc:'NEC Corporation- SUBARU MES',acv:105090,lic:172279,book:262725,ai:0,ai_acv:0,date:'2026-12-21'},
   {q:4,ct:'In Call',id:'95268',desc:'ShinMaywa Industries, Ltd.-ShinMaywa - Ground Support vehicl',acv:731461,lic:1175189,book:3657305,ai:134994,ai_acv:26999,date:'2026-12-28'},
 ];
 
 const CHANGES = [
-  {type:'ACV改定', opp:'90924', desc:'MELCO A&D',                    from:'€2,116,292', to:'€2,111,547', acv:-4745,  note:'ACV微減 / License -€36,570'},
-  {type:'ACV改定', opp:'96704', desc:'NEC – MHI AEL-Oracle',          from:'€43,393',    to:'€43,918',    acv:525,    note:'ACV微増 +€525'},
-  {type:'ACV改定', opp:'101346',desc:'Bunka Shutter Co., Ltd. – ERP', from:'—',          to:'—',          acv:0,      note:'License +€36,781（ACV変化なし）'},
+  {type:'ACV改定', opp:'73746', desc:'NEC – KHI Energy&Marine MES',      from:'€494,470', to:'€436,311', acv:-58159, note:'ACV減額 -€58,159 / License -€59,819 / AI ACV -€43,700'},
+  {type:'消滅',    opp:'95590', desc:'JERA – O&M CPLF Asset PoV',         from:'Q4 In Call',to:'消滅',    acv:-47036, note:'ソース削除 -€47,036'},
+  {type:'ACV改定', opp:'96704', desc:'NEC – MHI AEL-Oracle',              from:'€43,918',  to:'€44,779',  acv:861,   note:'ACV微増 +€861'},
 ];
 
-const KPI_CUR  = {acv:5112174,lic:8058763,book:24431749,ai:1603015,ai_acv:406300};
+const KPI_CUR  = {acv:5007840,lic:8001916,book:24209382,ai:1686734,ai_acv:362600};
 const TARGETS  = {acv:9191819, lic:11717775, book:40802500, ai:3752500, ai_acv:1130000};
-const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[2840742,2835997],'4':[1292289,1292814]};
+const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[2835997,2777838],'4':[1292814,1246639]};
 const KPI_STORE = 'ifs_fy26_kpi_v3';
 function loadKT(){try{return JSON.parse(localStorage.getItem(KPI_STORE)||'{}');}catch(e){return{};}}
 function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON.stringify(s));}
@@ -272,7 +271,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
     <div class="chart-card"><h3>In Call ACV vs Target by Quarter (€)</h3><div class="chart-wrap"><canvas id="chartAcv"></canvas></div></div>
     <div class="chart-card"><h3>In Call ACV – Quarter Breakdown</h3><div class="chart-wrap"><canvas id="chartPie"></canvas></div></div>
   </div>
-  <div class="section-title">WTW (vs 2026-08-31)</div>
+  <div class="section-title">WTW (vs 2026-09-14)</div>
   <div class="wtw-grid" id="wtwGrid"></div>
   <script>
   (function(){
@@ -305,15 +304,15 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 <div id="tab-changes" class="tab-content">
 <div class="page">
   <div class="impact-banner">
-    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,116,394</div></div>
+    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,112,174</div></div>
     <div style="font-size:24px;color:var(--muted)">→</div>
-    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,112,174</div></div>
+    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,007,840</div></div>
     <div style="font-size:24px;color:var(--muted)">=</div>
-    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€4,220</div></div>
+    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€104,334</div></div>
     <div style="margin-left:auto;text-align:right;">
-      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">55.6%</div>
+      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">54.5%</div>
     </div>
-    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€4,079,645</div></div>
+    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€4,183,979</div></div>
   </div>
   <div class="section-title">変更内容一覧（2026-06-01 → 2026-06-08）</div>
   <div class="change-table-wrap">
@@ -481,6 +480,16 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 (function(){
   // ── 週次 WTW データ（案件別増減）
     const WTW_WEEKS = [
+    {
+      date: '09-23', prev_date: '09-14',
+      prev_acv: 5112174, cur_acv: 5007840,
+      net: -104334,
+      changes: [
+        {q:'Q3', opp:'73746', desc:'NEC – KHI Energy&Marine MES', delta:-58159, type:'neg', note:'ACV減額 -€58,159 / License -€59,819'},
+        {q:'Q4', opp:'95590', desc:'JERA – O&M CPLF Asset PoV',   delta:-47036, type:'lost', note:'消滅'},
+        {q:'Q4', opp:'96704', desc:'NEC – MHI AEL-Oracle',         delta:861,   type:'pos', note:'ACV微増 +€861'},
+      ]
+    },
     {
       date: '09-14', prev_date: '08-31',
       prev_acv: 5116394, cur_acv: 5112174,
@@ -1032,7 +1041,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 })();
 </script>
 
-<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-09-14 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
+<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-09-23 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
 
 <script>
 function switchTab(id){
