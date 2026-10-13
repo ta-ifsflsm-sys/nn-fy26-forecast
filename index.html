@@ -161,7 +161,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-t
     <div class="logo">IF</div>
     <div>
       <h1>IFS Japan &nbsp;–&nbsp; FY26 Forecast Dashboard</h1>
-      <div class="meta">Last updated: 2026-10-05</div>
+      <div class="meta">Last updated: 2026-10-13</div>
     </div>
   </div>
   <span class="badge">In Call Only &nbsp;·&nbsp; EUR</span>
@@ -193,28 +193,26 @@ const DEALS = [
   {q:3,ct:'Won',id:'98278',desc:'Mitsubishi Electric Corporation-MELCO_DS_Customer Success Oc',acv:85475,lic:0,book:521399,ai:0,ai_acv:0,date:'2026-09-29'},
   {q:3,ct:'Won',id:'90924',desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;',acv:2111445,lic:4937881,book:12204214,ai:136170,ai_acv:27234,date:'2026-09-30'},
   {q:3,ct:'Won',id:'73746',desc:'NEC Corporation-KHI-Energy&Marine Company-New Instance - 200',acv:436311,lic:622165,book:2290632,ai:752734,ai_acv:143378,date:'2026-09-30'},
-  {q:4,ct:'In Call',id:'96704',desc:'NEC Corporation-MHI AEL-Oracle',acv:44779,lic:85166,book:141801,ai:0,ai_acv:0,date:'2026-11-02'},
-  {q:4,ct:'In Call',id:'86759',desc:'NEC Corporation-SUBARU_ai',acv:22054,lic:0,book:110268,ai:110268,ai_acv:22054,date:'2026-11-26'},
+  {q:4,ct:'In Call',id:'96704',desc:'NEC Corporation-MHI AEL-Oracle',acv:44779,lic:83805,book:138069,ai:0,ai_acv:0,date:'2026-12-01'},
   {q:4,ct:'In Call',id:'75026',desc:'SkyDrive Inc.-Skydrive - ICAM - Type Certificate Configurati',acv:86207,lic:79882,book:258620,ai:81710,ai_acv:27237,date:'2026-11-26'},
-  {q:4,ct:'Out Call',id:'102456',desc:'NEC Corporation-  SUBARU -Add Use Place environment',acv:27521,lic:22745,book:27521,ai:0,ai_acv:0,date:'2026-11-26'},
-  {q:4,ct:'Out Call',id:'92865',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP3/CP4 (Janua',acv:328,lic:0,book:469079,ai:0,ai_acv:0,date:'2026-12-01'},
+  {q:4,ct:'In Call',id:'102456',desc:'NEC Corporation-  SUBARU -Add Use Place environment',acv:27521,lic:22745,book:27521,ai:0,ai_acv:0,date:'2026-12-25'},
+  {q:4,ct:'In Call',id:'106864',desc:'Bunka Shutter Co., Ltd.-Bunka Shutter Co., Ltd. - New - Customer Success - FY26',acv:442527,lic:0,book:1327582,ai:0,ai_acv:0,date:'2026-12-14'},
   {q:4,ct:'In Call',id:'101346',desc:'Alphast Co.,Ltd.-Bunka Shutter Co., Ltd.- New - ERP - FY26',acv:362138,lic:584079,book:1810691,ai:325183,ai_acv:65037,date:'2026-12-14'},
-  {q:4,ct:'Out Call',id:'106864',desc:'Bunka Shutter Co., Ltd.-Bunka Shutter Co., Ltd. - New - Cust',acv:442527,lic:0,book:1327582,ai:0,ai_acv:0,date:'2026-12-14'},
+  {q:4,ct:'Out Call',id:'95268',desc:'ShinMaywa Industries, Ltd.-ShinMaywa - Ground Support vehicl',acv:731461,lic:1175189,book:3657305,ai:134994,ai_acv:26999,date:'2026-12-28'},
+  {q:4,ct:'Out Call',id:'92865',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP3/CP4 (Janua',acv:328,lic:0,book:469079,ai:0,ai_acv:0,date:'2026-12-01'},
   {q:4,ct:'Out Call',id:'84447',desc:'Honda Motor Co., Ltd.-Honda Marine- POKA',acv:44139,lic:0,book:220694,ai:0,ai_acv:0,date:'2026-12-18'},
-  {q:4,ct:'Out Call',id:'94852',desc:'NEC Corporation- SUBARU MES',acv:105090,lic:172279,book:262725,ai:0,ai_acv:0,date:'2026-12-21'},
-  {q:4,ct:'In Call',id:'95268',desc:'ShinMaywa Industries, Ltd.-ShinMaywa - Ground Support vehicl',acv:731461,lic:1175189,book:3657305,ai:134994,ai_acv:26999,date:'2026-12-28'},
 ];
 
 const CHANGES = [
-  {type:'ACV改定', opp:'90924', desc:'MELCO A&D',   from:'€2,111,547', to:'€2,111,445', acv:-102, note:'ACV微減 -€102 / License -€560'},
-  {type:'Won',     opp:'90924', desc:'MELCO A&D',   from:'Q3 In Call', to:'Won（受注確定）', acv:0, note:'Q3クローズに伴い全件Won確定'},
-  {type:'Won',     opp:'73746', desc:'NEC – KHI Energy&Marine MES', from:'Q3 In Call', to:'Won（受注確定）', acv:0, note:''},
-  {type:'Won',     opp:'98278', desc:'MELCO DS Customer Success',   from:'Q3 In Call', to:'Won（受注確定）', acv:0, note:''},
+  {type:'move',  opp:'95268', desc:'ShinMaywa – Ground Support Q4',          from:'Q4 In Call (€731,461)', to:'Out Call 除外',    acv:-731461, note:'翌週以降の受注見込みなしと判断、Out Callへ移動'},
+  {type:'lost',  opp:'86759', desc:'NEC – SUBARU AI',                         from:'Q4 In Call (€22,054)',  to:'ソース削除',       acv:-22054,  note:'CRMから削除'},
+  {type:'new',   opp:'106864',desc:'Bunka Shutter Co. – Customer Success FY26',from:'Q4 Out Call',          to:'In Call (€442,527)',acv:442527,  note:'Out Call → In Call 格上げ'},
+  {type:'pos',   opp:'102456',desc:'NEC – SUBARU Add Use Place',               from:'Q4 Out Call',          to:'In Call (€27,521)', acv:27521,   note:'Out Call → In Call 格上げ'},
 ];
 
-const KPI_CUR  = {acv:5007738,lic:8001356,book:24208821,ai:1686734,ai_acv:362600};
+const KPI_CUR  = {acv:4724271,lic:6847551,book:21792619,ai:1441471,ai_acv:313547};
 const TARGETS  = {acv:9191819, lic:11717775, book:40802500, ai:3752500, ai_acv:1130000};
-const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[2777838,2777736],'4':[1246639,1246639]};
+const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[2777736,2777736],'4':[1246639,963172]};
 const KPI_STORE = 'ifs_fy26_kpi_v3';
 function loadKT(){try{return JSON.parse(localStorage.getItem(KPI_STORE)||'{}');}catch(e){return{};}}
 function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON.stringify(s));}
@@ -273,7 +271,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
     <div class="chart-card"><h3>In Call ACV vs Target by Quarter (€)</h3><div class="chart-wrap"><canvas id="chartAcv"></canvas></div></div>
     <div class="chart-card"><h3>In Call ACV – Quarter Breakdown</h3><div class="chart-wrap"><canvas id="chartPie"></canvas></div></div>
   </div>
-  <div class="section-title">WTW (vs 2026-09-28)</div>
+  <div class="section-title">WTW (vs 2026-10-05)</div>
   <div class="wtw-grid" id="wtwGrid"></div>
   <script>
   (function(){
@@ -306,17 +304,17 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 <div id="tab-changes" class="tab-content">
 <div class="page">
   <div class="impact-banner">
-    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,007,840</div></div>
+    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,007,738</div></div>
     <div style="font-size:24px;color:var(--muted)">→</div>
-    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,007,738</div></div>
+    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€4,724,271</div></div>
     <div style="font-size:24px;color:var(--muted)">=</div>
-    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€102</div></div>
+    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€283,467</div></div>
     <div style="margin-left:auto;text-align:right;">
-      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">54.5%</div>
+      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">51.4%</div>
     </div>
-    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€4,184,081</div></div>
+    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€4,467,548</div></div>
   </div>
-  <div class="section-title">変更内容一覧（2026-06-01 → 2026-06-08）</div>
+  <div class="section-title">変更内容一覧（2026-10-05 → 2026-10-13）</div>
   <div class="change-table-wrap">
     <table>
       <thead><tr><th>区分</th><th>Opp No</th><th>案件名</th><th>変更前</th><th>変更後</th><th class="num">ACV影響 (€)</th><th>備考</th></tr></thead>
@@ -375,16 +373,17 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
   </script>
   <div style="background:rgba(59,158,255,0.06);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:8px;">
     <div style="font-size:12px;color:var(--text-dim);line-height:1.9">
-      <strong style="color:var(--accent)">📌 今週の変化（2026-06-29）</strong><br>
-      実質的な変化なし。Bunka Shutter Co., Ltd. – ERP のACV / Licenseが微修正（-€1,812 / -€73,469）のみ。<br><br>
-      <strong style="color:var(--accent)">📌 残ギャップ €1,842,196 の対策</strong><br>
-      現 Out Call 7件合計 <strong style="color:var(--gold)">€318,619</strong>。
-      全件 In Call 化しても <strong style="color:var(--red)">€1,523,577</strong> 不足。<br>
-      Out Callの貢献度はGapの <strong style="color:var(--gold)">17.3%</strong> にとどまる。<br><br>
+      <strong style="color:var(--accent)">📌 今週の変化（2026-10-13）</strong><br>
+      Q4 In Call ACV が前週比 <strong style="color:var(--red)">-€283,467</strong>。ShinMaywa Ground Support（€731,461）がIn Call→Out Callへ移動し大幅減。
+      一方でBunka Shutter Customer Success（€442,527）と SUBARU Add Use Place（€27,521）がOut Call→In Callへ格上げ。
+      SUBARU AI（86759, €22,054）はCRMから削除。<br><br>
+      <strong style="color:var(--accent)">📌 残ギャップ €2,398,265（修正Target €7,122,536 比）の対策</strong><br>
+      現Q4 Out Call 3件合計 <strong style="color:var(--gold)">€775,928</strong>（ShinMaywa €731K・Honda Marine €44K・JAL CP3/4 €0.3K）。<br>
+      全件 In Call 化しても <strong style="color:var(--red)">€1,622,337</strong> 不足。Out Callカバー率は <strong style="color:var(--gold)">32.3%</strong>。<br><br>
       <strong style="color:var(--text)">対策案：</strong><br>
-      ① 消滅した大型案件（Otsuka HD €689K・Sankyu €657K・MHI JASDF POC 2 €507K）のCRM状況を確認、復活可能性を追求。<br>
-      ② 新規パイプラインの追加なしにはTarget到達は困難。現実的な着地は <strong style="color:var(--gold)">85〜90%</strong> 程度と想定。<br>
-      ③ 当面はIn Call現状維持のうえ、Q3・Q4の既存案件の受注確度を高めることを優先。
+      ① <strong style="color:var(--gold)">ShinMaywa Ground Support（€731K）</strong> 最大のOut Call。受注確度の再評価・Q4内クローズ可能性を優先確認。<br>
+      ② 新規パイプライン追加が不可欠。Q4残期間でOut Call→In Call 化できる案件の掘り起こしを加速。<br>
+      ③ 修正Target達成には現状のIn Call全勝 + ShinMaywa回収でも €622K 不足。新規創出なしには66%未満着地が現実的。
     </div>
   </div>
 </div></div>
@@ -402,7 +401,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
     const inD=all.filter(d=>d.ct==='In Call'),wonD=all.filter(d=>d.ct==='Won'),outD=all.filter(d=>d.ct==='Out Call');
     const inAcv=inD.reduce((s,d)=>s+d.acv,0)+wonD.reduce((s,d)=>s+d.acv,0);
     const rowH=(arr)=>arr.map(d=>`<tr class="row-${d.ct==='In Call'?'in':d.ct==='Won'?'won':'out'}">
-      <td><span class="${d.ct==='In Call'?'in-badge':'out-badge'}">${d.ct}</span></td>
+      <td><span class="${d.ct==='In Call'?'in-badge':d.ct==='Won'?'won-badge':'out-badge'}">${d.ct}</span></td>
       <td><div>${d.desc}</div><div class="opp-id">#${d.id}</div></td>
       <td class="num">${fmtN(d.acv)}</td><td class="num">${d.lic?fmtN(d.lic):'—'}</td>
       <td class="num">${d.book?fmtN(d.book):'—'}</td>
@@ -482,6 +481,17 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 (function(){
   // ── 週次 WTW データ（案件別増減）
     const WTW_WEEKS = [
+    {
+      date: '10-13', prev_date: '10-05',
+      prev_acv: 5007738, cur_acv: 4724271,
+      net: -283467,
+      changes: [
+        {q:'Q4', opp:'95268', desc:'ShinMaywa – Ground Support Q4', delta:-731461, type:'move', note:'In Call → Out Call'},
+        {q:'Q4', opp:'86759', desc:'NEC – SUBARU AI',               delta:-22054,  type:'lost', note:'ソース削除'},
+        {q:'Q4', opp:'106864',desc:'Bunka Shutter Co. – Customer Success', delta:442527, type:'new', note:'Out Call → In Call'},
+        {q:'Q4', opp:'102456',desc:'NEC – SUBARU Add Use Place',    delta:27521,   type:'pos',  note:'Out Call → In Call'},
+      ]
+    },
     {
       date: '10-05', prev_date: '09-28',
       prev_acv: 5007840, cur_acv: 5007738,
@@ -978,10 +988,10 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
   <div style="background:rgba(240,90,90,0.06);border:1px solid rgba(240,90,90,0.3);border-radius:var(--radius);padding:18px;">
     <div style="font-size:13px;font-weight:600;color:var(--red);margin-bottom:10px">⚠️ 現状評価</div>
     <div style="font-size:13px;color:var(--text-dim);line-height:2">
-      現在のOut Call候補合計 <strong style="color:var(--text)">€322,622</strong> に対し残ギャップは <strong style="color:var(--red)">€1,840,384</strong>。<br>
-      Gap全体の <strong style="color:var(--text)">17.5%</strong> しかカバーできない状況。<br>
-      消滅した大型案件（Otsuka HD €690K・Sankyu €657K・MHI JASDF €507K）の復活、<br>
-      または新規パイプラインの追加なしには目標達成が困難。
+      現在のOut Call候補合計 <strong style="color:var(--text)">€775,928</strong> に対し残ギャップは <strong style="color:var(--red)">€4,467,548</strong>（Target €9.19M比）。<br>
+      Gap全体の <strong style="color:var(--text)">17.4%</strong> しかカバーできない状況。<br>
+      修正Target（€7.12M）比では残ギャップ €2,398,265。Out Callカバー率 32.3%。<br>
+      新規パイプライン追加なしには目標達成が困難。
     </div>
   </div>
 
@@ -1054,13 +1064,13 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       <span style="color:var(--gold)">€${outTotal.toLocaleString('en-US')}</span>
     </div>
     <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)">
-      <span>vs 残ギャップ €1,840,384</span>
-      <span style="color:var(--red)">${(outTotal/1840384*100).toFixed(1)}% しかカバーできない</span>
+      <span>vs 残ギャップ €4,467,548（Target比）/ €2,398,265（修正Target比）</span>
+      <span style="color:var(--red)">${(outTotal/4467548*100).toFixed(1)}% しかカバーできない（Target比）</span>
     </div>`;
 })();
 </script>
 
-<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-10-05 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
+<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-10-13 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
 
 <script>
 function switchTab(id){
@@ -1090,7 +1100,7 @@ function renderDeals(){
   document.getElementById('dealTableBody').innerHTML=fl.map(d=>`
     <tr class="row-${d.ct==='In Call'?'in':'out'}">
       <td><span style="color:var(--accent);font-weight:600">Q${d.q}</span></td>
-      <td><span class="${d.ct==='In Call'?'in-badge':'out-badge'}">${d.ct}</span></td>
+      <td><span class="${d.ct==='In Call'?'in-badge':d.ct==='Won'?'won-badge':'out-badge'}">${d.ct}</span></td>
       <td style="color:var(--muted);font-size:11px">${d.id}</td>
       <td style="max-width:220px">${d.desc}</td>
       <td class="num">${fmtN(d.acv)}</td>
