@@ -161,7 +161,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-t
     <div class="logo">IF</div>
     <div>
       <h1>IFS Japan &nbsp;–&nbsp; FY26 Forecast Dashboard</h1>
-      <div class="meta">Last updated: 2026-10-13</div>
+      <div class="meta">Last updated: 2026-10-19</div>
     </div>
   </div>
   <span class="badge">In Call Only &nbsp;·&nbsp; EUR</span>
@@ -181,38 +181,38 @@ function fmt(n){return '€'+Math.round(n).toLocaleString('en-US');}
 
 const DEALS = [
   {q:1,ct:'Won',id:'94325',desc:'NEC Corporation-SUBARU New Non-production environments',acv:12599,lic:10412,book:12599,ai:0,ai_acv:0,date:'2026-01-12'},
-  {q:1,ct:'Won',id:'74989',desc:'ShinMaywa Industries, Ltd.-ShinMaywa Aircraft Div - SCM/MES ',acv:447798,lic:423161,book:2238990,ai:118768,ai_acv:23754,date:'2026-02-26'},
+  {q:1,ct:'Won',id:'74989',desc:'ShinMaywa Industries, Ltd.-ShinMaywa Aircraft Div - SCM/MES ',acv:447797,lic:423161,book:2238990,ai:118768,ai_acv:23754,date:'2026-02-26'},
   {q:1,ct:'Won',id:'97124',desc:'JVCKENWOOD CORPORATION-JVC KENWOOD Additional Sales',acv:2033,lic:4723,book:10673,ai:0,ai_acv:0,date:'2026-03-06'},
-  {q:1,ct:'Won',id:'94851',desc:'Mitsubishi Electric Corporation-MELCO_DS_CRP',acv:263850,lic:73769,book:263850,ai:26907,ai_acv:26907,date:'2026-03-19'},
+  {q:1,ct:'Won',id:'94851',desc:'Mitsubishi Electric Corporation-MELCO_DS_CRP',acv:349345,lic:73769,book:263850,ai:26907,ai_acv:26907,date:'2026-03-19'},
   {q:2,ct:'Won',id:'89753',desc:'JAL Engineering Co.,LTD.-Renewal of BO 43549 - JAL Engineeri',acv:4993,lic:0,book:20806,ai:0,ai_acv:0,date:'2026-04-01'},
   {q:2,ct:'Won',id:'94085',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP2( July–Dece',acv:247942,lic:0,book:247942,ai:0,ai_acv:0,date:'2026-04-30'},
   {q:2,ct:'Won',id:'96173',desc:'NEC Corporation-KHI-Energy&Marine Company - Oracle ASFU',acv:4148,lic:4929,book:6568,ai:0,ai_acv:0,date:'2026-06-05'},
   {q:3,ct:'Won',id:'103971',desc:'Japan Airlines Co., Ltd.-JAL VPN Tunnels',acv:409,lic:0,book:511,ai:0,ai_acv:0,date:'2026-08-07'},
-  {q:3,ct:'Won',id:'103662',desc:'Japan Airlines Co., Ltd.-JAL Confirm Solution Phase Extensio',acv:132475,lic:0,book:397426,ai:0,ai_acv:0,date:'2026-08-20'},
+  {q:3,ct:'Won',id:'103662',desc:'Japan Airlines Co., Ltd.-JAL Confirm Solution Phase Extensio',acv:794852,lic:0,book:397426,ai:0,ai_acv:0,date:'2026-08-20'},
   {q:3,ct:'Won',id:'91278',desc:'Japan Airlines Co., Ltd.-JAL Demand Planning Server',acv:11621,lic:0,book:14526,ai:0,ai_acv:0,date:'2026-09-09'},
   {q:3,ct:'Won',id:'98278',desc:'Mitsubishi Electric Corporation-MELCO_DS_Customer Success Oc',acv:85475,lic:0,book:521399,ai:0,ai_acv:0,date:'2026-09-29'},
-  {q:3,ct:'Won',id:'90924',desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;',acv:2111445,lic:4937881,book:12204214,ai:136170,ai_acv:27234,date:'2026-09-30'},
-  {q:3,ct:'Won',id:'73746',desc:'NEC Corporation-KHI-Energy&Marine Company-New Instance - 200',acv:436311,lic:622165,book:2290632,ai:752734,ai_acv:143378,date:'2026-09-30'},
+  {q:3,ct:'Won',id:'90924',desc:'Mitsubishi Electric Corporation-MELCO - A&D&#39;',acv:2440843,lic:4937881,book:12204214,ai:136170,ai_acv:27234,date:'2026-09-30'},
+  {q:3,ct:'Won',id:'73746',desc:'NEC Corporation-KHI-Energy&Marine Company-New Instance - 200',acv:436312,lic:622165,book:2290632,ai:752734,ai_acv:143378,date:'2026-09-30'},
   {q:4,ct:'In Call',id:'96704',desc:'NEC Corporation-MHI AEL-Oracle',acv:44779,lic:83805,book:138069,ai:0,ai_acv:0,date:'2026-12-01'},
   {q:4,ct:'In Call',id:'75026',desc:'SkyDrive Inc.-Skydrive - ICAM - Type Certificate Configurati',acv:86207,lic:79882,book:258620,ai:81710,ai_acv:27237,date:'2026-11-26'},
   {q:4,ct:'In Call',id:'102456',desc:'NEC Corporation-  SUBARU -Add Use Place environment',acv:27521,lic:22745,book:27521,ai:0,ai_acv:0,date:'2026-12-25'},
   {q:4,ct:'In Call',id:'106864',desc:'Bunka Shutter Co., Ltd.-Bunka Shutter Co., Ltd. - New - Customer Success - FY26',acv:442527,lic:0,book:1327582,ai:0,ai_acv:0,date:'2026-12-14'},
-  {q:4,ct:'In Call',id:'101346',desc:'Alphast Co.,Ltd.-Bunka Shutter Co., Ltd.- New - ERP - FY26',acv:362138,lic:584079,book:1810691,ai:325183,ai_acv:65037,date:'2026-12-14'},
+  {q:4,ct:'In Call',id:'101346',desc:'Alphast Co.,Ltd.-Bunka Shutter Co., Ltd.- New - ERP - FY26',acv:362139,lic:584079,book:1810691,ai:325183,ai_acv:65037,date:'2026-12-14'},
   {q:4,ct:'Out Call',id:'95268',desc:'ShinMaywa Industries, Ltd.-ShinMaywa - Ground Support vehicl',acv:731461,lic:1175189,book:3657305,ai:134994,ai_acv:26999,date:'2026-12-28'},
-  {q:4,ct:'Out Call',id:'92865',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP3/CP4 (Janua',acv:328,lic:0,book:469079,ai:0,ai_acv:0,date:'2026-12-01'},
+  {q:4,ct:'Out Call',id:'92865',desc:'Japan Airlines Co., Ltd.-JAL Customer Success CP3/CP4 (Janua',acv:449720,lic:0,book:469079,ai:0,ai_acv:0,date:'2026-12-01'},
   {q:4,ct:'Out Call',id:'84447',desc:'Honda Motor Co., Ltd.-Honda Marine- POKA',acv:44139,lic:0,book:220694,ai:0,ai_acv:0,date:'2026-12-18'},
 ];
 
 const CHANGES = [
-  {type:'move',  opp:'95268', desc:'ShinMaywa – Ground Support Q4',          from:'Q4 In Call (€731,461)', to:'Out Call 除外',    acv:-731461, note:'翌週以降の受注見込みなしと判断、Out Callへ移動'},
-  {type:'lost',  opp:'86759', desc:'NEC – SUBARU AI',                         from:'Q4 In Call (€22,054)',  to:'ソース削除',       acv:-22054,  note:'CRMから削除'},
-  {type:'new',   opp:'106864',desc:'Bunka Shutter Co. – Customer Success FY26',from:'Q4 Out Call',          to:'In Call (€442,527)',acv:442527,  note:'Out Call → In Call 格上げ'},
-  {type:'pos',   opp:'102456',desc:'NEC – SUBARU Add Use Place',               from:'Q4 Out Call',          to:'In Call (€27,521)', acv:27521,   note:'Out Call → In Call 格上げ'},
+  {type:'pos', opp:'94851',  desc:'MELCO DS CRP',                  from:'Q1 Won €263,850', to:'€349,345', acv:85495,  note:'ACV改定 +€85,495'},
+  {type:'pos', opp:'103662', desc:'JAL Confirm Solution Phase Ext.',from:'Q3 Won €132,475', to:'€794,852', acv:662377, note:'ACV改定 +€662,377'},
+  {type:'pos', opp:'90924',  desc:'MELCO A&D',                     from:'Q3 Won €2,111,445',to:'€2,440,843',acv:329398,note:'ACV改定 +€329,398'},
+  {type:'out', opp:'92865',  desc:'JAL CP3/4 (Out Call)',           from:'Q4 Out €328',     to:'€449,720', acv:449392, note:'Out Call ACV改定 — KPI影響なし'},
 ];
 
-const KPI_CUR  = {acv:4724271,lic:6847551,book:21792619,ai:1441471,ai_acv:313547};
+const KPI_CUR  = {acv:5801542,lic:6847551,book:21792619,ai:1441471,ai_acv:313547};
 const TARGETS  = {acv:9191819, lic:11717775, book:40802500, ai:3752500, ai_acv:1130000};
-const WTW = {'1':[726280,726280],'2':[257083,257083],'3':[2777736,2777736],'4':[1246639,963172]};
+const WTW = {'1':[726280,811774],'2':[257083,257083],'3':[2777736,3769512],'4':[963172,963173]};
 const KPI_STORE = 'ifs_fy26_kpi_v3';
 function loadKT(){try{return JSON.parse(localStorage.getItem(KPI_STORE)||'{}');}catch(e){return{};}}
 function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON.stringify(s));}
@@ -271,7 +271,7 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
     <div class="chart-card"><h3>In Call ACV vs Target by Quarter (€)</h3><div class="chart-wrap"><canvas id="chartAcv"></canvas></div></div>
     <div class="chart-card"><h3>In Call ACV – Quarter Breakdown</h3><div class="chart-wrap"><canvas id="chartPie"></canvas></div></div>
   </div>
-  <div class="section-title">WTW (vs 2026-10-05)</div>
+  <div class="section-title">WTW (vs 2026-10-13)</div>
   <div class="wtw-grid" id="wtwGrid"></div>
   <script>
   (function(){
@@ -304,17 +304,17 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 <div id="tab-changes" class="tab-content">
 <div class="page">
   <div class="impact-banner">
-    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,007,738</div></div>
+    <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€4,724,271</div></div>
     <div style="font-size:24px;color:var(--muted)">→</div>
-    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€4,724,271</div></div>
+    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,801,542</div></div>
     <div style="font-size:24px;color:var(--muted)">=</div>
-    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--red)">-€283,467</div></div>
+    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--green,#4caf50)">+€1,077,271</div></div>
     <div style="margin-left:auto;text-align:right;">
-      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">51.4%</div>
+      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">63.1%</div>
     </div>
-    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€4,467,548</div></div>
+    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€3,390,277</div></div>
   </div>
-  <div class="section-title">変更内容一覧（2026-10-05 → 2026-10-13）</div>
+  <div class="section-title">変更内容一覧（2026-10-13 → 2026-10-19）</div>
   <div class="change-table-wrap">
     <table>
       <thead><tr><th>区分</th><th>Opp No</th><th>案件名</th><th>変更前</th><th>変更後</th><th class="num">ACV影響 (€)</th><th>備考</th></tr></thead>
@@ -373,17 +373,16 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
   </script>
   <div style="background:rgba(59,158,255,0.06);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:8px;">
     <div style="font-size:12px;color:var(--text-dim);line-height:1.9">
-      <strong style="color:var(--accent)">📌 今週の変化（2026-10-13）</strong><br>
-      Q4 In Call ACV が前週比 <strong style="color:var(--red)">-€283,467</strong>。ShinMaywa Ground Support（€731,461）がIn Call→Out Callへ移動し大幅減。
-      一方でBunka Shutter Customer Success（€442,527）と SUBARU Add Use Place（€27,521）がOut Call→In Callへ格上げ。
-      SUBARU AI（86759, €22,054）はCRMから削除。<br><br>
-      <strong style="color:var(--accent)">📌 残ギャップ €2,398,265（修正Target €7,122,536 比）の対策</strong><br>
-      現Q4 Out Call 3件合計 <strong style="color:var(--gold)">€775,928</strong>（ShinMaywa €731K・Honda Marine €44K・JAL CP3/4 €0.3K）。<br>
-      全件 In Call 化しても <strong style="color:var(--red)">€1,622,337</strong> 不足。Out Callカバー率は <strong style="color:var(--gold)">32.3%</strong>。<br><br>
+      <strong style="color:var(--accent)">📌 今週の変化（2026-10-19）</strong><br>
+      ACV <strong style="color:#4caf50">+€1,077,271</strong> の大幅改善。全て既存Won案件のACV改定（Q1: MELCO DS CRP +€85K、Q3: JAL Confirm +€662K、MELCO A&D +€329K）。
+      Q4 In Callに変更なし。Out CallではJAL CP3/4（92865）が€328→€449,720へ改定（KPI影響なし）。<br><br>
+      <strong style="color:var(--accent)">📌 残ギャップ €1,320,994（修正Target €7,122,536 比）の対策</strong><br>
+      現Q4 Out Call 3件合計 <strong style="color:var(--gold)">€1,225,320</strong>（ShinMaywa €731K・JAL CP3/4 €450K・Honda Marine €44K）。<br>
+      全件 In Call 化すれば残 <strong style="color:var(--gold)">€95,674</strong> まで縮小。Out Callカバー率は <strong style="color:var(--gold)">92.8%</strong>。<br><br>
       <strong style="color:var(--text)">対策案：</strong><br>
-      ① <strong style="color:var(--gold)">ShinMaywa Ground Support（€731K）</strong> 最大のOut Call。受注確度の再評価・Q4内クローズ可能性を優先確認。<br>
-      ② 新規パイプライン追加が不可欠。Q4残期間でOut Call→In Call 化できる案件の掘り起こしを加速。<br>
-      ③ 修正Target達成には現状のIn Call全勝 + ShinMaywa回収でも €622K 不足。新規創出なしには66%未満着地が現実的。
+      ① <strong style="color:var(--gold)">ShinMaywa Ground Support（€731K）</strong> がQ4 Out Callの主力。Q4内クローズへの道筋確認が最優先。<br>
+      ② <strong style="color:var(--gold)">JAL CP3/4（€450K）</strong> がOut Callで急増。クローズ条件・タイムラインを早急に確認。<br>
+      ③ 上記2件がIn Call化すれば修正Target達成圏内。現時点で最も達成可能性の高いシナリオ。
     </div>
   </div>
 </div></div>
@@ -481,6 +480,17 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
 (function(){
   // ── 週次 WTW データ（案件別増減）
     const WTW_WEEKS = [
+    {
+      date: '10-19', prev_date: '10-13',
+      prev_acv: 4724271, cur_acv: 5801542,
+      net: 1077271,
+      changes: [
+        {q:'Q1', opp:'94851',  desc:'MELCO DS CRP',                   delta:85495,  type:'pos',  note:'ACV改定'},
+        {q:'Q3', opp:'103662', desc:'JAL Confirm Solution Phase Ext.', delta:662377, type:'pos',  note:'ACV改定'},
+        {q:'Q3', opp:'90924',  desc:'MELCO A&D',                       delta:329398, type:'pos',  note:'ACV改定'},
+        {q:'Q4', opp:'92865',  desc:'JAL CP3/4 (Out Call)',            delta:449392, type:'out',  note:'Out Call ACV改定 — KPI影響なし'},
+      ]
+    },
     {
       date: '10-13', prev_date: '10-05',
       prev_acv: 5007738, cur_acv: 4724271,
@@ -988,10 +998,10 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
   <div style="background:rgba(240,90,90,0.06);border:1px solid rgba(240,90,90,0.3);border-radius:var(--radius);padding:18px;">
     <div style="font-size:13px;font-weight:600;color:var(--red);margin-bottom:10px">⚠️ 現状評価</div>
     <div style="font-size:13px;color:var(--text-dim);line-height:2">
-      現在のOut Call候補合計 <strong style="color:var(--text)">€775,928</strong> に対し残ギャップは <strong style="color:var(--red)">€4,467,548</strong>（Target €9.19M比）。<br>
-      Gap全体の <strong style="color:var(--text)">17.4%</strong> しかカバーできない状況。<br>
-      修正Target（€7.12M）比では残ギャップ €2,398,265。Out Callカバー率 32.3%。<br>
-      新規パイプライン追加なしには目標達成が困難。
+      現在のOut Call候補合計 <strong style="color:var(--text)">€1,225,320</strong> に対し残ギャップは <strong style="color:var(--red)">€3,390,277</strong>（Target €9.19M比）。<br>
+      Gap全体の <strong style="color:var(--text)">36.1%</strong> カバー可能。<br>
+      修正Target（€7.12M）比では残ギャップ €1,320,994。Out Callカバー率 92.8%（ほぼ達成圏）。<br>
+      ShinMaywa + JAL CP3/4 のIn Call化が修正Target達成の鍵。
     </div>
   </div>
 
@@ -1064,13 +1074,13 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
       <span style="color:var(--gold)">€${outTotal.toLocaleString('en-US')}</span>
     </div>
     <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)">
-      <span>vs 残ギャップ €4,467,548（Target比）/ €2,398,265（修正Target比）</span>
-      <span style="color:var(--red)">${(outTotal/4467548*100).toFixed(1)}% しかカバーできない（Target比）</span>
+      <span>vs 残ギャップ €3,390,277（Target比）/ €1,320,994（修正Target比）</span>
+      <span style="color:var(--red)">${(outTotal/3390277*100).toFixed(1)}% カバー可能（Target比）</span>
     </div>`;
 })();
 </script>
 
-<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-10-13 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
+<footer>IFS Japan FY26 Forecast &nbsp;·&nbsp; Data as of 2026-10-19 &nbsp;·&nbsp; In Call figures used for achievement rates</footer>
 
 <script>
 function switchTab(id){
