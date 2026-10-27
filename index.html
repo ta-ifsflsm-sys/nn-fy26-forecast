@@ -204,10 +204,9 @@ const DEALS = [
 ];
 
 const CHANGES = [
-  {type:'pos', opp:'94851',  desc:'MELCO DS CRP',                  from:'Q1 Won €263,850', to:'€349,345', acv:85495,  note:'ACV改定 +€85,495'},
-  {type:'pos', opp:'103662', desc:'JAL Confirm Solution Phase Ext.',from:'Q3 Won €132,475', to:'€794,852', acv:662377, note:'ACV改定 +€662,377'},
-  {type:'pos', opp:'90924',  desc:'MELCO A&D',                     from:'Q3 Won €2,111,445',to:'€2,440,843',acv:329398,note:'ACV改定 +€329,398'},
-  {type:'out', opp:'92865',  desc:'JAL CP3/4 (Out Call)',           from:'Q4 Out €328',     to:'€449,720', acv:449392, note:'Out Call ACV改定 — KPI影響なし'},
+  {type:'新規', opp:'106972', desc:'DentsuSK LoopsPOKA',            from:'新規',             to:'Q4 In Call €185,272', acv:185272, note:'新規 In Call追加（国見 / Dentsu Soken）'},
+  {type:'out',  opp:'95268',  desc:'ShinMaywa Ground Support',       from:'Q4 Out €731,461', to:'削除',                acv:0,      note:'リスト削除 — Out Call、KPI影響なし'},
+  {type:'out',  opp:'92865',  desc:'JAL CP3/4',                      from:'Q4 Out €328',     to:'€0',                  acv:0,      note:'ACV 328→0 — Out Call、KPI影響なし'},
 ];
 
 const KPI_CUR  = {acv:4909543,lic:6847551,book:22348436,ai:1831227,ai_acv:443465};
@@ -306,13 +305,13 @@ function saveKT(k,v){const s=loadKT();s[k]=v;localStorage.setItem(KPI_STORE,JSON
   <div class="impact-banner">
     <div class="impact-item"><div class="impact-label">前週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€4,724,271</div></div>
     <div style="font-size:24px;color:var(--muted)">→</div>
-    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€5,801,542</div></div>
+    <div class="impact-item"><div class="impact-label">今週 In Call ACV</div><div class="impact-val" style="color:var(--accent)">€4,909,543</div></div>
     <div style="font-size:24px;color:var(--muted)">=</div>
-    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--green,#4caf50)">+€1,077,271</div></div>
+    <div class="impact-item"><div class="impact-label">純ACV影響</div><div class="impact-val" style="color:var(--green,#4caf50)">+€185,272</div></div>
     <div style="margin-left:auto;text-align:right;">
-      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">63.1%</div>
+      <div class="impact-label">Target達成率</div><div class="impact-val" style="color:var(--gold)">68.9%</div>
     </div>
-    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€3,390,277</div></div>
+    <div class="impact-item"><div class="impact-label">残ギャップ</div><div class="impact-val" style="color:var(--red)">-€2,212,993</div></div>
   </div>
   <div class="section-title">変更内容一覧（2026-10-19 → 2026-10-26）</div>
   <div class="change-table-wrap">
